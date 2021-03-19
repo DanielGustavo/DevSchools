@@ -1,9 +1,10 @@
 import 'dotenv/config';
+import { ConnectionOptions } from 'typeorm';
 
-module.exports = {
+const config: ConnectionOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: (process.env.DB_PORT || 5432) as number,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DATABASE,
@@ -14,3 +15,5 @@ module.exports = {
     migrationsDir: './src/database/migrations',
   },
 };
+
+export default config;
