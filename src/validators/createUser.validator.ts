@@ -11,6 +11,13 @@ export default async function createUserValidator(
   const schema = yup.object().shape({
     username: yup.string().min(5).max(100).required(),
     password: yup.string().min(10).max(120).required(),
+    passwordConfirmation: yup
+      .string()
+      .required('password confirmation is a required field')
+      .oneOf(
+        [yup.ref('password')],
+        'password confirmation must be equal to the password'
+      ),
     isASchool: yup.bool().required(),
   });
 
