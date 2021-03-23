@@ -12,5 +12,7 @@ export default function handleAppErrorThrow(
     return response.status(error.code).json({ error: error.message });
   }
 
+  console.log(error);
+
   return response.status(500).json({ error: 'Internal Server Error' });
 }
