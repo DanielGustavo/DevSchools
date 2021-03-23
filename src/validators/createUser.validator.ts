@@ -10,6 +10,7 @@ export default async function createUserValidator(
 ) {
   const schema = yup.object().shape({
     username: yup.string().min(5).max(100).required(),
+    name: yup.string().min(5).max(100).required(),
     password: yup.string().min(10).max(120).required(),
     passwordConfirmation: yup
       .string()
