@@ -21,9 +21,6 @@ class User {
   is_a_school!: boolean;
 
   @Column()
-  name!: string;
-
-  @Column()
   avatar_filename!: string;
 
   @CreateDateColumn()

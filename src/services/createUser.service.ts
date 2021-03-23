@@ -6,13 +6,14 @@ import AppError from '../errors/AppError';
 
 interface Request {
   username: string;
-  name: string;
   password: string;
   isASchool: boolean;
 }
 
-export default async function createUser(request: Request): Promise<User> {
-  const { username, name, password, isASchool: is_a_school } = request;
+export default async function createUserService(
+  request: Request
+): Promise<User> {
+  const { username, password, isASchool: is_a_school } = request;
 
   const userRepository = getRepository(User);
 
@@ -26,7 +27,6 @@ export default async function createUser(request: Request): Promise<User> {
 
   const user = userRepository.create({
     username,
-    name,
     password,
     is_a_school,
   });
