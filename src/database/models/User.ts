@@ -6,6 +6,8 @@ import {
   Entity,
   OneToOne,
 } from 'typeorm';
+
+import Person from './Person';
 import School from './School';
 
 @Entity('users')
@@ -33,6 +35,9 @@ class User {
 
   @OneToOne(() => School, (school) => school.user)
   school!: School;
+
+  @OneToOne(() => Person, (person) => person.user)
+  person!: Person;
 }
 
 export default User;
