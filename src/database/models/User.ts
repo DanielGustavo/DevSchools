@@ -4,7 +4,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Entity,
+  OneToOne,
 } from 'typeorm';
+import School from './School';
 
 @Entity('users')
 class User {
@@ -28,6 +30,9 @@ class User {
 
   @UpdateDateColumn()
   updated_at!: Date;
+
+  @OneToOne(() => School, (school) => school.user)
+  school!: School;
 }
 
 export default User;
