@@ -28,7 +28,6 @@ export class createSchoolsTable1616245747201 implements MigrationInterface {
             name: 'user_id',
             type: 'uuid',
             isNullable: false,
-            default: 'uuid_generate_v4()',
             isUnique: true,
           },
         ],
