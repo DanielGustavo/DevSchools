@@ -39,20 +39,14 @@ export class createSchoolsTable1616245747201 implements MigrationInterface {
       referencedTableName: 'users',
       columnNames: ['user_id'],
       onDelete: 'CASCADE',
+      name: 'schools_user_id_fk',
     });
 
     await queryRunner.createForeignKey('schools', userIdForeignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const schoolsTable = await queryRunner.getTable('schools');
-    const userIdForeignKey = schoolsTable?.foreignKeys.find(
-      (foreignKey) => foreignKey.columnNames.indexOf('user_id') > -1
-    );
-
-    if (userIdForeignKey) {
-      await queryRunner.dropForeignKey('schools', userIdForeignKey);
-    }
+    await queryRunner.dropForeignKey('schools', 'schools_user_id_fk');
 
     await queryRunner.dropTable('schools');
   }
