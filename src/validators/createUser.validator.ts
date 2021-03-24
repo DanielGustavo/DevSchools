@@ -19,7 +19,6 @@ export default async function createUserValidator(
         [yup.ref('password')],
         'password confirmation must be equal to the password'
       ),
-    isASchool: yup.bool().required(),
   });
 
   try {

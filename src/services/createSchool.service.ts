@@ -10,7 +10,6 @@ interface Request {
   username: string;
   name: string;
   password: string;
-  isASchool: boolean;
 }
 
 export default async function createSchoolService(
@@ -26,7 +25,10 @@ export default async function createSchoolService(
     throw new AppError(400, 'This name already exists, try another one');
   }
 
-  const user = await createUserService(request);
+  const user = await createUserService({
+    ...request,
+    isASchool: true,
+  });
 
   const school = schoolRepository.create({
     name: request.name,

@@ -9,7 +9,6 @@ interface Request {
   role: string;
   name: string;
   password: string;
-  isASchool: boolean;
 }
 
 export default async function createPersonService(
@@ -17,7 +16,10 @@ export default async function createPersonService(
 ): Promise<Person> {
   const personRepository = getRepository(Person);
 
-  const user = await createUserService(request);
+  const user = await createUserService({
+    ...request,
+    isASchool: false,
+  });
 
   const person = personRepository.create({
     role: request.role,
