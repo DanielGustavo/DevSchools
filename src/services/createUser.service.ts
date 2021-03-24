@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import bcrypt from 'bcrypt';
 
 import User from '../database/models/User';
 
@@ -25,9 +26,11 @@ export default async function createUserService(
     throw new AppError(400, 'This username already exists, try another one.');
   }
 
+  const passwordHash = await bcrypt.hash(password, 7);
+
   const user = userRepository.create({
     username,
-    password,
+    password: passwordHash,
     is_a_school,
   });
   await userRepository.save(user);
