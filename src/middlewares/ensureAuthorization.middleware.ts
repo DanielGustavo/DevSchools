@@ -12,7 +12,7 @@ interface JWTPayload {
   exp: number;
 }
 
-export default function ensureAuthorization(
+export default function ensureAuthorizationMiddleware(
   request: Request,
   response: Response,
   next: NextFunction
