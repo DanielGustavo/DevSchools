@@ -30,9 +30,12 @@ export default function ensureAuthorizationMiddleware(
   }
 
   try {
-    const payload = jsonwebtoken.verify(token, jwtConfig.secret) as JWTPayload;
+    const { subject, isASchool } = jsonwebtoken.verify(
+      token,
+      jwtConfig.secret
+    ) as JWTPayload;
 
-    request.userId = payload.subject;
+    request.user = { id: subject, isASchool };
 
     next();
   } catch {
