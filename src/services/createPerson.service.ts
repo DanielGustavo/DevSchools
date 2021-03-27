@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Person from '../database/models/Person';
+import User from '../database/models/User';
 
 import createUserService from './createUser.service';
 
@@ -31,16 +32,28 @@ export default async function createPersonService(
     throw new AppError(403, errorMsg);
   }
 
-  const personRepository = getRepository(Person);
+  const userRepository = getRepository(User);
+
+  const creatorUser = await userRepository.findOne(creatorDatas.id, {
+    relations: ['school'],
+  });
+  const school = creatorUser?.school;
+
+  if (!school) {
+    throw new AppError(403, 'You must have a school to create an user');
+  }
 
   const user = await createUserService({
     ...personDatas,
     isASchool: false,
   });
 
+  const personRepository = getRepository(Person);
+
   const person = personRepository.create({
     role: personDatas.role,
     name: personDatas.name,
+    school,
     user,
   });
 
