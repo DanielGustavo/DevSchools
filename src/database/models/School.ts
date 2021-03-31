@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import Classroom from './Classroom';
 import Person from './Person';
 import User from './User';
 
@@ -24,6 +25,9 @@ class School {
 
   @OneToMany(() => Person, (person) => person.school)
   persons!: Promise<Person[]>;
+
+  @OneToMany(() => Classroom, (classroom) => classroom.school)
+  classrooms!: Promise<Classroom[]>;
 }
 
 export default School;
