@@ -1,9 +1,10 @@
 import { getRepository } from 'typeorm';
 
 import Person from '../database/models/Person';
-import User from '../database/models/User';
 
 import createUserService from './createUser.service';
+
+import getSchoolByUserId from '../utils/getSchoolByUserId';
 
 import AppError from '../errors/AppError';
 
@@ -25,23 +26,11 @@ export default async function createPersonService(
 ): Promise<Person> {
   const { personDatas, creatorDatas } = request;
 
-  const creatorIsntASchool = !creatorDatas.isASchool;
-
-  if (creatorIsntASchool) {
-    const errorMsg = 'You are not allowed to create a user of type "person"';
-    throw new AppError(403, errorMsg);
+  if (!creatorDatas.isASchool) {
+    throw new AppError(403, 'You are not a user of type school');
   }
 
-  const userRepository = getRepository(User);
-
-  const creatorUser = await userRepository.findOne(creatorDatas.id, {
-    relations: ['school'],
-  });
-  const school = creatorUser?.school;
-
-  if (!school) {
-    throw new AppError(403, 'You must have a school to create an user');
-  }
+  const school = await getSchoolByUserId(creatorDatas.id);
 
   const user = await createUserService({
     ...personDatas,
