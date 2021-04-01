@@ -2,8 +2,10 @@ import { Router, Request, Response } from 'express';
 
 import createPersonValidator from '../validators/createPerson.validator';
 import createUserValidator from '../validators/createUser.validator';
+import listClassroomsOfAPersonValidator from '../validators/listClassroomsOfAPerson.validator';
 
 import createPersonService from '../services/createPerson.service';
+import getClassroomsByPersonIdService from '../services/getClassroomsByPersonId.service';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
 
@@ -23,6 +25,22 @@ router.post(
     Object.assign(person.user, { id: undefined, password: undefined });
 
     return response.json(person);
+  }
+);
+
+router.get(
+  '/persons/:personId/classrooms',
+  ensureAuthorizationMiddleware,
+  listClassroomsOfAPersonValidator,
+  async (request: Request, response: Response) => {
+    const { personId } = request.params;
+
+    const classrooms = await getClassroomsByPersonIdService({
+      userDatas: request.user,
+      personId,
+    });
+
+    return response.json(classrooms);
   }
 );
 
