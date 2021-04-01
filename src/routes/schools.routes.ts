@@ -1,6 +1,9 @@
 import { Router, Request, Response } from 'express';
 
+import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
+
 import createSchoolService from '../services/createSchool.service';
+import getClassroomsBySchoolName from '../services/getClassroomsBySchoolName.service';
 
 import createUserValidator from '../validators/createUser.validator';
 
@@ -15,6 +18,19 @@ router.post(
     Object.assign(school.user, { password: undefined, id: undefined });
 
     return response.json(school);
+  }
+);
+
+router.get(
+  '/schools/:schoolName/classrooms',
+  ensureAuthorizationMiddleware,
+  async (request: Request, response: Response) => {
+    const classrooms = await getClassroomsBySchoolName({
+      schoolName: request.params.schoolName,
+      userDatas: request.user,
+    });
+
+    return response.json(classrooms);
   }
 );
 
