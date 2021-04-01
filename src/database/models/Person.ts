@@ -2,6 +2,8 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +11,7 @@ import {
 
 import School from './School';
 import User from './User';
+import Classroom from './Classroom';
 
 @Entity('persons')
 class Person {
@@ -28,6 +31,14 @@ class Person {
   @ManyToOne(() => School, (school) => school.persons)
   @JoinColumn({ name: 'school_id' })
   school!: School;
+
+  @ManyToMany(() => Classroom, (classroom) => classroom.persons)
+  @JoinTable({
+    name: 'persons_classrooms',
+    joinColumn: { name: 'person_id' },
+    inverseJoinColumn: { name: 'classroom_id' },
+  })
+  classrooms!: Classroom[];
 }
 
 export default Person;
