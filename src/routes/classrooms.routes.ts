@@ -3,9 +3,11 @@ import { Request, Response, Router } from 'express';
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
 
 import createClassroomService from '../services/createClassroom.service';
+import deleteAClassroomByIdService from '../services/deleteAClassroomById.service';
 import insertAPersonInAClassroomService from '../services/insertAPersonInAClassroom.service';
 
 import createClassroomValidator from '../validators/createClassroom.validator';
+import deleteAClassroomValidator from '../validators/deleteAClassroom.validator';
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
 
 const router = Router();
@@ -46,6 +48,24 @@ router.post(
     });
 
     const message = `${person.name} was inserted in the classroom "${classroom.title}" of "${school.name}"`;
+
+    return response.json({ message });
+  }
+);
+
+router.delete(
+  '/classrooms/:classroomId',
+  ensureAuthorizationMiddleware,
+  deleteAClassroomValidator,
+  async (request: Request, response: Response) => {
+    const { classroomId } = request.params;
+
+    const classroom = await deleteAClassroomByIdService({
+      classroomId,
+      userDatas: request.user,
+    });
+
+    const message = `${classroom.title} was delete successfully`;
 
     return response.json({ message });
   }
