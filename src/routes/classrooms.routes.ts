@@ -5,10 +5,12 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import createClassroomService from '../services/createClassroom.service';
 import deleteAClassroomByIdService from '../services/deleteAClassroomById.service';
 import insertAPersonInAClassroomService from '../services/insertAPersonInAClassroom.service';
+import updateAClassroomById from '../services/updateAClassroomById.service';
 
 import createClassroomValidator from '../validators/createClassroom.validator';
 import deleteAClassroomValidator from '../validators/deleteAClassroom.validator';
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
+import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 
 const router = Router();
 
@@ -68,6 +70,23 @@ router.delete(
     const message = `${classroom.title} was delete successfully`;
 
     return response.json({ message });
+  }
+);
+
+router.put(
+  '/classrooms/:classroomId',
+  ensureAuthorizationMiddleware,
+  updateAClassroomValidator,
+  async (request: Request, response: Response) => {
+    const { classroomId } = request.params;
+
+    const classroom = await updateAClassroomById({
+      classroomId,
+      newTitle: request.body.newTitle,
+      userDatas: request.user,
+    });
+
+    return response.json(classroom);
   }
 );
 
