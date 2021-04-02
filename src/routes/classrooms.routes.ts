@@ -4,12 +4,14 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 
 import createClassroomService from '../services/createClassroom.service';
 import deleteAClassroomByIdService from '../services/deleteAClassroomById.service';
+import getPersonsByClassroomIdService from '../services/getPersonsByClassroomId.service';
 import insertAPersonInAClassroomService from '../services/insertAPersonInAClassroom.service';
 import updateAClassroomById from '../services/updateAClassroomById.service';
 
 import createClassroomValidator from '../validators/createClassroom.validator';
 import deleteAClassroomValidator from '../validators/deleteAClassroom.validator';
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
+import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 
 const router = Router();
@@ -87,6 +89,22 @@ router.put(
     });
 
     return response.json(classroom);
+  }
+);
+
+router.get(
+  '/classrooms/:classroomId/persons',
+  ensureAuthorizationMiddleware,
+  listPersonsRegisteredInAClassroomValidator,
+  async (request: Request, response: Response) => {
+    const { classroomId } = request.params;
+
+    const persons = await getPersonsByClassroomIdService({
+      classroomId,
+      userDatas: request.user,
+    });
+
+    return response.json(persons);
   }
 );
 
