@@ -26,16 +26,13 @@ export default async function deleteAClassroomByIdService(
   const school = await getSchoolByUserId(userDatas.id);
 
   const classroomRepository = getRepository(Classroom);
-
-  const classroom = await classroomRepository.findOne(classroomId, {
-    relations: ['school'],
-  });
+  const classroom = await classroomRepository.findOne(classroomId);
 
   if (!classroom) {
     throw new AppError(400, 'This classroom does not exist');
   }
 
-  const schoolIsNotTheOwnerOfThisClassroom = classroom.school.id !== school.id;
+  const schoolIsNotTheOwnerOfThisClassroom = classroom.school_id !== school.id;
 
   if (schoolIsNotTheOwnerOfThisClassroom) {
     throw new AppError(

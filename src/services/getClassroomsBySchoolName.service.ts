@@ -24,14 +24,13 @@ export default async function getClassroomsBySchoolNameService(
 
   const school = await schoolRepository.findOne({
     where: { name: schoolName },
-    relations: ['user'],
   });
 
   if (!school) {
     throw new AppError(400, 'This school does not exists');
   }
 
-  const isNotTheOwnerOfTheSchool = userDatas.id !== school?.user.id;
+  const isNotTheOwnerOfTheSchool = userDatas.id !== school?.user_id;
 
   if (isNotTheOwnerOfTheSchool) {
     throw new AppError(403, 'You can not access the classrooms of this school');

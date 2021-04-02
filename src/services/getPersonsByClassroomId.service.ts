@@ -27,7 +27,7 @@ export default async function getPersonsByClassroomIdService(
   const classroomRepository = getRepository(Classroom);
 
   const classroom = await classroomRepository.findOne(classroomId, {
-    relations: ['school', 'persons'],
+    relations: ['persons'],
   });
 
   if (!classroom) {
@@ -36,7 +36,7 @@ export default async function getPersonsByClassroomIdService(
 
   const school = await getSchoolByUserId(userDatas.id);
 
-  const schoolDoesNotOwnThisClassroom = classroom.school.id !== school.id;
+  const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
 
   if (schoolDoesNotOwnThisClassroom) {
     throw new AppError(403, 'You can not access these classrooms');

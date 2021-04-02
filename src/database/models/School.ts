@@ -19,6 +19,9 @@ class School {
   @Column()
   name!: string;
 
+  @Column()
+  user_id!: string;
+
   @OneToOne(() => User, (user) => user.school)
   @JoinColumn({ name: 'user_id' })
   user!: User;

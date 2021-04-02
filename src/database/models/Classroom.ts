@@ -19,6 +19,9 @@ class Classroom {
   @Column()
   title!: string;
 
+  @Column()
+  school_id!: string;
+
   @ManyToOne(() => School, (school) => school.classrooms)
   @JoinColumn({ name: 'school_id' })
   school!: School;

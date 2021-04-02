@@ -24,7 +24,7 @@ export default async function getClassroomsByPersonIdService(
 
   const person = await personRepository.findOne({
     where: { id: personId },
-    relations: ['user', 'classrooms', 'school'],
+    relations: ['classrooms'],
   });
 
   if (!person) {
@@ -34,14 +34,14 @@ export default async function getClassroomsByPersonIdService(
   if (userDatas.isASchool) {
     const school = await getSchoolByUserId(userDatas.id);
 
-    const personIsNotRegisteredInThisSchool = person.school.id !== school.id;
+    const personIsNotRegisteredInThisSchool = person.school_id !== school.id;
 
     if (personIsNotRegisteredInThisSchool) {
       throw new AppError(403, 'This person is not registered in your school');
     }
   }
 
-  const isNotTheOwnerOfThePersonAccount = userDatas.id !== person?.user.id;
+  const isNotTheOwnerOfThePersonAccount = userDatas.id !== person?.user_id;
 
   if (isNotTheOwnerOfThePersonAccount && !userDatas.isASchool) {
     throw new AppError(403, 'You can not access the classrooms of this person');

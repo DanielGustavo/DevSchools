@@ -36,7 +36,6 @@ export default async function insertAPersonInAClassroomService(
 
   const classroom = await classroomRepository.findOne({
     where: { id: classroomId },
-    relations: ['school'],
   });
 
   if (!classroom) {
@@ -45,7 +44,7 @@ export default async function insertAPersonInAClassroomService(
 
   const school = await getSchoolByUserId(userDatas.id);
 
-  const schoolDoesNotOwnThisClassroom = classroom.school.id !== school.id;
+  const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
 
   if (schoolDoesNotOwnThisClassroom) {
     throw new AppError(
@@ -56,7 +55,7 @@ export default async function insertAPersonInAClassroomService(
 
   const personRepository = getRepository(Person);
   const person = await personRepository.findOne(personId, {
-    relations: ['school', 'classrooms'],
+    relations: ['classrooms'],
   });
 
   if (!person) {
@@ -74,7 +73,7 @@ export default async function insertAPersonInAClassroomService(
     );
   }
 
-  const personIsRegisteredInAnotherSchool = person.school.id !== school.id;
+  const personIsRegisteredInAnotherSchool = person.school_id !== school.id;
 
   if (personIsRegisteredInAnotherSchool) {
     throw new AppError(403, 'This person is not registered in your school');

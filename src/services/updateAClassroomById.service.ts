@@ -26,9 +26,7 @@ export default async function updateAClassroomById(
 
   const classroomRepository = getRepository(Classroom);
 
-  const classroom = await classroomRepository.findOne(classroomId, {
-    relations: ['school'],
-  });
+  const classroom = await classroomRepository.findOne(classroomId);
 
   if (!classroom) {
     throw new AppError(400, 'This classroom does not exist');
@@ -36,7 +34,7 @@ export default async function updateAClassroomById(
 
   const school = await getSchoolByUserId(userDatas.id);
 
-  const schoolDoesNotOwnThisClassroom = classroom.school.id !== school.id;
+  const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
 
   if (schoolDoesNotOwnThisClassroom) {
     throw new AppError(403, 'You can not edit a classroom that you do not own');

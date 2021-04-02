@@ -24,6 +24,12 @@ class Person {
   @Column()
   name!: String;
 
+  @Column()
+  school_id!: String;
+
+  @Column()
+  user_id!: String;
+
   @OneToOne(() => User, (user) => user.person)
   @JoinColumn({ name: 'user_id' })
   user!: User;
