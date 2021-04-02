@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 
 import Classroom from '../database/models/Classroom';
 import Person from '../database/models/Person';
@@ -80,8 +80,12 @@ export default async function insertAPersonInAClassroomService(
     throw new AppError(403, 'This person is not registered in your school');
   }
 
-  classroom.persons = [person];
-  await classroomRepository.save(classroom);
+  const relationalQueryBuilderOfClassroom = getConnection()
+    .createQueryBuilder()
+    .relation(Classroom, 'persons')
+    .of(classroom);
+
+  await relationalQueryBuilderOfClassroom.add(person);
 
   return { person, school, classroom };
 }
