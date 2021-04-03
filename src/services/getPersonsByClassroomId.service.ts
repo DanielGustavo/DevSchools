@@ -39,7 +39,7 @@ export default async function getPersonsByClassroomIdService(
   const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
 
   if (schoolDoesNotOwnThisClassroom) {
-    throw new AppError(403, 'You can not access these classrooms');
+    throw new AppError(403, 'You can not access this classroom');
   }
 
   return classroom.persons;
