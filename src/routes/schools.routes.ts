@@ -1,37 +1,19 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
 
-import createSchoolService from '../services/createSchool.service';
-import getClassroomsBySchoolName from '../services/getClassroomsBySchoolName.service';
-
 import createUserValidator from '../validators/createUser.validator';
+
+import schoolsController from '../controllers/schools.controller';
 
 const router = Router();
 
-router.post(
-  '/schools',
-  createUserValidator,
-  async (request: Request, response: Response) => {
-    const school = await createSchoolService(request.body);
-
-    Object.assign(school.user, { password: undefined, id: undefined });
-
-    return response.json(school);
-  }
-);
+router.post('/schools', createUserValidator, schoolsController.store);
 
 router.get(
   '/schools/:schoolName/classrooms',
   ensureAuthorizationMiddleware,
-  async (request: Request, response: Response) => {
-    const classrooms = await getClassroomsBySchoolName({
-      schoolName: request.params.schoolName,
-      userDatas: request.user,
-    });
-
-    return response.json(classrooms);
-  }
+  schoolsController.getClassroomsOfASchool
 );
 
 export default router;

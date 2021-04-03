@@ -1,23 +1,11 @@
-import { Request, Response, Router } from 'express';
-
-import createAuthenticationService from '../services/createAuthentication.service';
+import { Router } from 'express';
 
 import authValidator from '../validators/auth.validator';
 
+import authController from '../controllers/auth.controller';
+
 const router = Router();
 
-router.post(
-  '/auth',
-  authValidator,
-  async (request: Request, response: Response) => {
-    const { body } = request;
-
-    const { user, token } = await createAuthenticationService(body);
-
-    Object.assign(user, { password: undefined });
-
-    return response.json({ user, token });
-  }
-);
+router.post('/auth', authValidator, authController.authenticate);
 
 export default router;
