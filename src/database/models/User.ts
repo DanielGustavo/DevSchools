@@ -15,16 +15,16 @@ class User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column('varchar')
   username!: string;
 
-  @Column()
+  @Column('varchar')
   password!: string;
 
-  @Column()
+  @Column('boolean')
   is_a_school!: boolean;
 
-  @Column()
+  @Column('varchar')
   avatar_filename!: string;
 
   @CreateDateColumn()

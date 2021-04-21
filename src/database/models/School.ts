@@ -16,10 +16,10 @@ class School {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column('varchar')
   name!: string;
 
-  @Column()
+  @Column('uuid')
   user_id!: string;
 
   @OneToOne(() => User, (user) => user.school)

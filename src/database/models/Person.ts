@@ -21,13 +21,13 @@ class Person {
   @Column('enum')
   role!: String;
 
-  @Column()
+  @Column('varchar')
   name!: String;
 
-  @Column()
+  @Column('uuid')
   school_id!: String;
 
-  @Column()
+  @Column('uuid')
   user_id!: String;
 
   @OneToOne(() => User, (user) => user.person)
