@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
+import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
 
 import createClassroomValidator from '../validators/createClassroom.validator';
 import deleteAClassroomValidator from '../validators/deleteAClassroom.validator';
@@ -12,37 +13,38 @@ import classroomsController from '../controllers/classrooms.controller';
 
 const router = Router();
 
-router.post(
+router.use(
   '/classrooms',
   ensureAuthorizationMiddleware,
+  ensureIsASchoolMiddleware
+);
+
+router.post(
+  '/classrooms',
   createClassroomValidator,
   classroomsController.store
 );
 
 router.post(
   '/classrooms/:classroomId/persons',
-  ensureAuthorizationMiddleware,
   insertAPersonInAClassroomValidator,
   classroomsController.insertAPersonInAClassroom
 );
 
 router.delete(
   '/classrooms/:classroomId',
-  ensureAuthorizationMiddleware,
   deleteAClassroomValidator,
   classroomsController.delete
 );
 
 router.put(
   '/classrooms/:classroomId',
-  ensureAuthorizationMiddleware,
   updateAClassroomValidator,
   classroomsController.edit
 );
 
 router.get(
   '/classrooms/:classroomId/persons',
-  ensureAuthorizationMiddleware,
   listPersonsRegisteredInAClassroomValidator,
   classroomsController.listPersonsRegisteredInAClassroom
 );

@@ -20,10 +20,6 @@ export default async function updateAClassroomById(
 ): Promise<Classroom> {
   const { userDatas, classroomId, newTitle } = request;
 
-  if (!userDatas.isASchool) {
-    throw new AppError(403, 'You are not a user of type school');
-  }
-
   const classroomRepository = getRepository(Classroom);
 
   const classroom = await classroomRepository.findOne(classroomId);

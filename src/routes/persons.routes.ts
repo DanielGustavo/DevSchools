@@ -5,14 +5,17 @@ import createUserValidator from '../validators/createUser.validator';
 import listClassroomsOfAPersonValidator from '../validators/listClassroomsOfAPerson.validator';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
+import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
 
 import personsController from '../controllers/persons.controller';
 
 const router = Router();
 
+router.use('/persons', ensureAuthorizationMiddleware);
+
 router.post(
   '/persons',
-  ensureAuthorizationMiddleware,
+  ensureIsASchoolMiddleware,
   createUserValidator,
   createPersonValidator,
   personsController.store
@@ -20,7 +23,6 @@ router.post(
 
 router.get(
   '/persons/:personId/classrooms',
-  ensureAuthorizationMiddleware,
   listClassroomsOfAPersonValidator,
   personsController.listClassroomsOfAPerson
 );

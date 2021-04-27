@@ -19,10 +19,6 @@ export default async function deleteAClassroomByIdService(
 ): Promise<Classroom> {
   const { userDatas, classroomId } = request;
 
-  if (!userDatas.isASchool) {
-    throw new AppError(403, 'You are not a user of type school');
-  }
-
   const school = await getSchoolByUserId(userDatas.id);
 
   const classroomRepository = getRepository(Classroom);

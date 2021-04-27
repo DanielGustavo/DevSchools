@@ -26,10 +26,6 @@ export default async function createPersonService(
 ): Promise<Person> {
   const { personDatas, creatorDatas } = request;
 
-  if (!creatorDatas.isASchool) {
-    throw new AppError(403, 'You are not a user of type school');
-  }
-
   const school = await getSchoolByUserId(creatorDatas.id);
 
   const user = await createUserService({

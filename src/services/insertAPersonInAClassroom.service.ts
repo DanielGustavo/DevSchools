@@ -28,10 +28,6 @@ export default async function insertAPersonInAClassroomService(
 ): Promise<Response> {
   const { userDatas, classroomId, personId } = request;
 
-  if (!userDatas.isASchool) {
-    throw new AppError(403, 'You are not a user of type school');
-  }
-
   const classroomRepository = getRepository(Classroom);
 
   const classroom = await classroomRepository.findOne({

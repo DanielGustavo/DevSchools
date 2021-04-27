@@ -16,10 +16,6 @@ export default async function getClassroomsBySchoolNameService(
 ): Promise<Classroom[]> {
   const { schoolName, userDatas } = request;
 
-  if (!userDatas.isASchool) {
-    throw new AppError(403, 'You are not a user of type school');
-  }
-
   const schoolRepository = getRepository(School);
 
   const school = await schoolRepository.findOne({
