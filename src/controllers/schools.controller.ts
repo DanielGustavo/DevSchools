@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import createSchoolService from '../services/createSchool.service';
 import getClassroomsBySchoolNameService from '../services/getClassroomsBySchoolName.service';
+import getStudentsByUserIdOfASchoolService from '../services/getStudentsByUserIdOfASchool.service';
 
 class SchoolsController {
   async store(request: Request, response: Response) {
@@ -18,6 +19,17 @@ class SchoolsController {
     });
 
     return response.json(classrooms);
+  }
+
+  async getStudentsOfTheAuthenticatedSchool(
+    request: Request,
+    response: Response
+  ) {
+    const students = await getStudentsByUserIdOfASchoolService({
+      userId: request.user.id,
+    });
+
+    return response.json(students);
   }
 }
 
