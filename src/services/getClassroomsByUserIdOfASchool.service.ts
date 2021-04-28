@@ -4,7 +4,7 @@ import AppError from '../errors/AppError';
 
 import getSchoolByUserId from '../utils/getSchoolByUserId';
 
-export default async function getClassroomsByUserIdOfASchool(
+export default async function getClassroomsByUserIdOfASchoolService(
   userId: string
 ): Promise<Classroom[]> {
   const school = await getSchoolByUserId(userId);

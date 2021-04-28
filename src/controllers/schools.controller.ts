@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import createSchoolService from '../services/createSchool.service';
-import getClassroomsByUserIdOfASchool from '../services/getClassroomsByUserIdOfASchool.service';
+import getClassroomsByUserIdOfASchoolService from '../services/getClassroomsByUserIdOfASchool.service';
 import getStudentsByUserIdOfASchoolService from '../services/getStudentsByUserIdOfASchool.service';
 import getTeachersByUserIdOfASchoolService from '../services/getTeachersByUserIdOfASchool.service';
 
@@ -17,7 +17,9 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const classrooms = await getClassroomsByUserIdOfASchool(request.user.id);
+    const classrooms = await getClassroomsByUserIdOfASchoolService(
+      request.user.id
+    );
 
     return response.json(classrooms);
   }
