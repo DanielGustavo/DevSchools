@@ -18,8 +18,8 @@ router.use(
 );
 
 router.get(
-  '/schools/:schoolName/classrooms',
-  schoolsController.getClassroomsOfASchool
+  '/schools/classrooms',
+  schoolsController.getClassroomsOfTheAuthenticatedSchool
 );
 
 router.get(

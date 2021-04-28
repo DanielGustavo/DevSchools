@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import createSchoolService from '../services/createSchool.service';
-import getClassroomsBySchoolNameService from '../services/getClassroomsBySchoolName.service';
+import getClassroomsByUserIdOfASchool from '../services/getClassroomsByUserIdOfASchool.service';
 import getStudentsByUserIdOfASchoolService from '../services/getStudentsByUserIdOfASchool.service';
 import getTeachersByUserIdOfASchoolService from '../services/getTeachersByUserIdOfASchool.service';
 
@@ -13,11 +13,11 @@ class SchoolsController {
     return response.json(school);
   }
 
-  async getClassroomsOfASchool(request: Request, response: Response) {
-    const classrooms = await getClassroomsBySchoolNameService({
-      schoolName: request.params.schoolName,
-      userDatas: request.user,
-    });
+  async getClassroomsOfTheAuthenticatedSchool(
+    request: Request,
+    response: Response
+  ) {
+    const classrooms = await getClassroomsByUserIdOfASchool(request.user.id);
 
     return response.json(classrooms);
   }
