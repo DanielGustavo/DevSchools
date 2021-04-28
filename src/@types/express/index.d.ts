@@ -3,6 +3,18 @@ declare module Express {
     user: {
       id: string;
       isASchool: Boolean;
+      avatar: string | null;
+      person?: {
+        name: string;
+        id: string;
+        role: string;
+        schoolId: string;
+      };
+      school?: {
+        id: string;
+        name: string;
+      };
+      isASchool: Boolean;
     };
   }
 }

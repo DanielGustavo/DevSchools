@@ -8,6 +8,17 @@ import jwtConfig from '../config/token';
 interface JWTPayload {
   subject: string;
   isASchool: Boolean;
+  avatar: string | null;
+  person?: {
+    name: string;
+    id: string;
+    role: string;
+    schoolId: string;
+  };
+  school?: {
+    id: string;
+    name: string;
+  };
   iat: number;
   exp: number;
 }
@@ -30,12 +41,12 @@ export default function ensureAuthorizationMiddleware(
   }
 
   try {
-    const { subject, isASchool } = jsonwebtoken.verify(
-      token,
-      jwtConfig.secret
-    ) as JWTPayload;
+    const payload = jsonwebtoken.verify(token, jwtConfig.secret) as JWTPayload;
+    const userId = payload.subject;
 
-    request.user = { id: subject, isASchool };
+    Object.assign(payload, { subject: undefined });
+
+    request.user = { id: userId, ...payload };
 
     next();
   } catch {
