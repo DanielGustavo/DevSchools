@@ -13,5 +13,12 @@ export default async function ensureIsASchoolMiddleware(
     throw new AppError(403, 'You are not a user of type school');
   }
 
+  if (!request.user.school) {
+    throw new AppError(
+      400,
+      'Your token does not offer the necessary datas, try to authenticate again'
+    );
+  }
+
   next();
 }
