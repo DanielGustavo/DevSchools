@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Classroom from '../database/models/Classroom';
+import School from '../database/models/School';
 
 import AppError from '../errors/AppError';
 
@@ -13,6 +14,13 @@ export default async function createClassroomService(
   request: Request
 ): Promise<Classroom> {
   const { title, schoolId } = request;
+
+  const schoolRepository = getRepository(School);
+  const school = await schoolRepository.findOne(schoolId);
+
+  if (!school) {
+    throw new AppError(400, 'This school does not exist');
+  }
 
   const classroomRepository = getRepository(Classroom);
 
