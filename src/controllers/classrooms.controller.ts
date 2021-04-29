@@ -4,7 +4,7 @@ import createClassroomService from '../services/createClassroom.service';
 import deleteAClassroomByIdService from '../services/deleteAClassroomById.service';
 import getPersonsByClassroomIdService from '../services/getPersonsByClassroomId.service';
 import insertAPersonInAClassroomService from '../services/insertAPersonInAClassroom.service';
-import updateAClassroomById from '../services/updateAClassroomById.service';
+import updateAClassroomByIdService from '../services/updateAClassroomById.service';
 
 class ClassroomsController {
   async store(request: Request, response: Response) {
@@ -12,7 +12,7 @@ class ClassroomsController {
 
     const classroom = await createClassroomService({
       title,
-      userDatas: request.user,
+      schoolId: request.user.school?.id as string,
     });
 
     return response.json(classroom);
@@ -23,7 +23,7 @@ class ClassroomsController {
 
     const classroom = await deleteAClassroomByIdService({
       classroomId,
-      userDatas: request.user,
+      schoolId: request.user.school?.id as string,
     });
 
     const message = `${classroom.title} was delete successfully`;
@@ -33,10 +33,10 @@ class ClassroomsController {
   async edit(request: Request, response: Response) {
     const { classroomId } = request.params;
 
-    const classroom = await updateAClassroomById({
+    const classroom = await updateAClassroomByIdService({
       classroomId,
       newTitle: request.body.newTitle,
-      userDatas: request.user,
+      schoolId: request.user.school?.id as string,
     });
 
     return response.json(classroom);
@@ -45,20 +45,19 @@ class ClassroomsController {
   async insertAPersonInAClassroom(request: Request, response: Response) {
     const { classroomId } = request.params;
     const { personId } = request.body;
-    const userDatas = request.user;
 
-    const {
-      person,
-      school,
-      classroom,
-    } = await insertAPersonInAClassroomService({
+    const { person, classroom } = await insertAPersonInAClassroomService({
       classroomId,
-      userDatas,
+      schoolId: request.user.school?.id as string,
       personId,
     });
 
-    const message = `${person.name} was inserted in the classroom "${classroom.title}" of "${school.name}"`;
-    return response.json({ message });
+    Object.assign(person, { classrooms: undefined });
+
+    return response.json({
+      person,
+      classroom,
+    });
   }
 
   async listPersonsRegisteredInAClassroom(
@@ -69,7 +68,7 @@ class ClassroomsController {
 
     const persons = await getPersonsByClassroomIdService({
       classroomId,
-      userDatas: request.user,
+      schoolId: request.user.school?.id as string,
     });
 
     return response.json(persons);

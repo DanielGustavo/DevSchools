@@ -1,10 +1,9 @@
 import { getRepository } from 'typeorm';
 
 import Person from '../database/models/Person';
+import School from '../database/models/School';
 
 import createUserService from './createUser.service';
-
-import getSchoolByUserId from '../utils/getSchoolByUserId';
 
 import AppError from '../errors/AppError';
 
@@ -15,18 +14,20 @@ interface Request {
     name: string;
     password: string;
   };
-  creatorDatas: {
-    id: string;
-    isASchool: Boolean;
-  };
+  schoolId: string;
 }
 
 export default async function createPersonService(
   request: Request
 ): Promise<Person> {
-  const { personDatas, creatorDatas } = request;
+  const { personDatas, schoolId } = request;
 
-  const school = await getSchoolByUserId(creatorDatas.id);
+  const schoolRepository = getRepository(School);
+  const school = await schoolRepository.findOne(schoolId);
+
+  if (!school) {
+    throw new AppError(400, 'This school does not exist');
+  }
 
   const user = await createUserService({
     ...personDatas,

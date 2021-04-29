@@ -4,21 +4,16 @@ import Classroom from '../database/models/Classroom';
 
 import AppError from '../errors/AppError';
 
-import getSchoolByUserId from '../utils/getSchoolByUserId';
-
 interface Request {
   classroomId: string;
   newTitle: string;
-  userDatas: {
-    id: string;
-    isASchool: Boolean;
-  };
+  schoolId: string;
 }
 
-export default async function updateAClassroomById(
+export default async function updateAClassroomByIdService(
   request: Request
 ): Promise<Classroom> {
-  const { userDatas, classroomId, newTitle } = request;
+  const { schoolId, classroomId, newTitle } = request;
 
   const classroomRepository = getRepository(Classroom);
 
@@ -28,16 +23,14 @@ export default async function updateAClassroomById(
     throw new AppError(400, 'This classroom does not exist');
   }
 
-  const school = await getSchoolByUserId(userDatas.id);
-
-  const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
+  const schoolDoesNotOwnThisClassroom = classroom.school_id !== schoolId;
 
   if (schoolDoesNotOwnThisClassroom) {
     throw new AppError(403, 'You can not edit a classroom that you do not own');
   }
 
   const ThereIsAlreadyAClassroomWithThisTitleInThisSchool = !!(await classroomRepository.findOne(
-    { where: { title: newTitle, school } }
+    { where: { title: newTitle, school_id: schoolId } }
   ));
 
   if (ThereIsAlreadyAClassroomWithThisTitleInThisSchool) {

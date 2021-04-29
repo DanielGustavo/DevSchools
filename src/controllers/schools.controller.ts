@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 import createSchoolService from '../services/createSchool.service';
-import getClassroomsByUserIdOfASchoolService from '../services/getClassroomsByUserIdOfASchool.service';
-import getStudentsByUserIdOfASchoolService from '../services/getStudentsByUserIdOfASchool.service';
-import getTeachersByUserIdOfASchoolService from '../services/getTeachersByUserIdOfASchool.service';
+import getClassroomsBySchoolIdService from '../services/getClassroomsBySchoolId.service';
+import getStudentsBySchoolIdService from '../services/getStudentsBySchoolId.service';
+import getTeachersBySchoolIdService from '../services/getTeachersBySchoolId.service';
 
 class SchoolsController {
   async store(request: Request, response: Response) {
@@ -17,8 +17,8 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const classrooms = await getClassroomsByUserIdOfASchoolService(
-      request.user.id
+    const classrooms = await getClassroomsBySchoolIdService(
+      request.user.school?.id as string
     );
 
     return response.json(classrooms);
@@ -28,9 +28,9 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const students = await getStudentsByUserIdOfASchoolService({
-      userId: request.user.id,
-    });
+    const students = await getStudentsBySchoolIdService(
+      request.user.school?.id as string
+    );
 
     return response.json(students);
   }
@@ -39,9 +39,9 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const teachers = await getTeachersByUserIdOfASchoolService({
-      userId: request.user.id,
-    });
+    const teachers = await getTeachersBySchoolIdService(
+      request.user.school?.id as string
+    );
 
     return response.json(teachers);
   }

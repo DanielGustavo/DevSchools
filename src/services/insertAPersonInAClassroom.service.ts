@@ -2,31 +2,24 @@ import { getConnection, getRepository } from 'typeorm';
 
 import Classroom from '../database/models/Classroom';
 import Person from '../database/models/Person';
-import School from '../database/models/School';
 
 import AppError from '../errors/AppError';
-
-import getSchoolByUserId from '../utils/getSchoolByUserId';
 
 interface Request {
   classroomId: string;
   personId: string;
-  userDatas: {
-    id: string;
-    isASchool: Boolean;
-  };
+  schoolId: string;
 }
 
 interface Response {
   classroom: Classroom;
   person: Person;
-  school: School;
 }
 
 export default async function insertAPersonInAClassroomService(
   request: Request
 ): Promise<Response> {
-  const { userDatas, classroomId, personId } = request;
+  const { schoolId, classroomId, personId } = request;
 
   const classroomRepository = getRepository(Classroom);
 
@@ -38,9 +31,7 @@ export default async function insertAPersonInAClassroomService(
     throw new AppError(400, 'This classroom does not exists');
   }
 
-  const school = await getSchoolByUserId(userDatas.id);
-
-  const schoolDoesNotOwnThisClassroom = classroom.school_id !== school.id;
+  const schoolDoesNotOwnThisClassroom = classroom.school_id !== schoolId;
 
   if (schoolDoesNotOwnThisClassroom) {
     throw new AppError(
@@ -69,7 +60,7 @@ export default async function insertAPersonInAClassroomService(
     );
   }
 
-  const personIsRegisteredInAnotherSchool = person.school_id !== school.id;
+  const personIsRegisteredInAnotherSchool = person.school_id !== schoolId;
 
   if (personIsRegisteredInAnotherSchool) {
     throw new AppError(403, 'This person is not registered in your school');
@@ -82,5 +73,5 @@ export default async function insertAPersonInAClassroomService(
 
   await relationalQueryBuilderOfClassroom.add(person);
 
-  return { person, school, classroom };
+  return { person, classroom };
 }

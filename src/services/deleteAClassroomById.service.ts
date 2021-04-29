@@ -4,22 +4,15 @@ import Classroom from '../database/models/Classroom';
 
 import AppError from '../errors/AppError';
 
-import getSchoolByUserId from '../utils/getSchoolByUserId';
-
 interface Request {
   classroomId: string;
-  userDatas: {
-    id: string;
-    isASchool: Boolean;
-  };
+  schoolId: string;
 }
 
 export default async function deleteAClassroomByIdService(
   request: Request
 ): Promise<Classroom> {
-  const { userDatas, classroomId } = request;
-
-  const school = await getSchoolByUserId(userDatas.id);
+  const { schoolId, classroomId } = request;
 
   const classroomRepository = getRepository(Classroom);
   const classroom = await classroomRepository.findOne(classroomId);
@@ -28,7 +21,7 @@ export default async function deleteAClassroomByIdService(
     throw new AppError(400, 'This classroom does not exist');
   }
 
-  const schoolIsNotTheOwnerOfThisClassroom = classroom.school_id !== school.id;
+  const schoolIsNotTheOwnerOfThisClassroom = classroom.school_id !== schoolId;
 
   if (schoolIsNotTheOwnerOfThisClassroom) {
     throw new AppError(

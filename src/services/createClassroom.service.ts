@@ -4,27 +4,20 @@ import Classroom from '../database/models/Classroom';
 
 import AppError from '../errors/AppError';
 
-import getSchoolByUserId from '../utils/getSchoolByUserId';
-
 interface Request {
   title: string;
-  userDatas: {
-    id: string;
-    isASchool: Boolean;
-  };
+  schoolId: string;
 }
 
 export default async function createClassroomService(
   request: Request
 ): Promise<Classroom> {
-  const { title, userDatas } = request;
-
-  const school = await getSchoolByUserId(userDatas.id);
+  const { title, schoolId } = request;
 
   const classroomRepository = getRepository(Classroom);
 
   const schoolAlreadyHasAClassroomWithThisTitle = !!(await classroomRepository.findOne(
-    { where: { school, title } }
+    { where: { school_id: schoolId, title } }
   ));
 
   if (schoolAlreadyHasAClassroomWithThisTitle) {
@@ -33,7 +26,7 @@ export default async function createClassroomService(
 
   const classroom = classroomRepository.create({
     title,
-    school,
+    school_id: schoolId,
   });
 
   await classroomRepository.save(classroom);

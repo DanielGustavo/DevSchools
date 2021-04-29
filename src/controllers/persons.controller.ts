@@ -7,10 +7,10 @@ class PersonsController {
   async store(request: Request, response: Response) {
     const person = await createPersonService({
       personDatas: request.body,
-      creatorDatas: request.user,
+      schoolId: request.user.school?.id as string,
     });
 
-    Object.assign(person.user, { id: undefined, password: undefined });
+    Object.assign(person.user, { password: undefined });
     return response.json(person);
   }
 
@@ -18,7 +18,7 @@ class PersonsController {
     const { personId } = request.params;
 
     const classrooms = await getClassroomsByPersonIdService({
-      userDatas: request.user,
+      requesterDatas: request.user,
       personId,
     });
 

@@ -5,20 +5,23 @@ import Person from '../database/models/Person';
 
 import AppError from '../errors/AppError';
 
-import getSchoolByUserId from '../utils/getSchoolByUserId';
-
 interface Request {
   personId: string;
-  userDatas: {
-    id: string;
+  requesterDatas: {
     isASchool: Boolean;
+    person?: {
+      id: string;
+    };
+    school?: {
+      id: string;
+    };
   };
 }
 
 export default async function getClassroomsByPersonIdService(
   request: Request
 ): Promise<Classroom[]> {
-  const { personId, userDatas } = request;
+  const { personId, requesterDatas } = request;
 
   const personRepository = getRepository(Person);
 
@@ -31,19 +34,19 @@ export default async function getClassroomsByPersonIdService(
     throw new AppError(400, 'This person does not exists');
   }
 
-  if (userDatas.isASchool) {
-    const school = await getSchoolByUserId(userDatas.id);
-
-    const personIsNotRegisteredInThisSchool = person.school_id !== school.id;
+  if (requesterDatas.isASchool) {
+    const personIsNotRegisteredInThisSchool =
+      person.school_id !== requesterDatas.school?.id;
 
     if (personIsNotRegisteredInThisSchool) {
       throw new AppError(403, 'This person is not registered in your school');
     }
   }
 
-  const isNotTheOwnerOfThePersonAccount = userDatas.id !== person?.user_id;
+  const isNotTheOwnerOfThePersonAccount =
+    requesterDatas.person?.id !== person.id;
 
-  if (isNotTheOwnerOfThePersonAccount && !userDatas.isASchool) {
+  if (isNotTheOwnerOfThePersonAccount && !requesterDatas.isASchool) {
     throw new AppError(403, 'You can not access the classrooms of this person');
   }
 
