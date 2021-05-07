@@ -41,7 +41,7 @@ export default async function updateAClassroomByIdService(
   }
 
   classroom.title = newTitle;
-  classroomRepository.save(classroom);
+  await classroomRepository.save(classroom);
 
   return classroom;
 }

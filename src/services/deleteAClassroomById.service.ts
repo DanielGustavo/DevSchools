@@ -30,6 +30,6 @@ export default async function deleteAClassroomByIdService(
     );
   }
 
-  await classroomRepository.delete(classroom);
+  await classroomRepository.delete(classroomId);
   return classroom;
 }

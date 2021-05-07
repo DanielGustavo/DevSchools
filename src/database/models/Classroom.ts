@@ -27,11 +27,6 @@ class Classroom {
   school!: School;
 
   @ManyToMany(() => Person, (person) => person.classrooms)
-  @JoinTable({
-    name: 'persons_classrooms',
-    joinColumn: { name: 'classroom_id' },
-    inverseJoinColumn: { name: 'person_id' },
-  })
   persons!: Person[];
 }
 
