@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { ConnectionOptions } from 'typeorm';
+import { resolve } from 'path';
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -8,11 +9,11 @@ const config: ConnectionOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DATABASE,
-  migrations: ['./src/database/migrations/*.ts'],
-  entities: ['./src/database/models/*.ts'],
+  migrations: [resolve(__dirname, 'migrations', '**', '*.ts')],
+  entities: [resolve(__dirname, 'models', '**', '*.ts')],
   cli: {
-    entitiesDir: './src/database/models',
-    migrationsDir: './src/database/migrations',
+    entitiesDir: resolve(__dirname, 'models'),
+    migrationsDir: resolve(__dirname, 'migrations'),
   },
 };
 
