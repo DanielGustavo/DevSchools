@@ -3,6 +3,6 @@ export default {
   clearMocks: true,
   coverageProvider: 'v8',
   testEnvironment: 'node',
-  setupFiles: ['<rootDir>/jest/setupEnvVars.ts'],
+  globalSetup: '<rootDir>/jest/setupDatabaseTest.ts',
   setupFilesAfterEnv: ['<rootDir>/jest/waitForDatabaseConnection.ts'],
 };
