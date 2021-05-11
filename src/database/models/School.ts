@@ -12,6 +12,7 @@ import {
 import Classroom from './Classroom';
 import Person from './Person';
 import User from './User';
+import Subject from './Subject';
 
 @Entity('schools')
 class School {
@@ -33,6 +34,9 @@ class School {
 
   @OneToMany(() => Classroom, (classroom) => classroom.school)
   classrooms!: Promise<Classroom[]>;
+
+  @OneToMany(() => Subject, (subject) => subject.school)
+  subjects!: Promise<Subject[]>;
 
   @CreateDateColumn()
   created_at!: Date;
