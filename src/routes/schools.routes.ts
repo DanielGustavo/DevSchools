@@ -32,4 +32,9 @@ router.get(
   schoolsController.getTeachersOfTheAuthenticatedSchool
 );
 
+router.get(
+  '/schools/subjects',
+  schoolsController.getSubjectsOfTheAuthenticatedSchool
+);
+
 export default router;
