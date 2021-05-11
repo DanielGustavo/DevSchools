@@ -2,11 +2,13 @@ import { v4 as uuid } from 'uuid';
 
 import createSubjectService from '../src/services/createSubject.service';
 
-import { createSchool, random, deleteUser, query } from './utils';
-
-function deleteSubject(subjectId) {
-  return query('DELETE FROM subjects WHERE id = $1', [subjectId]);
-}
+import {
+  createSchool,
+  random,
+  deleteUser,
+  query,
+  deleteSubject,
+} from './utils';
 
 describe('createSubjectService', () => {
   it('Should not be able to create a subject in a school that does not exist', async () => {

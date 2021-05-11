@@ -4,6 +4,7 @@ import deleteUser from './deleteUser';
 import createSchool from './createSchool';
 import deleteClassroom from './deleteClassroom';
 import createPerson from './createPerson';
+import deleteSubject from './deleteSubject';
 
 export {
   query,
@@ -12,4 +13,5 @@ export {
   createSchool,
   deleteClassroom,
   createPerson,
+  deleteSubject,
 };
