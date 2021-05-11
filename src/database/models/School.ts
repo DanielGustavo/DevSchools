@@ -1,10 +1,12 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import Classroom from './Classroom';
@@ -31,6 +33,12 @@ class School {
 
   @OneToMany(() => Classroom, (classroom) => classroom.school)
   classrooms!: Promise<Classroom[]>;
+
+  @CreateDateColumn()
+  created_at!: Date;
+
+  @UpdateDateColumn()
+  updated_at!: Date;
 }
 
 export default School;
