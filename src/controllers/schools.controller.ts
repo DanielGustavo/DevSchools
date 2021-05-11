@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import createSchoolService from '../services/createSchool.service';
 import getClassroomsBySchoolIdService from '../services/getClassroomsBySchoolId.service';
 import getStudentsBySchoolIdService from '../services/getStudentsBySchoolId.service';
+import getSubjectsBySchoolIdService from '../services/getSubjectsBySchoolId.service';
 import getTeachersBySchoolIdService from '../services/getTeachersBySchoolId.service';
 
 class SchoolsController {
@@ -44,6 +45,17 @@ class SchoolsController {
     );
 
     return response.json(teachers);
+  }
+
+  async getSubjectsOfTheAuthenticatedSchool(
+    request: Request,
+    response: Response
+  ) {
+    const subjects = await getSubjectsBySchoolIdService({
+      schoolId: request.user.school?.id as string,
+    });
+
+    return response.json(subjects);
   }
 }
 
