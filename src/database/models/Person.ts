@@ -14,6 +14,7 @@ import {
 import School from './School';
 import User from './User';
 import Classroom from './Classroom';
+import Subject from './Subject';
 
 @Entity('persons')
 class Person {
@@ -47,6 +48,14 @@ class Person {
     inverseJoinColumn: { name: 'classroom_id' },
   })
   classrooms!: Classroom[];
+
+  @ManyToMany(() => Subject, (subject) => subject.persons)
+  @JoinTable({
+    name: 'persons_subjects',
+    joinColumn: { name: 'person_id' },
+    inverseJoinColumn: { name: 'subject_id' },
+  })
+  subjects!: Promise<Subject[]>;
 
   @CreateDateColumn()
   created_at!: Date;

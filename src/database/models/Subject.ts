@@ -11,6 +11,7 @@ import {
 
 import School from './School';
 import Classroom from './Classroom';
+import Person from './Person';
 
 @Entity('subjects')
 class Subject {
@@ -29,6 +30,9 @@ class Subject {
 
   @ManyToMany(() => Classroom, (classroom) => classroom.subjects)
   classrooms!: Promise<Classroom[]>;
+
+  @ManyToMany(() => Person, (person) => person.subjects)
+  persons!: Promise<Person[]>;
 
   @CreateDateColumn()
   created_at!: Date;
