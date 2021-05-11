@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 
 import School from './School';
+import Classroom from './Classroom';
 
 @Entity('subjects')
 class Subject {
@@ -24,6 +26,9 @@ class Subject {
   @ManyToOne(() => School, (school) => school.subjects)
   @JoinColumn({ name: 'school_id' })
   school!: School;
+
+  @ManyToMany(() => Classroom, (classroom) => classroom.subjects)
+  classrooms!: Promise<Classroom[]>;
 
   @CreateDateColumn()
   created_at!: Date;
