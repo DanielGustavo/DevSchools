@@ -9,12 +9,17 @@ import createSubjectValidator from '../validators/createSubject.validator';
 
 const router = Router();
 
-router.post(
+router.use(
   '/subjects',
   ensureAuthorizationMiddleware,
-  ensureIsASchoolMiddleware,
-  createSubjectValidator,
-  subjectsController.store
+  ensureIsASchoolMiddleware
+);
+
+router.post('/subjects', createSubjectValidator, subjectsController.store);
+
+router.put(
+  '/subjects/:subjectId',
+  subjectsController.edit
 );
 
 export default router;
