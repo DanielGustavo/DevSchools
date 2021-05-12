@@ -6,6 +6,7 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
 
 import createSubjectValidator from '../validators/createSubject.validator';
+import updateASubjectValidator from '../validators/updateASubject.validator';
 
 const router = Router();
 
@@ -19,6 +20,7 @@ router.post('/subjects', createSubjectValidator, subjectsController.store);
 
 router.put(
   '/subjects/:subjectId',
+  updateASubjectValidator,
   subjectsController.edit
 );
 
