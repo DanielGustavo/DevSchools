@@ -6,6 +6,7 @@ import getPersonsByClassroomIdService from '../services/getPersonsByClassroomId.
 import insertAPersonInAClassroomService from '../services/insertAPersonInAClassroom.service';
 import updateAClassroomByIdService from '../services/updateAClassroomById.service';
 import insertASubjectInAClassroomService from '../services/insertASubjectInAClassroom.service';
+import getSubjectsByClassroomIdService from '../services/getSubjectsByClassroomId.service';
 
 class ClassroomsController {
   async store(request: Request, response: Response) {
@@ -83,6 +84,15 @@ class ClassroomsController {
     });
 
     return response.json({ subject, classroom });
+  }
+
+  async listSubjectsInsertedInAClassroom(request: Request, response: Response) {
+    const subjects = await getSubjectsByClassroomIdService({
+      classroomId: request.params.classroomId,
+      schoolId: request.user.school?.id as string,
+    });
+
+    return response.json(subjects);
   }
 }
 
