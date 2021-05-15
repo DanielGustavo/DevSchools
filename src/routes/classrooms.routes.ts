@@ -8,6 +8,7 @@ import deleteAClassroomValidator from '../validators/deleteAClassroom.validator'
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
 import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
+import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -33,6 +34,7 @@ router.post(
 
 router.post(
   '/classrooms/:classroomId/subjects',
+  insertASubjectInAClassroomValidator,
   classroomsController.insertASubjectInAClassroom
 );
 
