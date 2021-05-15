@@ -56,4 +56,9 @@ router.get(
   classroomsController.listPersonsRegisteredInAClassroom
 );
 
+router.get(
+  '/classrooms/:classroomId/subjects',
+  classroomsController.listSubjectsInsertedInAClassroom
+);
+
 export default router;
