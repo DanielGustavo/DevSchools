@@ -7,6 +7,7 @@ import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware
 
 import createSubjectValidator from '../validators/createSubject.validator';
 import updateASubjectValidator from '../validators/updateASubject.validator';
+import deleteASubjectValidator from '../validators/deleteASubject.validator';
 
 const router = Router();
 
@@ -26,6 +27,7 @@ router.put(
 
 router.delete(
   '/subjects/:subjectId',
+  deleteASubjectValidator,
   subjectsController.delete
 );
 
