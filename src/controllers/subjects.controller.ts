@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import createSubjectService from '../services/createSubject.service';
 import updateASubjectByIdService from '../services/updateASubjectById.service';
+import deleteASubjectByIdService from '../services/deleteASubjectById.service';
 
 class SubjectsController {
   async store(request: Request, response: Response) {
@@ -17,6 +18,15 @@ class SubjectsController {
     const subject = await updateASubjectByIdService({
       schoolId: request.user.school?.id as string,
       newTitle: request.body.newTitle,
+      subjectId: request.params.subjectId,
+    });
+
+    return response.json(subject);
+  }
+
+  async delete(request: Request, response: Response) {
+    const subject = await deleteASubjectByIdService({
+      schoolId: request.user.school?.id as string,
       subjectId: request.params.subjectId,
     });
 
