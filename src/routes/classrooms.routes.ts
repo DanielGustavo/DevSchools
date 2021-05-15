@@ -31,6 +31,11 @@ router.post(
   classroomsController.insertAPersonInAClassroom
 );
 
+router.post(
+  '/classrooms/:classroomId/subjects',
+  classroomsController.insertASubjectInAClassroom
+);
+
 router.delete(
   '/classrooms/:classroomId',
   deleteAClassroomValidator,
