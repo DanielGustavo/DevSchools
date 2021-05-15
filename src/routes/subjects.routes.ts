@@ -24,4 +24,9 @@ router.put(
   subjectsController.edit
 );
 
+router.delete(
+  '/subjects/:subjectId',
+  subjectsController.delete
+);
+
 export default router;
