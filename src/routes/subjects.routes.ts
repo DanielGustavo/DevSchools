@@ -19,6 +19,11 @@ router.use(
 
 router.post('/subjects', createSubjectValidator, subjectsController.store);
 
+router.post(
+  '/subjects/:subjectId/teachers',
+  subjectsController.insertATeacherInASubject
+);
+
 router.put(
   '/subjects/:subjectId',
   updateASubjectValidator,
