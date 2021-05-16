@@ -29,10 +29,10 @@ class Subject {
   school!: School;
 
   @ManyToMany(() => Classroom, (classroom) => classroom.subjects)
-  classrooms!: Promise<Classroom[]>;
+  classrooms!: Classroom[];
 
   @ManyToMany(() => Person, (person) => person.subjects)
-  persons!: Promise<Person[]>;
+  persons!: Person[];
 
   @CreateDateColumn()
   created_at!: Date;
