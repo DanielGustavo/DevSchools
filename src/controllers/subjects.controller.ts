@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import createSubjectService from '../services/createSubject.service';
 import updateASubjectByIdService from '../services/updateASubjectById.service';
 import deleteASubjectByIdService from '../services/deleteASubjectById.service';
+import insertATeacherInASubjectService from '../services/insertATeacherInASubject.service';
 
 class SubjectsController {
   async store(request: Request, response: Response) {
@@ -31,6 +32,18 @@ class SubjectsController {
     });
 
     return response.json(subject);
+  }
+
+  async insertATeacherInASubject(request: Request, response: Response) {
+    const { subject, person } = await insertATeacherInASubjectService({
+      personId: request.body.personId,
+      schoolId: request.user.school?.id as string,
+      subjectId: request.params.subjectId,
+    });
+
+    Object.assign(subject, { persons: undefined });
+
+    return response.json({ subject, teacher: person });
   }
 }
 
