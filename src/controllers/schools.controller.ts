@@ -51,8 +51,11 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
     const subjects = await getSubjectsBySchoolIdService({
-      schoolId: request.user.school?.id as string,
+      schoolId,
     });
 
     return response.json(subjects);

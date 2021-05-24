@@ -11,11 +11,14 @@ const router = Router();
 
 router.post('/schools', createUserValidator, schoolsController.store);
 
-router.use(
-  '/schools',
-  ensureAuthorizationMiddleware,
-  ensureIsASchoolMiddleware
+router.use('/schools', ensureAuthorizationMiddleware);
+
+router.get(
+  '/schools/subjects',
+  schoolsController.getSubjectsOfTheAuthenticatedSchool
 );
+
+router.use('/schools', ensureIsASchoolMiddleware);
 
 router.get(
   '/schools/classrooms',
@@ -30,11 +33,6 @@ router.get(
 router.get(
   '/schools/teachers',
   schoolsController.getTeachersOfTheAuthenticatedSchool
-);
-
-router.get(
-  '/schools/subjects',
-  schoolsController.getSubjectsOfTheAuthenticatedSchool
 );
 
 export default router;
