@@ -87,9 +87,12 @@ class ClassroomsController {
   }
 
   async listSubjectsInsertedInAClassroom(request: Request, response: Response) {
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
     const subjects = await getSubjectsByClassroomIdService({
       classroomId: request.params.classroomId,
-      schoolId: request.user.school?.id as string,
+      schoolId,
     });
 
     return response.json(subjects);

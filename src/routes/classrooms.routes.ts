@@ -15,11 +15,15 @@ import classroomsController from '../controllers/classrooms.controller';
 
 const router = Router();
 
-router.use(
-  '/classrooms',
-  ensureAuthorizationMiddleware,
-  ensureIsASchoolMiddleware
+router.use('/classrooms', ensureAuthorizationMiddleware);
+
+router.get(
+  '/classrooms/:classroomId/subjects',
+  listSubjectsInsertedInAClassroomValidator,
+  classroomsController.listSubjectsInsertedInAClassroom
 );
+
+router.use('/classrooms', ensureIsASchoolMiddleware);
 
 router.post(
   '/classrooms',
@@ -55,12 +59,6 @@ router.get(
   '/classrooms/:classroomId/persons',
   listPersonsRegisteredInAClassroomValidator,
   classroomsController.listPersonsRegisteredInAClassroom
-);
-
-router.get(
-  '/classrooms/:classroomId/subjects',
-  listSubjectsInsertedInAClassroomValidator,
-  classroomsController.listSubjectsInsertedInAClassroom
 );
 
 export default router;
