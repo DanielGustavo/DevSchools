@@ -18,9 +18,10 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const classrooms = await getClassroomsBySchoolIdService(
-      request.user.school?.id as string
-    );
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
+    const classrooms = await getClassroomsBySchoolIdService(schoolId);
 
     return response.json(classrooms);
   }

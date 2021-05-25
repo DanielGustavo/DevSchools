@@ -18,12 +18,12 @@ router.get(
   schoolsController.getSubjectsOfTheAuthenticatedSchool
 );
 
-router.use('/schools', ensureIsASchoolMiddleware);
-
 router.get(
   '/schools/classrooms',
   schoolsController.getClassroomsOfTheAuthenticatedSchool
 );
+
+router.use('/schools', ensureIsASchoolMiddleware);
 
 router.get(
   '/schools/students',
