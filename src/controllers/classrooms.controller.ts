@@ -7,8 +7,21 @@ import insertAPersonInAClassroomService from '../services/insertAPersonInAClassr
 import updateAClassroomByIdService from '../services/updateAClassroomById.service';
 import insertASubjectInAClassroomService from '../services/insertASubjectInAClassroom.service';
 import getSubjectsByClassroomIdService from '../services/getSubjectsByClassroomId.service';
+import getClassroomByIdService from '../services/getClassroomById.service';
 
 class ClassroomsController {
+  async listClassroom(request: Request, response: Response) {
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
+    const classroom = await getClassroomByIdService({
+      schoolId,
+      classroomId: request.params.classroomId,
+    });
+
+    return response.json(classroom);
+  }
+
   async store(request: Request, response: Response) {
     const { title } = request.body;
 
