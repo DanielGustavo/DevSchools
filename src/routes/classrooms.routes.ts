@@ -10,6 +10,7 @@ import listPersonsRegisteredInAClassroomValidator from '../validators/listPerson
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
 import listSubjectsInsertedInAClassroomValidator from '../validators/listSubjectsInsertedInAClassroom.validator';
+import listClassroomValidator from '../validators/listClassroom.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -21,6 +22,12 @@ router.get(
   '/classrooms/:classroomId/subjects',
   listSubjectsInsertedInAClassroomValidator,
   classroomsController.listSubjectsInsertedInAClassroom
+);
+
+router.get(
+  '/classrooms/:classroomId',
+  listClassroomValidator,
+  classroomsController.listClassroom
 );
 
 router.use('/classrooms', ensureIsASchoolMiddleware);
