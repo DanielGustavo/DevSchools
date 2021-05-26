@@ -5,7 +5,6 @@ import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware
 
 import createClassroomValidator from '../validators/createClassroom.validator';
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
-import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
 import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParams.validator';
@@ -62,7 +61,7 @@ router.put(
 
 router.get(
   '/classrooms/:classroomId/persons',
-  listPersonsRegisteredInAClassroomValidator,
+  hasClassroomIdInParamsValidator,
   classroomsController.listPersonsRegisteredInAClassroom
 );
 
