@@ -4,7 +4,6 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
 
 import createClassroomValidator from '../validators/createClassroom.validator';
-import deleteAClassroomValidator from '../validators/deleteAClassroom.validator';
 import insertAPersonInAClassroomValidator from '../validators/insertAPersonInAClassroom.validator';
 import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
@@ -51,7 +50,7 @@ router.post(
 
 router.delete(
   '/classrooms/:classroomId',
-  deleteAClassroomValidator,
+  hasClassroomIdInParamsValidator,
   classroomsController.delete
 );
 
