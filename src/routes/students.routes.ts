@@ -4,14 +4,14 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 
 import studentsController from '../controllers/students.controller';
 
-import listStudentValidator from '../validators/listStudent.validator';
+import hasPersonIdInParamsValidator from '../validators/hasPersonIdInParams.validator';
 
 const router = Router();
 
 router.get(
   '/students/:personId',
   ensureAuthorizationMiddleware,
-  listStudentValidator,
+  hasPersonIdInParamsValidator,
   studentsController.listStudent
 );
 
