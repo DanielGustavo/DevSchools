@@ -9,7 +9,6 @@ import insertAPersonInAClassroomValidator from '../validators/insertAPersonInACl
 import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
-import listClassroomValidator from '../validators/listClassroom.validator';
 import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParams.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
@@ -26,7 +25,7 @@ router.get(
 
 router.get(
   '/classrooms/:classroomId',
-  listClassroomValidator,
+  hasClassroomIdInParamsValidator,
   classroomsController.listClassroom
 );
 
