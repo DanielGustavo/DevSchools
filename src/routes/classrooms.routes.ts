@@ -9,8 +9,8 @@ import insertAPersonInAClassroomValidator from '../validators/insertAPersonInACl
 import listPersonsRegisteredInAClassroomValidator from '../validators/listPersonsRegisteredInAClassroom.validator';
 import updateAClassroomValidator from '../validators/updateAClassroom.validator';
 import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
-import listSubjectsInsertedInAClassroomValidator from '../validators/listSubjectsInsertedInAClassroom.validator';
 import listClassroomValidator from '../validators/listClassroom.validator';
+import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParams.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -20,7 +20,7 @@ router.use('/classrooms', ensureAuthorizationMiddleware);
 
 router.get(
   '/classrooms/:classroomId/subjects',
-  listSubjectsInsertedInAClassroomValidator,
+  hasClassroomIdInParamsValidator,
   classroomsController.listSubjectsInsertedInAClassroom
 );
 
