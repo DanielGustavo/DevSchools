@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import createPersonService from '../services/createPerson.service';
+import deleteAPersonService from '../services/deleteAPerson.service';
 import getClassroomsByPersonIdService from '../services/getClassroomsByPersonId.service';
 
 class PersonsController {
@@ -11,6 +12,15 @@ class PersonsController {
     });
 
     Object.assign(person.user, { password: undefined });
+    return response.json(person);
+  }
+
+  async delete(request: Request, response: Response) {
+    const person = await deleteAPersonService({
+      personId: request.params.personId,
+      schoolId: request.user.school?.id as string,
+    });
+
     return response.json(person);
   }
 
