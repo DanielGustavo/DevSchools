@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import createPersonValidator from '../validators/createPerson.validator';
 import createUserValidator from '../validators/createUser.validator';
-import deleteAPersonValidator from '../validators/deleteAPerson.validator';
 import hasPersonIdInParamsValidator from '../validators/hasPersonIdInParams.validator';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
@@ -31,7 +30,7 @@ router.post(
 
 router.delete(
   '/persons/:personId',
-  deleteAPersonValidator,
+  hasPersonIdInParamsValidator,
   personsController.delete
 );
 
