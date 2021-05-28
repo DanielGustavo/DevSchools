@@ -55,7 +55,7 @@ class Person {
     joinColumn: { name: 'person_id' },
     inverseJoinColumn: { name: 'subject_id' },
   })
-  subjects!: Promise<Subject[]>;
+  subjects!: Subject[];
 
   @CreateDateColumn()
   created_at!: Date;
