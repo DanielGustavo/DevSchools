@@ -8,6 +8,7 @@ import updateAClassroomByIdService from '../services/updateAClassroomById.servic
 import insertASubjectInAClassroomService from '../services/insertASubjectInAClassroom.service';
 import getSubjectsByClassroomIdService from '../services/getSubjectsByClassroomId.service';
 import getClassroomByIdService from '../services/getClassroomById.service';
+import deletePersonFromClassroomService from '../services/deletePersonFromClassroom.service';
 
 class ClassroomsController {
   async listClassroom(request: Request, response: Response) {
@@ -43,6 +44,19 @@ class ClassroomsController {
 
     const message = `${classroom.title} was delete successfully`;
     return response.json({ message });
+  }
+
+  async deletePersonFromClassroom(request: Request, response: Response) {
+    const person = await deletePersonFromClassroomService({
+      schoolId: request.user.school?.id as string,
+      classroomId: request.params.classroomId,
+      personId: request.params.personId,
+    });
+
+    const classroom = person.classrooms[0];
+    Object.assign(person, { classrooms: undefined });
+
+    return response.json({ person, classroom });
   }
 
   async edit(request: Request, response: Response) {
