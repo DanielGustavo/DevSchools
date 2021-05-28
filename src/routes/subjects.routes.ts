@@ -9,6 +9,7 @@ import createSubjectValidator from '../validators/createSubject.validator';
 import updateASubjectValidator from '../validators/updateASubject.validator';
 import deleteASubjectValidator from '../validators/deleteASubject.validator';
 import insertATeacherInASubjectValidator from '../validators/insertATeacherInASubject.validator';
+import deleteTeacherFromSubjectValidator from '../validators/deleteTeacherFromSubject.validator';
 
 const router = Router();
 
@@ -36,6 +37,12 @@ router.delete(
   '/subjects/:subjectId',
   deleteASubjectValidator,
   subjectsController.delete
+);
+
+router.delete(
+  '/subjects/:subjectId/teachers/:personId',
+  deleteTeacherFromSubjectValidator,
+  subjectsController.deleteTeacherFromSubject
 );
 
 export default router;
