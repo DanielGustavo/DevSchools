@@ -4,6 +4,7 @@ import createSubjectService from '../services/createSubject.service';
 import updateASubjectByIdService from '../services/updateASubjectById.service';
 import deleteASubjectByIdService from '../services/deleteASubjectById.service';
 import insertATeacherInASubjectService from '../services/insertATeacherInASubject.service';
+import deleteTeacherFromSubjectService from '../services/deleteTeacherFromSubject.service';
 
 class SubjectsController {
   async store(request: Request, response: Response) {
@@ -32,6 +33,19 @@ class SubjectsController {
     });
 
     return response.json(subject);
+  }
+
+  async deleteTeacherFromSubject(request: Request, response: Response) {
+    const teacher = await deleteTeacherFromSubjectService({
+      schoolId: request.user.school?.id as string,
+      subjectId: request.params.subjectId,
+      personId: request.params.personId,
+    });
+
+    const subject = teacher.subjects[0];
+    Object.assign(teacher, { subjects: undefined });
+
+    return response.json({ teacher, subject });
   }
 
   async insertATeacherInASubject(request: Request, response: Response) {
