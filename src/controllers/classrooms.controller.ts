@@ -9,6 +9,7 @@ import insertASubjectInAClassroomService from '../services/insertASubjectInAClas
 import getSubjectsByClassroomIdService from '../services/getSubjectsByClassroomId.service';
 import getClassroomByIdService from '../services/getClassroomById.service';
 import deletePersonFromClassroomService from '../services/deletePersonFromClassroom.service';
+import deleteSubjectFromClassroomService from '../services/deleteSubjectFromClassroom.service';
 
 class ClassroomsController {
   async listClassroom(request: Request, response: Response) {
@@ -57,6 +58,19 @@ class ClassroomsController {
     Object.assign(person, { classrooms: undefined });
 
     return response.json({ person, classroom });
+  }
+
+  async deleteSubjectFromClassroom(request: Request, response: Response) {
+    const subject = await deleteSubjectFromClassroomService({
+      schoolId: request.user.school?.id as string,
+      classroomId: request.params.classroomId,
+      subjectId: request.params.subjectId,
+    });
+
+    const classroom = subject.classrooms[0];
+    Object.assign(subject, { classrooms: undefined });
+
+    return response.json({ subject, classroom });
   }
 
   async edit(request: Request, response: Response) {
