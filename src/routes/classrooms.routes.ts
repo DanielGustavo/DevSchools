@@ -9,6 +9,7 @@ import updateAClassroomValidator from '../validators/updateAClassroom.validator'
 import insertASubjectInAClassroomValidator from '../validators/insertASubjectInAClassroom.validator';
 import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParams.validator';
 import deletePersonFromClassroomValidator from '../validators/deletePersonFromClassroom.validator';
+import deleteSubjectFromClassroomValidator from '../validators/deleteSubjectFromClassroom.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -58,6 +59,12 @@ router.delete(
   '/classrooms/:classroomId/persons/:personId',
   deletePersonFromClassroomValidator,
   classroomsController.deletePersonFromClassroom
+);
+
+router.delete(
+  '/classrooms/:classroomId/subjects/:subjectId',
+  deleteSubjectFromClassroomValidator,
+  classroomsController.deleteSubjectFromClassroom
 );
 
 router.put(
