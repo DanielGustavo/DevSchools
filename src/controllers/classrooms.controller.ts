@@ -107,11 +107,12 @@ class ClassroomsController {
     request: Request,
     response: Response
   ) {
-    const { classroomId } = request.params;
+    const { classroomId, page } = request.params;
 
     const persons = await getPersonsByClassroomIdService({
       classroomId,
       schoolId: request.user.school?.id as string,
+      page: parseInt(page, 10),
     });
 
     return response.json(persons);

@@ -76,8 +76,9 @@ router.put(
 );
 
 router.get(
-  '/classrooms/:classroomId/persons',
+  '/classrooms/:classroomId/persons/:page',
   hasClassroomIdInParamsValidator,
+  hasPageInParamsValidator,
   classroomsController.listPersonsRegisteredInAClassroom
 );
 
