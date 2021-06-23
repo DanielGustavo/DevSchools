@@ -43,6 +43,28 @@ export default async function insertASubjectInAClassroomService(
     throw new AppError(403, 'Your school does not own this classroom');
   }
 
+  const subjectIsAlreadyInsertedInThisClassroom =
+    (await getConnection()
+      .createQueryBuilder(Subject, 'subject')
+      .leftJoinAndSelect(
+        'classrooms_subjects',
+        'cs',
+        'cs.classroom_id = :classroomId AND cs.subject_id = :subjectId',
+        { classroomId: request.classroomId, subjectId: request.subjectId }
+      )
+      .where('cs.classroom_id = :classroomId', {
+        classroomId: request.classroomId,
+      })
+      .andWhere('subject.id = :subjectId', { subjectId: request.subjectId })
+      .getCount()) > 0;
+
+  if (subjectIsAlreadyInsertedInThisClassroom) {
+    throw new AppError(
+      403,
+      'This subject is already registered in this classroom'
+    );
+  }
+
   const classroomRelationalQueryBuilder = getConnection()
     .createQueryBuilder()
     .relation(Classroom, 'subjects')
