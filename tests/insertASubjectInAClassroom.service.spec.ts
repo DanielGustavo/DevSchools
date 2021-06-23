@@ -149,4 +149,41 @@ describe('insertASubjectInAClassroomService', () => {
 
     expect(quantityOfSubjectsInsertedInAClassroom).toBe(1);
   });
+
+  it('Should not insert the same subject more than once in a classroom', async () => {
+    const school = await createSchool();
+
+    const subject = await createSubjectService({
+      schoolId: school.id,
+      title: random(),
+    });
+
+    const classroom = await createClassroomService({
+      schoolId: school.id,
+      title: random(),
+    });
+
+    await insertASubjectInAClassroomService({
+      schoolId: school.id,
+      subjectId: subject.id,
+      classroomId: classroom.id,
+    });
+
+    const subjectClassroom = insertASubjectInAClassroomService({
+      schoolId: school.id,
+      subjectId: subject.id,
+      classroomId: classroom.id,
+    });
+
+    expect(subjectClassroom)
+      .rejects.toHaveProperty(
+        'message',
+        'This subject is already registered in this classroom'
+      )
+      .finally(async () => {
+        await deleteSubject(subject.id);
+        await deleteClassroom(classroom.id);
+        await deleteUser(school.user_id);
+      });
+  });
 });
