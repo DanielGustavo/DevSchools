@@ -1,6 +1,9 @@
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 
+import Classroom from '../database/models/Classroom';
 import Person from '../database/models/Person';
+import Subject from '../database/models/Subject';
+
 import AppError from '../errors/AppError';
 
 interface Request {
@@ -13,7 +16,6 @@ export default async function getTeacherByPersonIdService(request: Request) {
 
   const teacher = await personRepository.findOne({
     where: { id: request.personId, role: 'teacher' },
-    relations: ['classrooms', 'subjects'],
   });
 
   if (!teacher) {
@@ -25,6 +27,30 @@ export default async function getTeacherByPersonIdService(request: Request) {
   if (schoolDoesNotOwnThisTeacher) {
     throw new AppError(403, 'This teacher is not from your school');
   }
+
+  teacher.classrooms = await getConnection()
+    .createQueryBuilder(Classroom, 'classroom')
+    .leftJoinAndSelect(
+      'persons_classrooms',
+      'pc',
+      'pc.classroom_id = classroom.id AND pc.person_id = :personId',
+      { personId: request.personId }
+    )
+    .take(5)
+    .where('pc.person_id = :personId', { personId: request.personId })
+    .getMany();
+
+  teacher.subjects = await getConnection()
+    .createQueryBuilder(Subject, 'subject')
+    .leftJoinAndSelect(
+      'persons_subjects',
+      'ps',
+      'ps.subject_id = subject.id AND ps.person_id = :personId',
+      { personId: request.personId }
+    )
+    .take(5)
+    .where('ps.person_id = :personId', { personId: request.personId })
+    .getMany();
 
   return teacher;
 }
