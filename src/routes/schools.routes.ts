@@ -29,7 +29,8 @@ router.get(
 router.use('/schools', ensureIsASchoolMiddleware);
 
 router.get(
-  '/schools/students',
+  '/schools/students/:page',
+  hasPageInParamsValidator,
   schoolsController.getStudentsOfTheAuthenticatedSchool
 );
 
