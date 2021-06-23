@@ -21,7 +21,10 @@ class SchoolsController {
     const { school, person } = request.user;
     const schoolId = (school?.id || person?.schoolId) as string;
 
-    const classrooms = await getClassroomsBySchoolIdService(schoolId);
+    const classrooms = await getClassroomsBySchoolIdService({
+      schoolId,
+      page: parseInt(request.params.page, 10),
+    });
 
     return response.json(classrooms);
   }

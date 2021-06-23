@@ -21,7 +21,8 @@ router.get(
 );
 
 router.get(
-  '/schools/classrooms',
+  '/schools/classrooms/:page',
+  hasPageInParamsValidator,
   schoolsController.getClassroomsOfTheAuthenticatedSchool
 );
 
