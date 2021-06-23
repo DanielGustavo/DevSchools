@@ -1,5 +1,6 @@
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 
+import Classroom from '../database/models/Classroom';
 import Person from '../database/models/Person';
 
 import AppError from '../errors/AppError';
@@ -14,7 +15,6 @@ export default async function getStudentByPersonIdService(request: Request) {
 
   const student = await personRepository.findOne({
     where: { id: request.personId, role: 'student' },
-    relations: ['classrooms'],
   });
 
   if (!student) {
@@ -26,6 +26,18 @@ export default async function getStudentByPersonIdService(request: Request) {
   if (schoolDoesNotOwnThisStudent) {
     throw new AppError(403, 'This student is not from your school');
   }
+
+  student.classrooms = await getConnection()
+    .createQueryBuilder(Classroom, 'classroom')
+    .leftJoinAndSelect(
+      'persons_classrooms',
+      'pc',
+      'pc.classroom_id = classroom.id AND pc.person_id = :personId',
+      { personId: request.personId }
+    )
+    .take(5)
+    .where('pc.person_id = :personId', { personId: request.personId })
+    .getMany();
 
   return student;
 }
