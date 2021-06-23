@@ -4,6 +4,7 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
 
 import createUserValidator from '../validators/createUser.validator';
+import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
 
 import schoolsController from '../controllers/schools.controller';
 
@@ -14,7 +15,8 @@ router.post('/schools', createUserValidator, schoolsController.store);
 router.use('/schools', ensureAuthorizationMiddleware);
 
 router.get(
-  '/schools/subjects',
+  '/schools/subjects/:page',
+  hasPageInParamsValidator,
   schoolsController.getSubjectsOfTheAuthenticatedSchool
 );
 
