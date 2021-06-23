@@ -6,7 +6,7 @@ import { createPerson, createSchool, deleteUser } from './utils';
 
 describe('getStudentsBySchoolIdService', () => {
   it('Should not get students of a school that does not exist', async () => {
-    const students = getStudentsBySchoolIdService(uuid());
+    const students = getStudentsBySchoolIdService({ schoolId: uuid() });
 
     expect(students).rejects.toHaveProperty(
       'message',
@@ -27,8 +27,12 @@ describe('getStudentsBySchoolIdService', () => {
       role: 'student',
     });
 
-    const students1 = await getStudentsBySchoolIdService(school1.id);
-    const students2 = await getStudentsBySchoolIdService(school2.id);
+    const students1 = await getStudentsBySchoolIdService({
+      schoolId: school1.id,
+    });
+    const students2 = await getStudentsBySchoolIdService({
+      schoolId: school2.id,
+    });
 
     await deleteUser(school1.user_id);
     await deleteUser(school2.user_id);
@@ -51,7 +55,9 @@ describe('getStudentsBySchoolIdService', () => {
       role: 'teacher',
     });
 
-    const students = await getStudentsBySchoolIdService(school.id);
+    const students = await getStudentsBySchoolIdService({
+      schoolId: school.id,
+    });
 
     await deleteUser(school.user_id);
     await deleteUser(student.user_id as string);
