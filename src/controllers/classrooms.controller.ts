@@ -134,6 +134,7 @@ class ClassroomsController {
     const subjects = await getSubjectsByClassroomIdService({
       classroomId: request.params.classroomId,
       schoolId,
+      page: parseInt(request.params.page, 10),
     });
 
     return response.json(subjects);

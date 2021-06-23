@@ -10,6 +10,7 @@ import insertASubjectInAClassroomValidator from '../validators/insertASubjectInA
 import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParams.validator';
 import deletePersonFromClassroomValidator from '../validators/deletePersonFromClassroom.validator';
 import deleteSubjectFromClassroomValidator from '../validators/deleteSubjectFromClassroom.validator';
+import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -18,8 +19,9 @@ const router = Router();
 router.use('/classrooms', ensureAuthorizationMiddleware);
 
 router.get(
-  '/classrooms/:classroomId/subjects',
+  '/classrooms/:classroomId/subjects/:page',
   hasClassroomIdInParamsValidator,
+  hasPageInParamsValidator,
   classroomsController.listSubjectsInsertedInAClassroom
 );
 
