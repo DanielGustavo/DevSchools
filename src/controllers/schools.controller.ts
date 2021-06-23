@@ -45,9 +45,10 @@ class SchoolsController {
     request: Request,
     response: Response
   ) {
-    const teachers = await getTeachersBySchoolIdService(
-      request.user.school?.id as string
-    );
+    const teachers = await getTeachersBySchoolIdService({
+      schoolId: request.user.school?.id as string,
+      page: parseInt(request.params.page, 10),
+    });
 
     return response.json(teachers);
   }

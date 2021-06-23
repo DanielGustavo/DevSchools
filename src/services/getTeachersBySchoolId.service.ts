@@ -5,7 +5,15 @@ import School from '../database/models/School';
 
 import AppError from '../errors/AppError';
 
-export default async function getTeachersBySchoolIdService(schoolId: string) {
+interface Request {
+  schoolId: string;
+  page?: number;
+  limit?: number;
+}
+
+export default async function getTeachersBySchoolIdService(request: Request) {
+  const { schoolId, page = 1, limit = 5 } = request;
+
   const schoolRepository = getRepository(School);
 
   const school = await schoolRepository.findOne(schoolId);
@@ -18,6 +26,8 @@ export default async function getTeachersBySchoolIdService(schoolId: string) {
 
   const teachers = await personRepository.find({
     where: { school_id: schoolId, role: 'teacher' },
+    take: limit,
+    skip: limit * (page - 1),
   });
 
   return teachers;

@@ -35,7 +35,8 @@ router.get(
 );
 
 router.get(
-  '/schools/teachers',
+  '/schools/teachers/:page',
+  hasPageInParamsValidator,
   schoolsController.getTeachersOfTheAuthenticatedSchool
 );
 
