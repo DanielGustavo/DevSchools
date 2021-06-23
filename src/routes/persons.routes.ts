@@ -3,6 +3,7 @@ import { Router } from 'express';
 import createPersonValidator from '../validators/createPerson.validator';
 import createUserValidator from '../validators/createUser.validator';
 import hasPersonIdInParamsValidator from '../validators/hasPersonIdInParams.validator';
+import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
 
 import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.middleware';
 import ensureIsASchoolMiddleware from '../middlewares/ensureIsASchool.middleware';
@@ -14,8 +15,9 @@ const router = Router();
 router.use('/persons', ensureAuthorizationMiddleware);
 
 router.get(
-  '/persons/:personId/classrooms',
+  '/persons/:personId/classrooms/:page',
   hasPersonIdInParamsValidator,
+  hasPageInParamsValidator,
   personsController.listClassroomsOfAPerson
 );
 

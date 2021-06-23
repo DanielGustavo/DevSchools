@@ -25,11 +25,12 @@ class PersonsController {
   }
 
   async listClassroomsOfAPerson(request: Request, response: Response) {
-    const { personId } = request.params;
+    const { personId, page } = request.params;
 
     const classrooms = await getClassroomsByPersonIdService({
       requesterDatas: request.user,
       personId,
+      page: parseInt(page, 10),
     });
 
     return response.json(classrooms);
