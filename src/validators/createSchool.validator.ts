@@ -3,13 +3,13 @@ import { Request, Response, NextFunction } from 'express';
 
 import AppError from '../errors/AppError';
 
-export default async function createUserValidator(
+export default async function createSchoolValidator(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   const schema = yup.object().shape({
-    email: yup.string().min(5).max(100).required(),
+    email: yup.string().email().required(),
     name: yup.string().min(5).max(100).required(),
     password: yup.string().min(10).max(120).required(),
     passwordConfirmation: yup
