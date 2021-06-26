@@ -5,12 +5,12 @@ import createUserService from '../src/services/createUser.service';
 import { query, random, deleteUser } from './utils';
 
 async function createUser(
-  username?: string,
+  email?: string,
   password?: string,
   isASchool?: boolean
 ) {
   return createUserService({
-    username: username || random(),
+    email: email || `${random()}@gmail.com`,
     password: password || random(),
     isASchool: isASchool || false,
   });
