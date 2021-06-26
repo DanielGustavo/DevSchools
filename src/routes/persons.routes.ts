@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import createPersonValidator from '../validators/createPerson.validator';
-import createUserValidator from '../validators/createUser.validator';
 import hasPersonIdInParamsValidator from '../validators/hasPersonIdInParams.validator';
 import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
 
@@ -23,12 +22,7 @@ router.get(
 
 router.use('/persons', ensureIsASchoolMiddleware);
 
-router.post(
-  '/persons',
-  createUserValidator,
-  createPersonValidator,
-  personsController.store
-);
+router.post('/persons', createPersonValidator, personsController.store);
 
 router.delete(
   '/persons/:personId',
