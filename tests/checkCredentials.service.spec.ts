@@ -5,11 +5,11 @@ import { createSchool, deleteUser, random } from './utils';
 describe('checkCredentialsService', () => {
   it('Should return a valid user', async () => {
     const password = random();
-    const username = random();
+    const email = random();
 
-    const school = await createSchool(undefined, username, password);
+    const school = await createSchool(undefined, email, password);
 
-    const user = await checkCredentialsService({ password, username });
+    const user = await checkCredentialsService({ password, email });
 
     await deleteUser(user.id);
 
