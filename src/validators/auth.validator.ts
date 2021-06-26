@@ -9,7 +9,7 @@ export default async function authValidator(
   next: NextFunction
 ) {
   const schema = yup.object().shape({
-    username: yup.string().required(),
+    email: yup.string().required(),
     password: yup.string().required(),
   });
 

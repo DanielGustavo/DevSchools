@@ -7,7 +7,7 @@ import AppError from '../errors/AppError';
 import createUserService from './createUser.service';
 
 interface Request {
-  username: string;
+  email: string;
   name: string;
   password: string;
 }

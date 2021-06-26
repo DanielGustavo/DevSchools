@@ -6,7 +6,7 @@ import User from '../database/models/User';
 import AppError from '../errors/AppError';
 
 interface Request {
-  username: string;
+  email: string;
   password: string;
   isASchool: boolean;
 }
@@ -14,22 +14,22 @@ interface Request {
 export default async function createUserService(
   request: Request
 ): Promise<User> {
-  const { username, password, isASchool: is_a_school } = request;
+  const { email, password, isASchool: is_a_school } = request;
 
   const userRepository = getRepository(User);
 
-  const usernameAlreadyExists = !!(await userRepository.findOne({
-    where: { username },
+  const EmailAlreadyExists = !!(await userRepository.findOne({
+    where: { email },
   }));
 
-  if (usernameAlreadyExists) {
-    throw new AppError(400, 'This username already exists, try another one.');
+  if (EmailAlreadyExists) {
+    throw new AppError(400, 'This email already exists, try another one.');
   }
 
   const passwordHash = await bcrypt.hash(password, 7);
 
   const user = userRepository.create({
-    username,
+    email,
     password: passwordHash,
     is_a_school,
   });

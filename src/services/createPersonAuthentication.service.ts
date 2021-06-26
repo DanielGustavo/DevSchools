@@ -12,7 +12,7 @@ import getPersonByUserId from '../utils/getPersonByUserId';
 import checkCredentialsService from './checkCredentials.service';
 
 interface Request {
-  username: string;
+  email: string;
   password: string;
 }
 

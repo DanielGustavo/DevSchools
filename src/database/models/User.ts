@@ -16,7 +16,7 @@ class User {
   id!: string;
 
   @Column('varchar')
-  username!: string;
+  email!: string;
 
   @Column('varchar')
   password!: string;

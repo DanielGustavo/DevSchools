@@ -9,7 +9,7 @@ import AppError from '../errors/AppError';
 
 interface Request {
   personDatas: {
-    username: string;
+    email: string;
     role: string;
     name: string;
     password: string;
