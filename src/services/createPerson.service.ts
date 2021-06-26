@@ -57,9 +57,9 @@ export default async function createPersonService(
   const accessLink = `${process.env.APP_URL}/?token=${tokenBase64Encoded}`;
 
   await mailer.send({
-    subject: 'Account created susscessfully!',
+    subject: 'Account created successfully!',
     to: personDatas.email,
-    html: `<h1>Hi ${personDatas.name}, your account in Devschools was created susscessfully!</h1>
+    html: `<h1>Hi ${personDatas.name}, your account in Devschools was created successfully!</h1>
     <p>Click <a href=${accessLink}>here</a> to login and setup your account</p>.
     `,
   });
