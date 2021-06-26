@@ -21,7 +21,10 @@ class Person {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column('enum')
+  @Column('enum', {
+    nullable: false,
+    enum: { STUDENT: 'student', TEACHER: 'teacher' },
+  })
   role!: String;
 
   @Column('varchar')
