@@ -4,12 +4,12 @@ import { random } from './index';
 
 export default async function createSchool(
   name?: string,
-  username?: string,
+  email?: string,
   password?: string
 ) {
   return createSchoolService({
     name: name || random(),
     password: password || random(),
-    username: username || random(),
+    email: email || `${random()}@gmail.com`,
   });
 }
