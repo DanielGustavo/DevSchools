@@ -7,6 +7,8 @@ import createUserService from './createUser.service';
 
 import AppError from '../errors/AppError';
 
+import generateRandomString from '../utils/generateRandomString';
+
 interface Request {
   personDatas: {
     email: string;
@@ -30,7 +32,8 @@ export default async function createPersonService(
   }
 
   const user = await createUserService({
-    ...personDatas,
+    email: personDatas.email,
+    password: generateRandomString(18),
     isASchool: false,
   });
 
