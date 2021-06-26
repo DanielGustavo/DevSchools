@@ -1,13 +1,10 @@
-import jsonwebtoken from 'jsonwebtoken';
-
 import User from '../database/models/User';
 import Person from '../database/models/Person';
 
 import AppError from '../errors/AppError';
 
-import jwtConfig from '../config/token';
-
 import getPersonByUserId from '../utils/getPersonByUserId';
+import createTokenToAUserOfTypePerson from '../utils/createTokenToAUserOfTypePerson';
 
 import checkCredentialsService from './checkCredentials.service';
 
@@ -22,18 +19,6 @@ interface Response {
   person: Person;
 }
 
-interface JWTPayload {
-  subject: String;
-  isASchool: Boolean;
-  avatar: String | null;
-  person: {
-    name: String;
-    id: String;
-    role: String;
-    schoolId: String;
-  };
-}
-
 export default async function createPersonAuthenticationService(
   request: Request
 ): Promise<Response> {
@@ -45,23 +30,7 @@ export default async function createPersonAuthenticationService(
 
   const person = await getPersonByUserId(user.id);
 
-  const jwtPayload: JWTPayload = {
-    subject: user.id,
-    isASchool: user.is_a_school,
-    avatar: user.avatar_filename,
-    person: {
-      name: person.name,
-      id: person.id,
-      role: person.role,
-      schoolId: person.school_id,
-    },
-  };
-
-  const token = jsonwebtoken.sign(
-    jwtPayload,
-    jwtConfig.secret,
-    jwtConfig.options
-  );
+  const token = createTokenToAUserOfTypePerson({ user, person });
 
   return { user, person, token };
 }
