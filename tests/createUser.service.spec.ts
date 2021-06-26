@@ -26,7 +26,7 @@ describe('CreateUserService', () => {
     expect(user2)
       .rejects.toHaveProperty(
         'message',
-        'This username already exists, try another one.'
+        'This email already exists, try another one.'
       )
       .finally(async () => {
         await deleteUser(user1.id);
