@@ -12,8 +12,8 @@ const config: ConnectionOptions = {
   migrations: [resolve(__dirname, 'migrations', '**', '*.ts')],
   entities: [resolve(__dirname, 'models', '**', '*.ts')],
   cli: {
-    entitiesDir: resolve(__dirname, 'models'),
-    migrationsDir: resolve(__dirname, 'migrations'),
+    entitiesDir: 'src/database/models',
+    migrationsDir: 'src/database/migrations',
   },
 };
 
