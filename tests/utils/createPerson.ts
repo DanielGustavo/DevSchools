@@ -5,21 +5,21 @@ import { random } from './index';
 
 interface CreatePersonParams {
   name?: string;
-  password?: string;
   role?: string;
-  username?: string;
+  email?: string;
   schoolId?: string;
 }
 
 export default function createPerson(
   params: CreatePersonParams | undefined = undefined
 ) {
+  const randomEmail = `${random()}@gmail.com`;
+
   return createPersonService({
     personDatas: {
       name: (params && params.name) || random(),
-      password: (params && params.password) || random(),
       role: (params && params.role) || 'student',
-      username: (params && params.username) || random(),
+      email: (params && params.email) || randomEmail,
     },
     schoolId: (params && params.schoolId) || uuid(),
   });
