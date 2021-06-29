@@ -24,7 +24,7 @@ class User {
   @Column('boolean')
   is_a_school!: boolean;
 
-  @Column('varchar')
+  @Column('varchar', { default: null })
   avatar_filename!: string;
 
   @CreateDateColumn()
