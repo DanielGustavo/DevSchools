@@ -33,6 +33,9 @@ class Person {
   @Column('uuid')
   school_id!: String;
 
+  @Column('boolean', { default: false })
+  setted_up!: Boolean;
+
   @Column('uuid')
   user_id!: String;
 
