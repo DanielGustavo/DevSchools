@@ -18,6 +18,7 @@ interface JWTPayload {
     name: String;
     id: String;
     role: String;
+    settedUp: Boolean;
     schoolId: String;
   };
 }
@@ -33,6 +34,7 @@ export default function createTokenToAUserOfTypePerson(request: Request) {
       name: person.name,
       id: person.id,
       role: person.role,
+      settedUp: person.setted_up,
       schoolId: person.school_id,
     },
   };

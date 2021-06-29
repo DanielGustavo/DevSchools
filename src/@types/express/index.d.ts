@@ -8,6 +8,7 @@ declare module Express {
         name: string;
         id: string;
         role: string;
+        settedUp: Boolean;
         schoolId: string;
       };
       school?: {

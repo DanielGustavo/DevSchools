@@ -13,6 +13,7 @@ interface JWTPayload {
     name: string;
     id: string;
     role: string;
+    settedUp: Boolean;
     schoolId: string;
   };
   school?: {
