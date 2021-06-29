@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import createPersonService from '../services/createPerson.service';
 import deleteAPersonService from '../services/deleteAPerson.service';
 import getClassroomsByPersonIdService from '../services/getClassroomsByPersonId.service';
+import setupPersonService from '../services/setupPerson.service';
 
 class PersonsController {
   async store(request: Request, response: Response) {
@@ -34,6 +35,20 @@ class PersonsController {
     });
 
     return response.json(classrooms);
+  }
+
+  async setup(request: Request, response: Response) {
+    const { name, password } = request.body;
+
+    const person = await setupPersonService({
+      personId: request.user.person?.id as string,
+      name,
+      password,
+    });
+
+    Object.assign(person.user, { password: undefined });
+
+    return response.json(person);
   }
 }
 
