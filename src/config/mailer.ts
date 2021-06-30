@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { resolve } from 'path';
 
 export default {
   host: process.env.MAILER_HOST,
@@ -8,4 +9,5 @@ export default {
     pass: process.env.MAILER_PASSWORD,
   },
   from: process.env.MAILER_FROM,
+  templatesDir: resolve(__dirname, '..', 'resources', 'views', 'emails'),
 };
