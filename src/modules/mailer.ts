@@ -17,6 +17,7 @@ interface SendRequest {
   subject: string;
   text?: string;
   html?: string;
+  attachmentsFilenames?: string[];
   template?: Template;
 }
 
@@ -24,7 +25,7 @@ class Mailer {
   private client = nodemailer.createTransport(mailerConfig as TransportOptions);
 
   public async send(request: SendRequest) {
-    const { to, subject, text, template } = request;
+    const { to, subject, text, template, attachmentsFilenames } = request;
     let { html } = request;
 
     if (template) {
@@ -34,6 +35,15 @@ class Mailer {
       });
     }
 
+    const attachments = attachmentsFilenames?.map((currentFilename) => {
+      const filenameWithoutExtension = currentFilename.split('.')[0];
+
+      return {
+        filename: currentFilename,
+        path: resolve(mailerConfig.attachmentsDir, currentFilename),
+        cid: `devschools@${filenameWithoutExtension}`,
+      };
+    });
 
     return this.client.sendMail({
       to,
@@ -41,6 +51,7 @@ class Mailer {
       text,
       html,
       from: mailerConfig.from,
+      attachments,
     });
   }
 }

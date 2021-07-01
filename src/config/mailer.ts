@@ -10,4 +10,5 @@ export default {
   },
   from: process.env.MAILER_FROM,
   templatesDir: resolve(__dirname, '..', 'resources', 'views', 'emails'),
+  attachmentsDir: resolve(__dirname, '..', 'resources', 'images'),
 };
