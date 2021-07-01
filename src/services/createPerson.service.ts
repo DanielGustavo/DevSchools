@@ -59,9 +59,16 @@ export default async function createPersonService(
   await mailer.send({
     subject: 'Account created successfully!',
     to: personDatas.email,
-    html: `<h1>Hi ${personDatas.name}, your account in Devschools was created successfully!</h1>
-    <p>Click <a href=${accessLink}>here</a> to login and setup your account</p>.
-    `,
+    template: {
+      filename: 'signUpEmail.hbs',
+      values: {
+        name: person.name,
+        schoolName: school.name,
+        personRole: person.role,
+        accessLink,
+      },
+    },
+    attachmentsFilenames: ['wave.svg', 'devschoolsLogo.svg'],
   });
 
   return person;
