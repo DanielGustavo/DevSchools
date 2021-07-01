@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Asap:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+
+      text-align: center;
+      color: #404040;
+      font-family: 'Asap', sans-serif;
+      font-weight: medium;
+
+      width: 100vw;
+      height: 100vh;
+    }
+
+    b {
+      font-weight: bold;
+    }
+
+    header h1 {
+      margin-top: 30px;
+      font-size: 35pt;
+      color: #fff;
+    }
+
+    header h1 span {
+      color: #A47AFF;
+    }
+
+    a {
+      color: #53E6F1;
+    }
+
+    header {
+      background: url('cid:devschools@wave') no-repeat center center;
+      background-size: cover;
+
+      min-height: 302px;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    footer {
+      background: url('cid:devschools@wave') no-repeat center center;
+      background-size: cover;
+
+      min-height: 302px;
+
+      display: flex;
+      justify-content: center;
+
+      transform: rotate(180deg);
+    }
+
+    footer img {
+      margin-bottom: 140px;
+      transform: rotate(180deg);
+      width: 180px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome <span>{{name}}</span>!</h1>
+  </header>
+
+  <p>Hi <b>{{name}}</b>, the school <b>"{{schoolName}}"</b> registered you as a <b>{{personRole}}</b></p>
+
+  <p>Click <a href="{{accessLink}}">here</a> to access you account</p>
+
+  <footer>
+    <img class="logo" src="cid:devschools@devschoolsLogo">
+  </footer>
+</body>
+</html>
