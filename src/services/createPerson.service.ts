@@ -11,7 +11,8 @@ import AppError from '../errors/AppError';
 import generateRandomString from '../utils/generateRandomString';
 import createTokenToAUserOfTypePerson from '../utils/createTokenToAUserOfTypePerson';
 
-import mailer from '../modules/mailer';
+import nodemailerProvider from '../providers/MailerProvider/NodemailerProvider';
+import MailerProvider from '../providers/MailerProvider/MailerProviderInterfaces';
 
 interface Request {
   personDatas: {
@@ -23,7 +24,8 @@ interface Request {
 }
 
 export default async function createPersonService(
-  request: Request
+  request: Request,
+  mailerProvider: MailerProvider = nodemailerProvider
 ): Promise<Person> {
   const { personDatas, schoolId } = request;
 
@@ -56,7 +58,7 @@ export default async function createPersonService(
 
   const accessLink = `${process.env.APP_URL}/?token=${tokenBase64Encoded}`;
 
-  await mailer.send({
+  await mailerProvider.send({
     subject: 'Account created successfully!',
     to: personDatas.email,
     template: {
