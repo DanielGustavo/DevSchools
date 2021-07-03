@@ -17,11 +17,11 @@ async function createUser(
 }
 
 describe('CreateUserService', () => {
-  it('Should not create two or more user with repeated username', async () => {
-    const repeatedUsername = random();
+  it('Should not create two or more user with repeated email', async () => {
+    const repeatedEmail = random();
 
-    const user1 = await createUser(repeatedUsername);
-    const user2 = createUser(repeatedUsername);
+    const user1 = await createUser(repeatedEmail);
+    const user2 = createUser(repeatedEmail);
 
     expect(user2)
       .rejects.toHaveProperty(
