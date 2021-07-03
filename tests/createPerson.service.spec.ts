@@ -53,4 +53,48 @@ describe('CreatePersonService', () => {
 
     expect(quantityOfPersons).toBe(1);
   });
+
+  it('Should send an email after registering a person', async () => {
+    console.log = jest.fn();
+
+    const school = await createSchool();
+    const person = await createPerson({
+      schoolId: school.id,
+    });
+
+    await deleteUser(person.user_id as string);
+    await deleteUser(school.user_id);
+
+    expect(console.log).toHaveBeenCalledWith('Sending email 📬...');
+  });
+
+  it('Should not send an email if person could not be registered due to some error', async () => {
+    const email = random();
+
+    const school = await createSchool();
+    console.log = jest.fn();
+
+    const person1 = await createPerson({
+      schoolId: school.id,
+      email,
+    });
+
+    const person2 = createPerson({
+      schoolId: school.id,
+      email,
+    });
+
+    await expect(person2)
+      .rejects.toHaveProperty(
+        'message',
+        'This email already exists, try another one.'
+      )
+      .finally(async () => {
+        await deleteUser(person1.user_id as string);
+        await deleteUser(school.user_id);
+      });
+
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenCalledWith('Sending email 📬...');
+  });
 });
