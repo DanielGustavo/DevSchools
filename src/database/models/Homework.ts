@@ -4,12 +4,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import Classroom from './Classroom';
 import Person from './Person';
+import Question from './Question';
 import Subject from './Subject';
 
 @Entity('homeworks')
@@ -40,6 +42,9 @@ class Homework {
   @ManyToOne(() => Person, (person) => person.homeworks)
   @JoinColumn({ name: 'person_id' })
   person!: Person;
+
+  @OneToMany(() => Question, (question) => question.homework)
+  questions!: Question[];
 
   @CreateDateColumn()
   created_at!: Date;
