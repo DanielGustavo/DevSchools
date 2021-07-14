@@ -6,10 +6,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import Homework from './Homework';
 import Person from './Person';
 import School from './School';
 import Subject from './Subject';
@@ -39,6 +41,9 @@ class Classroom {
     inverseJoinColumn: { name: 'subject_id' },
   })
   subjects!: Subject[];
+
+  @OneToMany(() => Homework, (homework) => homework.classroom)
+  homeworks!: Homework[];
 
   @CreateDateColumn()
   created_at!: Date;

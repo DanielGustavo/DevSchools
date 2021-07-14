@@ -7,11 +7,13 @@ import {
   ManyToOne,
   JoinColumn,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 
 import School from './School';
 import Classroom from './Classroom';
 import Person from './Person';
+import Homework from './Homework';
 
 @Entity('subjects')
 class Subject {
@@ -27,6 +29,9 @@ class Subject {
   @ManyToOne(() => School, (school) => school.subjects)
   @JoinColumn({ name: 'school_id' })
   school!: School;
+
+  @OneToMany(() => Homework, (homework) => homework.subject)
+  homeworks!: Homework[];
 
   @ManyToMany(() => Classroom, (classroom) => classroom.subjects)
   classrooms!: Classroom[];

@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -15,6 +16,7 @@ import School from './School';
 import User from './User';
 import Classroom from './Classroom';
 import Subject from './Subject';
+import Homework from './Homework';
 
 @Entity('persons')
 class Person {
@@ -54,6 +56,9 @@ class Person {
     inverseJoinColumn: { name: 'classroom_id' },
   })
   classrooms!: Classroom[];
+
+  @OneToMany(() => Homework, (homework) => homework.person)
+  homeworks!: Homework[];
 
   @ManyToMany(() => Subject, (subject) => subject.persons)
   @JoinTable({
