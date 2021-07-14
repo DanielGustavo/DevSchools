@@ -11,6 +11,7 @@ import {
 
 import Classroom from './Classroom';
 import Person from './Person';
+import PersonToHomework from './PersonToHomework';
 import Question from './Question';
 import Subject from './Subject';
 
@@ -45,6 +46,12 @@ class Homework {
 
   @OneToMany(() => Question, (question) => question.homework)
   questions!: Question[];
+
+  @OneToMany(
+    () => PersonToHomework,
+    (personToHomework) => personToHomework.homework
+  )
+  person_to_homeworks!: PersonToHomework[];
 
   @CreateDateColumn()
   created_at!: Date;
