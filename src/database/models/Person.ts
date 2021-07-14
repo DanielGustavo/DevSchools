@@ -17,6 +17,7 @@ import User from './User';
 import Classroom from './Classroom';
 import Subject from './Subject';
 import Homework from './Homework';
+import PersonToQuestion from './PersonToQuestion';
 
 @Entity('persons')
 class Person {
@@ -59,6 +60,12 @@ class Person {
 
   @OneToMany(() => Homework, (homework) => homework.person)
   homeworks!: Homework[];
+
+  @OneToMany(
+    () => PersonToQuestion,
+    (personToQuestion) => personToQuestion.person
+  )
+  person_to_questions!: PersonToQuestion[];
 
   @ManyToMany(() => Subject, (subject) => subject.persons)
   @JoinTable({

@@ -12,6 +12,7 @@ import {
 
 import Alternative from './Alternative';
 import Homework from './Homework';
+import PersonToQuestion from './PersonToQuestion';
 
 @Entity('questions')
 class Question {
@@ -27,6 +28,12 @@ class Question {
 
   @OneToMany(() => Alternative, (alternative) => alternative.question)
   alternatives!: Alternative[];
+
+  @OneToMany(
+    () => PersonToQuestion,
+    (personToQuestion) => personToQuestion.question
+  )
+  person_to_questions!: PersonToQuestion[];
 
   @ManyToOne(() => Homework, (homework) => homework.questions)
   @JoinColumn({ name: 'homework_id' })
