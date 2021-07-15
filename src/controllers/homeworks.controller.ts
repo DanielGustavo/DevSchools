@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import createHomeworkService from '../services/createHomework.service';
+import deleteAHomeworkService from '../services/deleteAHomework.service';
 
 class HomeworksController {
   async store(request: Request, response: Response) {
@@ -19,6 +20,15 @@ class HomeworksController {
     Object.assign(homework.person, {
       classrooms: undefined,
       subjects: undefined,
+    });
+
+    return response.json(homework);
+  }
+
+  async delete(request: Request, response: Response) {
+    const homework = await deleteAHomeworkService({
+      homeworkId: request.params.homeworkId,
+      teacherId: request.user.person?.id as string,
     });
 
     return response.json(homework);
