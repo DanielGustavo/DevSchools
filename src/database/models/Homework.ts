@@ -44,6 +44,9 @@ class Homework {
   @JoinColumn({ name: 'person_id' })
   person!: Person;
 
+  @Column('uuid')
+  person_id!: string;
+
   @OneToMany(() => Question, (question) => question.homework)
   questions!: Question[];
 
