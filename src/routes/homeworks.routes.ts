@@ -6,15 +6,22 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import ensureIsATeacherMiddleware from '../middlewares/ensureIsATeacher.middleware';
 
 import createHomeworkValidator from '../validators/createHomework.validator';
+import deleteHomeworkValidator from '../validators/deleteHomework.validator';
 
 const router = Router();
 
-router.post(
+router.use(
   '/homeworks',
   ensureAuthorizationMiddleware,
-  ensureIsATeacherMiddleware,
-  createHomeworkValidator,
-  homeworksController.store
+  ensureIsATeacherMiddleware
+);
+
+router.post('/homeworks', createHomeworkValidator, homeworksController.store);
+
+router.delete(
+  '/homeworks/:homeworkId',
+  deleteHomeworkValidator,
+  homeworksController.delete
 );
 
 export default router;
