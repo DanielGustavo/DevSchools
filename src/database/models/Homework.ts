@@ -47,6 +47,12 @@ class Homework {
   @Column('uuid')
   person_id!: string;
 
+  @Column('uuid')
+  classroom_id!: string;
+
+  @Column('uuid')
+  subject_id!: string;
+
   @OneToMany(() => Question, (question) => question.homework)
   questions!: Question[];
 
