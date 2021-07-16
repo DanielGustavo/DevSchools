@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import createHomeworkService from '../services/createHomework.service';
 import deleteAHomeworkService from '../services/deleteAHomework.service';
+import updateAHomeworkService from '../services/updateAHomework.service';
 
 class HomeworksController {
   async store(request: Request, response: Response) {
@@ -29,6 +30,23 @@ class HomeworksController {
     const homework = await deleteAHomeworkService({
       homeworkId: request.params.homeworkId,
       teacherId: request.user.person?.id as string,
+    });
+
+    return response.json(homework);
+  }
+
+  async edit(request: Request, response: Response) {
+    const { classroomId, deadline, description, subjectId, title } =
+      request.body;
+
+    const homework = await updateAHomeworkService({
+      classroomId,
+      deadline: parseInt(deadline, 10),
+      homeworkId: request.params.homeworkId,
+      description,
+      subjectId,
+      teacherId: request.user.person?.id as string,
+      title,
     });
 
     return response.json(homework);
