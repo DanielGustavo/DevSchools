@@ -34,7 +34,7 @@ router.put(
 
 router.delete(
   '/homeworks/:homeworkId',
-  deleteHomeworkValidator,
+  hasHomeworkIdInParamsValidator,
   homeworksController.delete
 );
 
