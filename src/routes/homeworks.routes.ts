@@ -19,6 +19,13 @@ router.use(
 
 router.post('/homeworks', createHomeworkValidator, homeworksController.store);
 
+router.post(
+  '/homeworks/:homeworkId/questions',
+  hasHomeworkIdInParamsValidator,
+  addQuestionValidator,
+  homeworksController.addQuestion
+);
+
 router.put(
   '/homeworks/:homeworkId',
   updateHomeworkValidator,
