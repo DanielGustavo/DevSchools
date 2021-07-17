@@ -16,13 +16,8 @@ export default async function updateHomeworkValidator(
     description: yup.string().min(5).max(300),
   });
 
-  const paramsSchema = yup.object().shape({
-    homeworkId: yup.string().uuid().required(),
-  });
-
   try {
     await schema.validate(request.body);
-    await paramsSchema.validate(request.params);
   } catch (error) {
     throw new AppError(400, error.message);
   }

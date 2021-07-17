@@ -6,7 +6,6 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import ensureIsATeacherMiddleware from '../middlewares/ensureIsATeacher.middleware';
 
 import createHomeworkValidator from '../validators/createHomework.validator';
-import deleteHomeworkValidator from '../validators/deleteHomework.validator';
 import updateHomeworkValidator from '../validators/updateHomework.validator';
 import hasHomeworkIdInParamsValidator from '../validators/hasHomeworkIdInParams.validator';
 import addQuestionValidator from '../validators/addQuestion.validator';
@@ -30,6 +29,7 @@ router.post(
 
 router.put(
   '/homeworks/:homeworkId',
+  hasHomeworkIdInParamsValidator,
   updateHomeworkValidator,
   homeworksController.edit
 );
