@@ -8,6 +8,7 @@ import subjectsRoutes from './subjects.routes';
 import teachersRoutes from './teachers.routes';
 import studentsRoutes from './students.routes';
 import homeworksRoutes from './homeworks.routes';
+import questionsRoutes from './questions.routes';
 
 const router = Router();
 
@@ -19,5 +20,6 @@ router.use(subjectsRoutes);
 router.use(teachersRoutes);
 router.use(studentsRoutes);
 router.use(homeworksRoutes);
+router.use(questionsRoutes);
 
 export default router;
