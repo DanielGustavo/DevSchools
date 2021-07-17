@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import createHomeworkService from '../services/createHomework.service';
+import createQuestionService from '../services/createQuestion.service';
 import deleteAHomeworkService from '../services/deleteAHomework.service';
 import updateAHomeworkService from '../services/updateAHomework.service';
 
@@ -50,6 +51,19 @@ class HomeworksController {
     });
 
     return response.json(homework);
+  }
+
+  async addQuestion(request: Request, response: Response) {
+    const { alternatives, questionTitle } = request.body;
+
+    const question = await createQuestionService({
+      alternatives,
+      homeworkId: request.params.homeworkId,
+      questionTitle,
+      teacherId: request.user.person?.id as string,
+    });
+
+    return response.json(question);
   }
 }
 
