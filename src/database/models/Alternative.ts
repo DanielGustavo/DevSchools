@@ -22,6 +22,9 @@ class Alternative {
   @JoinColumn({ name: 'question_id' })
   question!: Question;
 
+  @Column('uuid')
+  question_id!: string;
+
   @CreateDateColumn()
   created_at!: Date;
 
