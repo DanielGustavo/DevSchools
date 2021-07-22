@@ -26,6 +26,9 @@ class Question {
   @JoinColumn({ name: 'correct_alternative_id' })
   correct_alternative!: Alternative;
 
+  @Column('uuid')
+  correct_alternative_id!: string;
+
   @OneToMany(() => Alternative, (alternative) => alternative.question)
   alternatives!: Alternative[];
 
