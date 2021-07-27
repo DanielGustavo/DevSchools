@@ -1,6 +1,7 @@
 import { getConnection, getRepository } from 'typeorm';
 
 import Classroom from '../database/models/Classroom';
+import Homework from '../database/models/Homework';
 import Person from '../database/models/Person';
 import Subject from '../database/models/Subject';
 
@@ -50,6 +51,13 @@ export default async function getTeacherByPersonIdService(request: Request) {
     )
     .take(5)
     .where('ps.person_id = :personId', { personId: request.personId })
+    .getMany();
+
+  teacher.homeworks = await getConnection()
+    .createQueryBuilder(Homework, 'homework')
+    .leftJoinAndSelect('persons', 'person', 'person.id = homework.person_id')
+    .take(5)
+    .where('person.id = :personId', { personId: request.personId })
     .getMany();
 
   return teacher;
