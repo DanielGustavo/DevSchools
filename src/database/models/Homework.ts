@@ -30,7 +30,7 @@ class Homework {
   deadline!: Date;
 
   @Column('timestamp', { nullable: true })
-  sent_at!: Date;
+  sent_at!: Date | null;
 
   @ManyToOne(() => Subject, (subject) => subject.homeworks)
   @JoinColumn({ name: 'subject_id' })
