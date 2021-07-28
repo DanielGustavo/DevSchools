@@ -1,4 +1,4 @@
-import { isBefore } from 'date-fns';
+import { isBefore, subDays } from 'date-fns';
 
 import { getRepository } from 'typeorm';
 
@@ -12,6 +12,7 @@ interface Request {
   title?: string;
   description?: string;
   deadline?: number;
+  sentAt?: number | null;
   classroomId?: string;
   subjectId?: string;
   homeworkId: string;
@@ -27,6 +28,7 @@ export default async function updateAHomeworkService(request: Request) {
     title,
     description,
     homeworkId,
+    sentAt,
   } = request;
 
   const homeworkRepository = getRepository(Homework);
@@ -52,6 +54,29 @@ export default async function updateAHomeworkService(request: Request) {
     }
 
     homework.deadline = new Date(deadline);
+  }
+
+  const sentAtChanged =
+    sentAt !== undefined && homework.sent_at === null
+      ? true
+      : new Date(homework.sent_at as Date).getTime() !== sentAt;
+
+  if (sentAtChanged && sentAt !== undefined) {
+    if (sentAt === null) {
+      homework.sent_at = null;
+    } else {
+      const oneDayBefore = subDays(Date.now(), 1);
+      const newSentAtIsOneDayInPast = isBefore(sentAt, oneDayBefore);
+
+      if (newSentAtIsOneDayInPast) {
+        throw new AppError(
+          400,
+          'A homework can not be setted as sent one day before the current day.'
+        );
+      }
+
+      homework.sent_at = new Date(sentAt);
+    }
   }
 
   const classroomIdChanged =
