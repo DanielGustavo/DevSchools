@@ -37,12 +37,13 @@ class HomeworksController {
   }
 
   async edit(request: Request, response: Response) {
-    const { classroomId, deadline, description, subjectId, title } =
+    const { classroomId, deadline, description, subjectId, title, sentAt } =
       request.body;
 
     const homework = await updateAHomeworkService({
       classroomId,
       deadline: deadline !== undefined ? parseInt(deadline, 10) : undefined,
+      sentAt: sentAt !== undefined ? parseInt(sentAt, 10) || null : undefined,
       homeworkId: request.params.homeworkId,
       description,
       subjectId,
