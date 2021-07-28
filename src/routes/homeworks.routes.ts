@@ -27,7 +27,7 @@ router.post(
   homeworksController.addQuestion
 );
 
-router.put(
+router.patch(
   '/homeworks/:homeworkId',
   hasHomeworkIdInParamsValidator,
   updateHomeworkValidator,

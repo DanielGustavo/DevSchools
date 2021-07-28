@@ -9,10 +9,10 @@ export default async function updateHomeworkValidator(
   next: NextFunction
 ) {
   const schema = yup.object().shape({
-    deadline: yup.number().required(),
-    classroomId: yup.string().uuid().required(),
-    subjectId: yup.string().uuid().required(),
-    title: yup.string().min(5).max(100).required(),
+    deadline: yup.number().typeError('deadline must be a number.'),
+    classroomId: yup.string().uuid(),
+    subjectId: yup.string().uuid(),
+    title: yup.string().min(5).max(100),
     description: yup.string().min(5).max(300),
   });
 

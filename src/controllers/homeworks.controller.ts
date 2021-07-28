@@ -42,7 +42,7 @@ class HomeworksController {
 
     const homework = await updateAHomeworkService({
       classroomId,
-      deadline: parseInt(deadline, 10),
+      deadline: deadline !== undefined ? parseInt(deadline, 10) : undefined,
       homeworkId: request.params.homeworkId,
       description,
       subjectId,

@@ -9,11 +9,11 @@ import Subject from '../database/models/Subject';
 import AppError from '../errors/AppError';
 
 interface Request {
-  title: string;
+  title?: string;
   description?: string;
-  deadline: number;
-  classroomId: string;
-  subjectId: string;
+  deadline?: number;
+  classroomId?: string;
+  subjectId?: string;
   homeworkId: string;
   teacherId: string;
 }
@@ -37,12 +37,14 @@ export default async function updateAHomeworkService(request: Request) {
     throw new AppError(404, 'This homework does not exist.');
   }
 
-  homework.title = title;
-  homework.description = description || '';
+  homework.title = title || homework.title;
+  homework.description = description || homework.description;
 
-  const deadlineChanged = new Date(homework.deadline).getTime() !== deadline;
+  const deadlineChanged =
+    deadline !== undefined &&
+    new Date(homework.deadline).getTime() !== deadline;
 
-  if (deadlineChanged) {
+  if (deadlineChanged && deadline !== undefined) {
     const newDeadlineIsInAPastDate = isBefore(deadline, Date.now());
 
     if (newDeadlineIsInAPastDate) {
@@ -52,9 +54,10 @@ export default async function updateAHomeworkService(request: Request) {
     homework.deadline = new Date(deadline);
   }
 
-  const classroomIdChanged = homework.classroom_id !== classroomId;
+  const classroomIdChanged =
+    classroomId !== undefined && homework.classroom_id !== classroomId;
 
-  if (classroomIdChanged) {
+  if (classroomIdChanged && classroomId !== undefined) {
     const personRepository = getRepository(Person);
 
     const teacher = await personRepository.findOne(teacherId, {
@@ -75,12 +78,14 @@ export default async function updateAHomeworkService(request: Request) {
     homework.classroom_id = classroomId;
   }
 
-  const subjectIdChanged = homework.subject_id !== subjectId;
+  const subjectIdChanged =
+    subjectId !== undefined && homework.subject_id !== subjectId;
 
   if (subjectIdChanged || classroomIdChanged) {
     const subjectRepository = getRepository(Subject);
 
     const currentSubjectId = subjectIdChanged ? subjectId : homework.subject_id;
+
     const subject = await subjectRepository.findOne(currentSubjectId, {
       relations: ['classrooms', 'persons'],
     });
@@ -107,7 +112,7 @@ export default async function updateAHomeworkService(request: Request) {
       );
     }
 
-    homework.subject_id = subjectId;
+    homework.subject_id = currentSubjectId as string;
   }
 
   await homeworkRepository.save(homework);
