@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import deleteAQuestionService from '../services/deleteAQuestion.service';
+import getQuestionByIdService from '../services/getQuestionById.service';
 import updateAQuestionService from '../services/updateAQuestion.service';
 
 class QuestionsController {
@@ -24,6 +25,23 @@ class QuestionsController {
     });
 
     Object.assign(question, { homework: undefined });
+
+    return response.json(question);
+  }
+
+  async listQuestion(request: Request, response: Response) {
+    const { questionId } = request.params;
+
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
+    const question = await getQuestionByIdService({
+      questionId,
+      schoolId,
+      person,
+    });
+
+    Object.assign(question, { correct_alternative_id: undefined });
 
     return response.json(question);
   }
