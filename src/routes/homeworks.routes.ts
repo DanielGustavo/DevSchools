@@ -12,11 +12,15 @@ import addQuestionValidator from '../validators/addQuestion.validator';
 
 const router = Router();
 
-router.use(
-  '/homeworks',
-  ensureAuthorizationMiddleware,
-  ensureIsATeacherMiddleware
+router.use('/homeworks', ensureAuthorizationMiddleware);
+
+router.get(
+  '/homeworks/:homeworkId',
+  hasHomeworkIdInParamsValidator,
+  homeworksController.listHomework
 );
+
+router.use('/homeworks', ensureIsATeacherMiddleware);
 
 router.post('/homeworks', createHomeworkValidator, homeworksController.store);
 
