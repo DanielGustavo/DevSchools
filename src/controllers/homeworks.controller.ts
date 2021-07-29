@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import createHomeworkService from '../services/createHomework.service';
 import createQuestionService from '../services/createQuestion.service';
 import deleteAHomeworkService from '../services/deleteAHomework.service';
+import getHomeworkByIdService from '../services/getHomeworkById.service';
 import updateAHomeworkService from '../services/updateAHomework.service';
 
 class HomeworksController {
@@ -65,6 +66,21 @@ class HomeworksController {
     });
 
     return response.json(question);
+  }
+
+  async listHomework(request: Request, response: Response) {
+    const { homeworkId } = request.params;
+
+    const { school, person } = request.user;
+    const schoolId = (school?.id || person?.schoolId) as string;
+
+    const homework = await getHomeworkByIdService({
+      homeworkId,
+      schoolId,
+      person,
+    });
+
+    return response.json(homework);
   }
 }
 
