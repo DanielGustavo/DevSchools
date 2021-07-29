@@ -9,23 +9,19 @@ import hasQuestionIdInParamsValidator from '../validators/hasQuestionIdInParams.
 
 const router = Router();
 
-router.use(
-  '/questions',
-  ensureAuthorizationMiddleware,
-  ensureIsATeacherMiddleware
-);
+router.use('/questions/:questionId', hasQuestionIdInParamsValidator);
+router.use('/questions', ensureAuthorizationMiddleware);
+
+router.get('/questions/:questionId', questionsController.listQuestion);
+
+router.use('/questions', ensureIsATeacherMiddleware);
 
 router.patch(
   '/questions/:questionId',
-  hasQuestionIdInParamsValidator,
   editQuestionValidator,
   questionsController.edit
 );
 
-router.delete(
-  '/questions/:questionId',
-  hasQuestionIdInParamsValidator,
-  questionsController.delete
-);
+router.delete('/questions/:questionId', questionsController.delete);
 
 export default router;
