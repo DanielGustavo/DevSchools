@@ -19,7 +19,7 @@ export default async function getHomeworkByIdService(request: Request) {
   const homeworkRepository = getRepository(Homework);
 
   const homework = await homeworkRepository.findOne(homeworkId, {
-    relations: ['classroom'],
+    relations: ['classroom', 'questions'],
   });
 
   if (!homework) {
