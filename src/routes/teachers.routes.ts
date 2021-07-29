@@ -5,14 +5,24 @@ import ensureAuthorizationMiddleware from '../middlewares/ensureAuthorization.mi
 import teachersController from '../controllers/teachers.controller';
 
 import hasPersonIdInParamsValidator from '../validators/hasPersonIdInParams.validator';
+import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
+import listHomeworksFromTeacherQueryValidator from '../validators/listHomeworksFromTeacherQuery.validator';
 
 const router = Router();
 
-router.get(
+router.use(
   '/teachers/:personId',
   ensureAuthorizationMiddleware,
-  hasPersonIdInParamsValidator,
-  teachersController.listTeacher
+  hasPersonIdInParamsValidator
+);
+
+router.get('/teachers/:personId', teachersController.listTeacher);
+
+router.get(
+  '/teachers/:personId/homeworks/:page',
+  hasPageInParamsValidator,
+  listHomeworksFromTeacherQueryValidator,
+  teachersController.listHomeworks
 );
 
 export default router;
