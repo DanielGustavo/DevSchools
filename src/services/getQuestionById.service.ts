@@ -1,4 +1,5 @@
 import { getRepository, getConnection } from 'typeorm';
+import isAfter from 'date-fns/isAfter';
 
 import Question from '../database/models/Question';
 
@@ -36,6 +37,16 @@ export default async function getQuestionByIdService(request: Request) {
     );
   }
 
+  const requesterIsAStudent = person?.role === 'student';
+
+  const now = new Date().getTime();
+  const homeworkWasNotSent =
+    !question.homework.sent_at || isAfter(question.homework.sent_at, now);
+
+  if (homeworkWasNotSent && requesterIsAStudent) {
+    throw new AppError(403, 'You can not access this question.');
+  }
+
   if (person) {
     const personIsRegisteredInClassroomOfTheQuestion = !!(await getConnection()
       .createQueryBuilder()
@@ -57,8 +68,6 @@ export default async function getQuestionByIdService(request: Request) {
         'You are not registered in the same classroom of this homework'
       );
     }
-
-    const requesterIsAStudent = person?.role === 'student';
 
     if (requesterIsAStudent) {
       Object.assign(question, { correct_alternative_id: undefined });
