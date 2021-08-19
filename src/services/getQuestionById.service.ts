@@ -57,6 +57,12 @@ export default async function getQuestionByIdService(request: Request) {
         'You are not registered in the same classroom of this homework'
       );
     }
+
+    const requesterIsAStudent = person?.role === 'student';
+
+    if (requesterIsAStudent) {
+      Object.assign(question, { correct_alternative_id: undefined });
+    }
   }
 
   return question;

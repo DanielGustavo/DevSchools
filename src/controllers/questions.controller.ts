@@ -41,8 +41,6 @@ class QuestionsController {
       person,
     });
 
-    Object.assign(question, { correct_alternative_id: undefined });
-
     return response.json(question);
   }
 }

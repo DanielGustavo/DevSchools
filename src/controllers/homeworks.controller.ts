@@ -80,10 +80,6 @@ class HomeworksController {
       person,
     });
 
-    homework.questions.forEach((question) => {
-      Object.assign(question, { correct_alternative_id: undefined });
-    });
-
     return response.json(homework);
   }
 }

@@ -57,6 +57,14 @@ export default async function getHomeworkByIdService(request: Request) {
         'You are not registered in the same classroom of this homework'
       );
     }
+
+    const requesterIsAStudent = person.role === 'student';
+
+    if (requesterIsAStudent) {
+      homework.questions.forEach((question) => {
+        Object.assign(question, { correct_alternative_id: undefined });
+      });
+    }
   }
 
   return homework;
