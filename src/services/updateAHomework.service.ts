@@ -33,7 +33,9 @@ export default async function updateAHomeworkService(request: Request) {
 
   const homeworkRepository = getRepository(Homework);
 
-  const homework = await homeworkRepository.findOne(homeworkId);
+  const homework = await homeworkRepository.findOne(homeworkId, {
+    relations: ['questions'],
+  });
 
   if (!homework) {
     throw new AppError(404, 'This homework does not exist.');
@@ -72,6 +74,13 @@ export default async function updateAHomeworkService(request: Request) {
         throw new AppError(
           400,
           'A homework can not be setted as sent one day before the current day.'
+        );
+      }
+
+      if (homework.questions.length === 0) {
+        throw new AppError(
+          403,
+          'You can not send a homework without at least 1 question.'
         );
       }
 
