@@ -9,8 +9,9 @@ class TeachersController {
     const schoolId = (school?.id || person?.schoolId) as string;
 
     const teacher = await getTeacherByPersonIdService({
-      personId: request.params.personId,
+      teacherId: request.params.personId,
       schoolId,
+      person,
     });
 
     return response.json(teacher);
@@ -29,6 +30,7 @@ class TeachersController {
       teacherId,
       classroomId: classroomId as string | undefined,
       subjectId: subjectId as string | undefined,
+      person,
     });
 
     return response.json(homeworks);

@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, LessThanOrEqual } from 'typeorm';
 
 import Homework from '../database/models/Homework';
 import Person from '../database/models/Person';
@@ -12,6 +12,9 @@ interface Request {
   subjectId?: string;
   limit?: number;
   page?: number;
+  person?: {
+    role: string;
+  };
 }
 
 export default async function getHomeworksByTeacherIdService(request: Request) {
@@ -22,6 +25,7 @@ export default async function getHomeworksByTeacherIdService(request: Request) {
     subjectId,
     page = 1,
     limit = 5,
+    person,
   } = request;
 
   const personRepository = getRepository(Person);
@@ -50,6 +54,16 @@ export default async function getHomeworksByTeacherIdService(request: Request) {
 
   if (subjectId) {
     Object.assign(homeworksFilter, { subject_id: subjectId });
+  }
+
+  const requesterIsAStudent = person?.role === 'student';
+
+  if (requesterIsAStudent) {
+    const now = new Date();
+
+    Object.assign(homeworksFilter, {
+      sent_at: LessThanOrEqual(now),
+    });
   }
 
   const homeworks = await homeworkRepository.find({

@@ -1,4 +1,5 @@
 import { getConnection, getRepository } from 'typeorm';
+import { isAfter } from 'date-fns';
 
 import Homework from '../database/models/Homework';
 
@@ -59,6 +60,14 @@ export default async function getHomeworkByIdService(request: Request) {
     }
 
     const requesterIsAStudent = person.role === 'student';
+
+    const now = new Date().getTime();
+    const homeworkWasNotSent =
+      !homework.sent_at || isAfter(homework.sent_at, now);
+
+    if (requesterIsAStudent && homeworkWasNotSent) {
+      throw new AppError(403, 'You can not access this homework.');
+    }
 
     if (requesterIsAStudent) {
       homework.questions.forEach((question) => {
