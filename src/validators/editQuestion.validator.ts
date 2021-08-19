@@ -9,6 +9,7 @@ export default async function editQuestionValidator(
   next: NextFunction
 ) {
   const alternativeSchema = yup.object().shape({
+    id: yup.string().uuid().notRequired(),
     text: yup
       .string()
       .min(5, 'All alternatives must have at least 5 characters.')
