@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import getStudentByPersonIdService from '../services/getStudentByPersonId.service';
+import answerHomeworkService from '../services/answerHomework.service';
 
 class StudentsController {
   async listStudent(request: Request, response: Response) {
@@ -13,6 +14,20 @@ class StudentsController {
     });
 
     return response.json(student);
+  }
+
+  async answerAHomework(request: Request, response: Response) {
+    const { person } = request.user;
+    const { homeworkId } = request.params;
+    const { answers } = request.body;
+
+    const { student, homework } = await answerHomeworkService({
+      homeworkId,
+      answers,
+      personId: person?.id as string,
+    });
+
+    return response.json({ student, homework });
   }
 }
 
