@@ -34,6 +34,24 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    @media (max-width: 356px) {
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) and (min-width: 356px) {
+      font-size: 18px;
+    }
+
+    @media (max-width: 1440px) and (min-width: 768px) {
+      font-size: 25px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 31px;
+    }
+  }
+
   body {
     color: var(--dark-color);
     background: var(--light-color);
@@ -46,5 +64,13 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  h1 {
+    font-size: 2.5rem
+  }
+
+  h2 {
+    font-size: 1rem;
   }
 `;
