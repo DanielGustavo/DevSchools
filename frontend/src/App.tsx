@@ -1,9 +1,11 @@
 import React from 'react';
 
+import LandingPage from './pages/LandingPage';
+
 const App: React.FC = () => (
-  <div className="App">
-    <h1>App</h1>
-  </div>
+  <>
+    <LandingPage />
+  </>
 );
 
 export default App;
