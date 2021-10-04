@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+import {
+  OutlinedButton as GlobalOutlinedButton,
+  ContainerBreakpoints,
+} from '../../styles';
+
+export const OutlinedButton = styled(GlobalOutlinedButton)`
+  font-size: 0.8rem;
+`;
+
+export const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,33 +17,15 @@ export const Container = styled.div`
   background: var(--primary-color);
 
   width: 100%;
-  padding: 12px 40px;
+  padding: 12px;
 
-  svg {
-    height: 50px;
-  }
-`;
+  @media (max-width: 425px) {
+    justify-content: center;
 
-export const Button = styled.button`
-  background: none;
-  transition: 0.5s;
-
-  border: 2px solid var(--light-color);
-  border-radius: 6px;
-
-  padding: 7px 45px;
-
-  color: var(--light-color);
-  font-weight: 500;
-  font-size: 1.1em;
-
-  :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    ${OutlinedButton} {
+      display: none;
+    }
   }
 
-  :active {
-    background: var(--light-color);
-    color: var(--primary-color);
-    transition: 0s;
-  }
+  ${ContainerBreakpoints}
 `;
