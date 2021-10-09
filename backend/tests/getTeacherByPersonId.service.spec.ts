@@ -8,7 +8,7 @@ describe('getTeacherByPersonIdService', () => {
   it('Should not list a teacher that does not exist', async () => {
     const teacher = getTeacherByPersonIdService({
       schoolId: uuid(),
-      personId: uuid(),
+      teacherId: uuid(),
     });
 
     expect(teacher).rejects.toHaveProperty(
@@ -21,13 +21,13 @@ describe('getTeacherByPersonIdService', () => {
     const school1 = await createSchool();
     const school2 = await createSchool();
 
-    const { id: personId, user_id } = await createPerson({
+    const { id: teacherId, user_id } = await createPerson({
       role: 'teacher',
       schoolId: school2.id,
     });
 
     const teacher = getTeacherByPersonIdService({
-      personId,
+      teacherId,
       schoolId: school1.id,
     });
 

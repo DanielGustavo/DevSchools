@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import deleteAPersonService from '../src/services/deleteAPerson.service';
 
-import { createPerson, createSchool, deleteUser, query, random } from './utils';
+import { createPerson, createSchool, deleteUser, query } from './utils';
 
 describe('deleteAPersonService', () => {
   it('Should not delete a person that does not exist', async () => {
