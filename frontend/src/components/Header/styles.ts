@@ -1,9 +1,20 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+import LogoImage from '../../assets/images/Logo.svg';
 
 import {
   OutlinedButton as GlobalOutlinedButton,
   ContainerBreakpoints,
 } from '../../styles';
+
+export const Logo = styled(Link)`
+  margin: 0;
+  padding: 0;
+  background-image: url(${LogoImage});
+  width: 131px;
+  height: 50px;
+`;
 
 export const OutlinedButton = styled(GlobalOutlinedButton)`
   font-size: 0.8rem;

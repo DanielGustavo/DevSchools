@@ -1,14 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/images/Logo.svg';
+import { Container, OutlinedButton, Logo } from './styles';
 
-import { Container, OutlinedButton } from './styles';
+const Header: React.FC = () => {
+  const { push } = useHistory();
 
-const Header: React.FC = () => (
-  <Container>
-    <Logo />
-    <OutlinedButton>Sign in</OutlinedButton>
-  </Container>
-);
+  return (
+    <Container>
+      <Logo to="/" />
+
+      <OutlinedButton onClick={() => push('/signin')}>Sign in</OutlinedButton>
+    </Container>
+  );
+};
 
 export default Header;
