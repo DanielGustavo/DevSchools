@@ -1,11 +1,15 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import LandingPage from './pages/LandingPage';
+import Header from './components/Header';
+
+import Routes from './routes';
 
 const App: React.FC = () => (
-  <>
-    <LandingPage />
-  </>
+  <BrowserRouter>
+    <Header />
+    <Routes />
+  </BrowserRouter>
 );
 
 export default App;
