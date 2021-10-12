@@ -108,8 +108,4 @@ export const Input = styled.input`
   border-radius: 4px;
 
   color: var(--dark-color);
-
-  ::placeholder {
-    color: var(--gray-color);
-  }
 `;
