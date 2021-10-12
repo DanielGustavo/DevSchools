@@ -18,6 +18,7 @@ export const Logo = styled(Link)`
 
 export const OutlinedButton = styled(GlobalOutlinedButton)`
   font-size: 0.8rem;
+  padding: 0.25rem 1.7rem;
 `;
 
 export const Container = styled.header`

@@ -5,7 +5,7 @@ export const Button = styled.button`
   transition: 0.5s;
 
   border: 2px solid transparent;
-  border-radius: 6px;
+  border-radius: 4px;
 
   padding: 0.7rem 2.5rem;
 
@@ -35,9 +35,9 @@ export const OutlinedButton = styled.button`
   transition: 0.5s;
 
   border: 2px solid var(--light-color);
-  border-radius: 6px;
+  border-radius: 4px;
 
-  padding: 0.25rem 1.7rem;
+  padding: 0.7rem 2.5rem;
 
   color: var(--light-color);
   font-weight: 500;
