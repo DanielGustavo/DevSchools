@@ -6,6 +6,8 @@ import * as yup from 'yup';
 
 import { ReactComponent as BuildingImage } from '../../assets/images/amico.svg';
 
+import useAuth from '../../hooks/useAuth';
+
 import {
   Container,
   Input,
@@ -14,6 +16,13 @@ import {
   Form,
   ErrorMessage,
 } from './styles';
+
+interface FormValues {
+  email: string;
+  name: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 const formSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -37,10 +46,12 @@ const SignupPage: React.FC = () => {
     resolver: yupResolver(formSchema),
   });
 
+  const { signUpSchool: signUp } = useAuth();
+
   const { push } = useHistory();
 
-  function onValidSubmit() {
-    console.log('submited');
+  async function onValidSubmit(formValues: FormValues) {
+    await signUp(formValues);
   }
 
   return (
