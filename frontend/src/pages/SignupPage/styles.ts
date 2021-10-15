@@ -109,3 +109,8 @@ export const Input = styled.input`
 
   color: var(--dark-color);
 `;
+
+export const ErrorMessage = styled.span`
+  font-size: 0.7rem;
+  color: var(--danger-color);
+`;
