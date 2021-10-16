@@ -87,8 +87,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function signUpSchool(credentials: SignUpProps) {
     const { email, name, password, passwordConfirmation } = credentials;
 
-    await SchoolService.signUp({ email, name, password, passwordConfirmation });
-    await signInSchool({ email, password });
+    const data = await SchoolService.signUp({
+      email,
+      name,
+      password,
+      passwordConfirmation,
+    });
+
+    if (data) {
+      await signInSchool({ email, password });
+    }
   }
 
   return (

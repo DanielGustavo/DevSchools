@@ -97,13 +97,6 @@ export const signUp = async (
     const data = (await api.post('/schools', requestBody))
       .data as SignUpResponse;
 
-    if (data) {
-      await signIn({
-        email: requestBody.email,
-        password: requestBody.password,
-      });
-    }
-
     return data;
   } catch (error) {
     const errorMessage = (error as ErrorResponse)?.response?.data?.error;
