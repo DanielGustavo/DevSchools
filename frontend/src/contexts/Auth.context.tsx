@@ -70,6 +70,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     const { email, password } = credentials;
     const data = await SchoolService.signIn({ email, password });
 
+    if (!data) return;
+
     setUser({
       avatarFilename: data.user.avatar_filename,
       email: data.user.email,
