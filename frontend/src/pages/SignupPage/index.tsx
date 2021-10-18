@@ -51,7 +51,11 @@ const SignupPage: React.FC = () => {
   const { push } = useHistory();
 
   async function onValidSubmit(formValues: FormValues) {
-    await signUp(formValues);
+    const user = await signUp(formValues);
+
+    if (user) {
+      push('/dashboard');
+    }
   }
 
   return (
