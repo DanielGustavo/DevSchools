@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 
 import * as SchoolService from '../services/School.service';
+import * as AuthService from '../services/Auth.service';
 
-interface SignInSchoolProps {
+interface SignInProps {
   email: string;
   password: string;
 }
@@ -14,7 +15,7 @@ interface SignUpProps {
   passwordConfirmation: string;
 }
 
-interface User {
+interface UserOfTypeSchool {
   schoolId: string;
   userId: string;
   name: string;
@@ -23,9 +24,25 @@ interface User {
   avatarFilename: string | null;
 }
 
+interface UserOfTypePerson {
+  userId: string;
+  email: string;
+  isASchool: boolean;
+  avatarFilename: string | null;
+  personId: string;
+  name: string;
+  role: string;
+  schoolId: string;
+  settedUp: boolean;
+}
+
+type User = UserOfTypePerson | UserOfTypeSchool;
+
 interface AuthContextValue {
-  signInSchool: (credentials: SignInSchoolProps) => Promise<User | undefined>;
-  signUpSchool: (credentials: SignUpProps) => Promise<User | undefined>;
+  signIn: (credentials: SignInProps) => Promise<User | undefined>;
+  signUpSchool: (
+    credentials: SignUpProps
+  ) => Promise<UserOfTypeSchool | undefined>;
   logout: () => void;
   token?: string;
   user?: User;
@@ -66,22 +83,33 @@ export const AuthProvider: React.FC = ({ children }) => {
     setToken(undefined);
   }
 
-  async function signInSchool(
-    credentials: SignInSchoolProps
-  ): Promise<User | undefined> {
+  async function signIn(credentials: SignInProps): Promise<User | undefined> {
     const { email, password } = credentials;
-    const data = await SchoolService.signIn({ email, password });
+    const data = await AuthService.signIn({ email, password });
 
     if (!data) return undefined;
 
-    const userData: User = {
-      avatarFilename: data.user.avatar_filename,
+    const userData = {
+      userId: data.user.id,
       email: data.user.email,
       isASchool: data.user.is_a_school,
-      name: data.school.name,
-      schoolId: data.school.id,
-      userId: data.user.id,
-    };
+      avatarFilename: data.user.avatar_filename,
+    } as User;
+
+    if (data.school) {
+      Object.assign(userData, {
+        schoolId: data.school.id,
+        name: data.school.name,
+      });
+    } else if (data.person) {
+      Object.assign(userData, {
+        personId: data.person.id,
+        name: data.person.name,
+        role: data.person.role,
+        schoolId: data.person.school_id,
+        settedUp: data.person.setted_up,
+      });
+    }
 
     setUser(userData);
     setToken(data.token);
@@ -91,20 +119,20 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signUpSchool(
     credentials: SignUpProps
-  ): Promise<User | undefined> {
+  ): Promise<UserOfTypeSchool | undefined> {
     const { email, name, password, passwordConfirmation } = credentials;
 
-    const data = await SchoolService.signUp({
+    const data = await SchoolService.create({
       email,
       name,
       password,
       passwordConfirmation,
     });
 
-    let userData = undefined as User | undefined;
+    let userData = undefined as UserOfTypeSchool | undefined;
 
     if (data) {
-      userData = await signInSchool({ email, password });
+      userData = await signIn({ email, password });
     }
 
     return userData;
@@ -112,7 +140,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, authenticated, logout, signInSchool, signUpSchool }}
+      value={{ user, token, authenticated, logout, signIn, signUpSchool }}
     >
       {children}
     </AuthContext.Provider>
