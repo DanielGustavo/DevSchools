@@ -6,7 +6,6 @@ import authController from '../controllers/auth.controller';
 
 const router = Router();
 
-router.post('/auth/schools', authValidator, authController.authenticateSchool);
-router.post('/auth/persons', authValidator, authController.authenticatePerson);
+router.post('/auth', authValidator, authController.authenticate);
 
 export default router;

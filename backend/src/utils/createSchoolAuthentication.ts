@@ -3,17 +3,12 @@ import jsonwebtoken from 'jsonwebtoken';
 import User from '../database/models/User';
 import School from '../database/models/School';
 
-import AppError from '../errors/AppError';
-
 import jwtConfig from '../config/token';
 
-import getSchoolByUserId from '../utils/getSchoolByUserId';
-
-import checkCredentialsService from './checkCredentials.service';
+import getSchoolByUserId from './getSchoolByUserId';
 
 interface Request {
-  email: string;
-  password: string;
+  user: User;
 }
 
 interface Response {
@@ -32,20 +27,16 @@ interface JWTPayload {
   };
 }
 
-export default async function createSchoolAuthenticationService(
+export default async function createSchoolAuthentication(
   request: Request
 ): Promise<Response> {
-  const user = await checkCredentialsService(request);
-
-  if (!user.is_a_school) {
-    throw new AppError(403, 'This user is not of type School');
-  }
+  const { user } = request;
 
   const school = await getSchoolByUserId(user.id);
 
   const jwtPayload: JWTPayload = {
     subject: user.id,
-    isASchool: user.is_a_school,
+    isASchool: true,
     avatar: user.avatar_filename,
     school: {
       name: school.name,

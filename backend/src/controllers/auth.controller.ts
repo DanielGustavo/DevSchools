@@ -1,29 +1,15 @@
 import { Request, Response } from 'express';
 
-import createPersonAuthenticationService from '../services/createPersonAuthentication.service';
-import createSchoolAuthenticationService from '../services/createSchoolAuthentication.service';
+import createAuthentication from '../services/createAuthentication.service';
 
 class AuthController {
-  async authenticateSchool(request: Request, response: Response) {
+  async authenticate(request: Request, response: Response) {
     const { body } = request;
 
-    const { user, token, school } = await createSchoolAuthenticationService(
-      body
-    );
+    const { user, ...rest } = await createAuthentication(body);
 
     Object.assign(user, { password: undefined });
-    return response.json({ user, token, school });
-  }
-
-  async authenticatePerson(request: Request, response: Response) {
-    const { body } = request;
-
-    const { user, token, person } = await createPersonAuthenticationService(
-      body
-    );
-
-    Object.assign(user, { password: undefined });
-    return response.json({ user, token, person });
+    return response.json({ user, ...rest });
   }
 }
 
