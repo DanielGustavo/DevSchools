@@ -97,6 +97,8 @@ export const signUp = async (
     const data = (await api.post('/schools', requestBody))
       .data as SignUpResponse;
 
+    toast('School registered successfully!', { type: 'success' });
+
     return data;
   } catch (error) {
     const errorMessage = (error as ErrorResponse)?.response?.data?.error;
