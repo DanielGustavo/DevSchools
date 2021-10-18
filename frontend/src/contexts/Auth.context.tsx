@@ -24,8 +24,8 @@ interface User {
 }
 
 interface AuthContextValue {
-  signInSchool: (credentials: SignInSchoolProps) => Promise<void>;
-  signUpSchool: (credentials: SignUpProps) => Promise<void>;
+  signInSchool: (credentials: SignInSchoolProps) => Promise<User | undefined>;
+  signUpSchool: (credentials: SignUpProps) => Promise<User | undefined>;
   logout: () => void;
   token?: string;
   user?: User;
@@ -66,25 +66,32 @@ export const AuthProvider: React.FC = ({ children }) => {
     setToken(undefined);
   }
 
-  async function signInSchool(credentials: SignInSchoolProps) {
+  async function signInSchool(
+    credentials: SignInSchoolProps
+  ): Promise<User | undefined> {
     const { email, password } = credentials;
     const data = await SchoolService.signIn({ email, password });
 
-    if (!data) return;
+    if (!data) return undefined;
 
-    setUser({
+    const userData: User = {
       avatarFilename: data.user.avatar_filename,
       email: data.user.email,
       isASchool: data.user.is_a_school,
       name: data.school.name,
       schoolId: data.school.id,
       userId: data.user.id,
-    });
+    };
 
+    setUser(userData);
     setToken(data.token);
+
+    return userData;
   }
 
-  async function signUpSchool(credentials: SignUpProps) {
+  async function signUpSchool(
+    credentials: SignUpProps
+  ): Promise<User | undefined> {
     const { email, name, password, passwordConfirmation } = credentials;
 
     const data = await SchoolService.signUp({
@@ -94,9 +101,13 @@ export const AuthProvider: React.FC = ({ children }) => {
       passwordConfirmation,
     });
 
+    let userData = undefined as User | undefined;
+
     if (data) {
-      await signInSchool({ email, password });
+      userData = await signInSchool({ email, password });
     }
+
+    return userData;
   }
 
   return (
