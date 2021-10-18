@@ -22,7 +22,7 @@ interface Response {
   school?: School;
 }
 
-export default async function createAuthentication(
+export default async function createAuthenticationService(
   request: Request
 ): Promise<Response> {
   const { email, password } = request;
