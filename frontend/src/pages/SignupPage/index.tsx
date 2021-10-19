@@ -1,20 +1,20 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { ReactComponent as BuildingImage } from '../../assets/images/amico.svg';
 
 import useAuth from '../../hooks/useAuth';
 
+import Input from '../../components/Input';
+
 import {
   Container,
-  Input,
   Button,
   OutlinedButton,
   Form,
-  ErrorMessage,
+  ButtonsWrapper,
+  InputsWrapper,
 } from './styles';
 
 interface FormValues {
@@ -38,14 +38,6 @@ const formSchema = yup.object().shape({
 });
 
 const SignupPage: React.FC = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
-  });
-
   const { signUpSchool: signUp } = useAuth();
 
   const { push } = useHistory();
@@ -62,42 +54,40 @@ const SignupPage: React.FC = () => {
     <Container>
       <BuildingImage />
 
-      <Form onSubmit={handleSubmit(onValidSubmit)}>
+      <Form onValidSubmit={onValidSubmit} schema={formSchema}>
         <h1>Subscribe your school here!</h1>
 
-        <ErrorMessage> {errors?.email?.message}</ErrorMessage>
-        <Input {...register('email')} type="email" placeholder="Email" />
+        <InputsWrapper>
+          <Input name="email" type="email" placeholder="Email" />
 
-        <ErrorMessage>{errors?.name?.message}</ErrorMessage>
-        <Input
-          {...register('name')}
-          type="text"
-          autoComplete="username"
-          placeholder="Name of your school"
-        />
+          <Input
+            name="name"
+            type="text"
+            autoComplete="username"
+            placeholder="Name of your school"
+          />
 
-        <ErrorMessage>{errors?.password?.message}</ErrorMessage>
-        <Input
-          {...register('password')}
-          type="password"
-          autoComplete="new-password"
-          placeholder="Password"
-        />
+          <Input
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Password"
+          />
 
-        <ErrorMessage>{errors?.passwordConfirmation?.message}</ErrorMessage>
-        <Input
-          {...register('passwordConfirmation')}
-          type="password"
-          autoComplete="new-password"
-          placeholder="Password confirmation"
-        />
+          <Input
+            name="passwordConfirmation"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Password confirmation"
+          />
+        </InputsWrapper>
 
-        <div>
+        <ButtonsWrapper>
           <Button type="submit">Sign Up</Button>
           <OutlinedButton type="button" onClick={() => push('/signin')}>
             Sign In
           </OutlinedButton>
-        </div>
+        </ButtonsWrapper>
       </Form>
     </Container>
   );

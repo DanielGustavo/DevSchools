@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import FormComponent from '../../components/Form';
+
 import {
   ContainerBreakpoints,
   Button as GlobalButton,
@@ -61,7 +63,7 @@ export const OutlinedButton = styled(GlobalOutlinedButton)`
   padding: 0.7rem 0;
 `;
 
-export const Form = styled.form`
+export const Form = styled(FormComponent)`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -72,45 +74,36 @@ export const Form = styled.form`
 
     margin-bottom: 20px;
   }
+`;
 
-  input {
-    margin-bottom: 5px;
-  }
+export const InputsWrapper = styled.div`
+  width: 100%;
 
-  div {
-    display: flex;
-    justify-content: space-between;
-
-    ${OutlinedButton} {
-      width: 40%;
-    }
-
-    ${Button} {
-      width: 58%;
-    }
-
-    @media (max-width: 425px) {
-      flex-direction: column;
-
-      button {
-        margin-bottom: 5px;
-        width: 100% !important;
-      }
-    }
-
-    margin-top: 15px;
+  div + div {
+    margin-top: 5px;
   }
 `;
 
-export const Input = styled.input`
-  padding: 0.7rem;
-  border: 2px solid var(--dark-color);
-  border-radius: 4px;
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 
-  color: var(--dark-color);
-`;
+  ${OutlinedButton} {
+    width: 40%;
+  }
 
-export const ErrorMessage = styled.span`
-  font-size: 0.7rem;
-  color: var(--danger-color);
+  ${Button} {
+    width: 58%;
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+
+    button {
+      margin-bottom: 5px;
+      width: 100% !important;
+    }
+  }
+
+  margin-top: 20px;
 `;
