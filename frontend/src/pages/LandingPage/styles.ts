@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-import { OutlinedButton, ContainerBreakpoints } from '../../styles';
+import Button from '../../components/Button';
+
+import { ContainerBreakpoints } from '../../styles';
 
 export const Container = styled.div``;
 
@@ -25,19 +27,6 @@ export const HeroSection = styled.section`
       }
 
       padding-bottom: 40px;
-    }
-
-    ${OutlinedButton} {
-      display: none;
-    }
-  }
-
-  @media (max-width: 425px) {
-    div {
-      ${OutlinedButton} {
-        margin-top: 10px;
-        display: block;
-      }
     }
   }
 
@@ -69,6 +58,15 @@ export const HeroSection = styled.section`
   }
 
   ${ContainerBreakpoints}
+`;
+
+export const SecondaryButton = styled(Button)`
+  display: none;
+
+  @media (max-width: 425px) {
+    margin-top: 10px;
+    display: block;
+  }
 `;
 
 export const SubHeroSection = styled.section`

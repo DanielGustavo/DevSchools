@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 
 import FormComponent from '../../components/Form';
+import GlobalButton from '../../components/Button';
 
-import {
-  ContainerBreakpoints,
-  Button as GlobalButton,
-  OutlinedButton as GlobalOutlinedButton,
-} from '../../styles';
+import { ContainerBreakpoints } from '../../styles';
 
 export const Container = styled.div`
   display: flex;
@@ -50,7 +47,7 @@ export const Button = styled(GlobalButton)`
   padding: 0.7rem 0;
 `;
 
-export const OutlinedButton = styled(GlobalOutlinedButton)`
+export const SecondaryButton = styled(GlobalButton)`
   color: var(--secondary-color);
   border-color: var(--secondary-color);
 
@@ -88,7 +85,7 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  ${OutlinedButton} {
+  ${SecondaryButton} {
     width: 40%;
   }
 

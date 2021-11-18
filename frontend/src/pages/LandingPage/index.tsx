@@ -1,11 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import Button from '../../components/Button';
+
 import { ReactComponent as Building } from '../../assets/images/building.svg';
 import { ReactComponent as Pana } from '../../assets/images/pana.svg';
 
-import { Container, HeroSection, SubHeroSection } from './styles';
-import { Button, OutlinedButton } from '../../styles';
+import {
+  Container,
+  HeroSection,
+  SubHeroSection,
+  SecondaryButton,
+} from './styles';
 
 const LandingPage: React.FC = () => {
   const { push } = useHistory();
@@ -19,9 +25,9 @@ const LandingPage: React.FC = () => {
           </h1>
 
           <Button onClick={() => push('/signup')}>Join us</Button>
-          <OutlinedButton onClick={() => push('/signin')}>
+          <SecondaryButton outlined onClick={() => push('/signin')}>
             Sign in
-          </OutlinedButton>
+          </SecondaryButton>
         </div>
 
         <Building />

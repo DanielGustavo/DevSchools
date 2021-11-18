@@ -11,7 +11,7 @@ import Input from '../../components/Input';
 import {
   Container,
   Button,
-  OutlinedButton,
+  SecondaryButton,
   Form,
   ButtonsWrapper,
   InputsWrapper,
@@ -84,9 +84,13 @@ const SignupPage: React.FC = () => {
 
         <ButtonsWrapper>
           <Button type="submit">Sign Up</Button>
-          <OutlinedButton type="button" onClick={() => push('/signin')}>
+          <SecondaryButton
+            outlined
+            type="button"
+            onClick={() => push('/signin')}
+          >
             Sign In
-          </OutlinedButton>
+          </SecondaryButton>
         </ButtonsWrapper>
       </Form>
     </Container>

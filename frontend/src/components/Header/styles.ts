@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import GlobalButton from '../Button';
+
 import LogoImage from '../../assets/images/Logo.svg';
 
-import {
-  OutlinedButton as GlobalOutlinedButton,
-  ContainerBreakpoints,
-} from '../../styles';
+import { ContainerBreakpoints } from '../../styles';
 
 export const Logo = styled(Link)`
   margin: 0;
@@ -16,7 +15,7 @@ export const Logo = styled(Link)`
   height: 50px;
 `;
 
-export const OutlinedButton = styled(GlobalOutlinedButton)`
+export const Button = styled(GlobalButton)`
   font-size: 0.8rem;
   padding: 0.25rem 1.7rem;
 `;
@@ -34,7 +33,7 @@ export const Container = styled.header`
   @media (max-width: 425px) {
     justify-content: center;
 
-    ${OutlinedButton} {
+    ${Button} {
       display: none;
     }
   }
