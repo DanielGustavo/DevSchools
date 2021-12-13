@@ -73,4 +73,8 @@ export default createGlobalStyle`
   h2 {
     font-size: 1rem;
   }
+
+  small {
+    font-size: 0.6rem;
+  }
 `;
