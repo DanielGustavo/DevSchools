@@ -29,5 +29,7 @@ export const Box = styled.div`
   padding: 20px 55px;
   border-radius: 10px;
 
+  max-width: 45%;
+
   background: var(--light-color);
 `;
