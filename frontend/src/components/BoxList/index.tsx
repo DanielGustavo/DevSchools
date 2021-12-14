@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiPlus } from 'react-icons/fi';
 
-import BoxListItem from '../BoxListItem';
+import BoxListItem from './partials/BoxListItem';
 
 import { Container, List } from './styles';
 
