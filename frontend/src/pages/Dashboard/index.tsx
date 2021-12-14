@@ -42,8 +42,8 @@ const Dashboard: React.FC = () => {
 
       <BoxList
         items={classrooms}
-        ableToDelete
         onMaxScroll={incrementCurrentClassroomPage}
+        onDelete={(classroom: Classroom) => console.log('deleting', classroom)}
         onAdd={() => console.log('Add classroom...')}
       />
     </Container>

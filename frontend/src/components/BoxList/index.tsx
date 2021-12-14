@@ -10,13 +10,14 @@ interface BoxListParams {
   items: Array<{ id: string; title: string; iconUrl?: string }>;
   onMaxScroll?: () => void;
   onAdd?: () => void;
+  onDelete?: (data: any) => void;
 }
 
 const BoxList: React.FC<BoxListParams> = ({
-  ableToDelete = false,
   items,
   onMaxScroll,
   onAdd,
+  onDelete,
 }) => {
   const ref = useRef() as MutableRefObject<HTMLUListElement>;
 
@@ -60,7 +61,8 @@ const BoxList: React.FC<BoxListParams> = ({
             key={item.id}
             title={item.title}
             iconUrl={item.iconUrl}
-            ableToDelete={ableToDelete}
+            onDelete={onDelete}
+            data={item}
           />
         ))}
       </List>

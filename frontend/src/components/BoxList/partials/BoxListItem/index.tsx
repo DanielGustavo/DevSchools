@@ -4,15 +4,17 @@ import { FiXCircle } from 'react-icons/fi';
 import { Container, IconWrapper } from './styles';
 
 interface BoxListItemParams {
+  data: unknown;
   title: string;
   iconUrl?: string;
-  ableToDelete?: boolean;
+  onDelete?: (data: any) => void;
 }
 
 const BoxListItem: React.FC<BoxListItemParams> = ({
   title,
-  ableToDelete,
+  onDelete,
   iconUrl,
+  data,
 }) => (
   <Container>
     <div>
@@ -27,7 +29,11 @@ const BoxListItem: React.FC<BoxListItemParams> = ({
       {title}
     </div>
 
-    {ableToDelete && <FiXCircle />}
+    {onDelete && (
+      <button type="button" onClick={() => onDelete(data)}>
+        <FiXCircle />
+      </button>
+    )}
   </Container>
 );
 

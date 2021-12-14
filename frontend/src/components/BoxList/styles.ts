@@ -17,11 +17,11 @@ export const Container = styled.div`
       color: var(--dark-color);
       cursor: pointer;
     }
+  }
 
-    button {
-      background: none;
-      border: none;
-    }
+  button {
+    background: none;
+    border: none;
   }
 
   border-radius: 0.4rem;
