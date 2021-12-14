@@ -2,6 +2,8 @@ import { toast } from 'react-toastify';
 
 import api from '../helpers/api';
 
+import { handleApiError } from '../utils/handleApiError';
+
 import { Classroom } from './Classroom.service';
 
 interface CreateProps {
@@ -30,14 +32,6 @@ export interface School {
   updated_at: string;
 }
 
-interface ErrorResponse {
-  response: {
-    data: {
-      error: string;
-    };
-  };
-}
-
 export const create = async (
   requestBody: CreateProps
 ): Promise<School | undefined> => {
@@ -48,13 +42,7 @@ export const create = async (
 
     return data;
   } catch (error) {
-    const errorMessage = (error as ErrorResponse)?.response?.data?.error;
-
-    toast(errorMessage, {
-      type: 'error',
-    });
-
-    return undefined;
+    return handleApiError(error);
   }
 };
 
@@ -69,12 +57,6 @@ export const getClassroomsFromSchool = async (
 
     return data;
   } catch (error) {
-    const errorMessage = (error as ErrorResponse)?.response?.data?.error;
-
-    toast(errorMessage, {
-      type: 'error',
-    });
-
-    return undefined;
+    return handleApiError(error);
   }
 };

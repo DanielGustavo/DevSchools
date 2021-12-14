@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
-
 import api from '../helpers/api';
+
+import { handleApiError } from '../utils/handleApiError';
 
 interface SignInRequest {
   email: string;
@@ -33,14 +33,6 @@ interface SignInResponse {
     user_id: string;
     created_at: string;
     updated_at: string;
-  };
-}
-
-interface ErrorResponse {
-  response: {
-    data: {
-      error: string;
-    };
   };
 }
 
@@ -79,12 +71,6 @@ export const signIn = async (
 
     return data;
   } catch (error) {
-    const errorMessage = (error as ErrorResponse)?.response?.data?.error;
-
-    toast(errorMessage, {
-      type: 'error',
-    });
-
-    return undefined;
+    return handleApiError(error);
   }
 };

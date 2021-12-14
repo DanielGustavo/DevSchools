@@ -1,5 +1,6 @@
-import { toast } from 'react-toastify';
 import api from '../helpers/api';
+
+import { handleApiError } from '../utils/handleApiError';
 
 export interface Classroom {
   id: string;
@@ -17,14 +18,6 @@ interface DeleteClassroomResponse {
   message: string;
 }
 
-interface ErrorResponse {
-  response: {
-    data: {
-      error: string;
-    };
-  };
-}
-
 export const deleteClassroom = async ({ id }: DeleteClassroomProps) => {
   try {
     const data = (await api.delete(`/classrooms/${id}`))
@@ -32,12 +25,6 @@ export const deleteClassroom = async ({ id }: DeleteClassroomProps) => {
 
     return data;
   } catch (error) {
-    const errorMessage = (error as ErrorResponse)?.response?.data?.error;
-
-    toast(errorMessage, {
-      type: 'error',
-    });
-
-    return undefined;
+    return handleApiError(error);
   }
 };
