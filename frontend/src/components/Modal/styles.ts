@@ -31,5 +31,19 @@ export const Box = styled.div`
 
   max-width: 45%;
 
+  @media (max-width: 1024px) {
+    max-width: 80%;
+  }
+
+  @media (max-width: 460px) {
+    max-width: 90%;
+    padding: 20px 20px;
+  }
+
+  @media (max-width: 280px) {
+    max-width: 95%;
+    padding: 10px 10px;
+  }
+
   background: var(--light-color);
 `;
