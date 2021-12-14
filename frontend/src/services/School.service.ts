@@ -2,6 +2,8 @@ import { toast } from 'react-toastify';
 
 import api from '../helpers/api';
 
+import { Classroom } from './Classroom.service';
+
 interface CreateProps {
   email: string;
   password: string;
@@ -24,14 +26,6 @@ export interface School {
     created_at: string;
     updated_at: string;
   };
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Classroom {
-  id: string;
-  title: string;
-  school_id: string;
   created_at: string;
   updated_at: string;
 }

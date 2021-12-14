@@ -4,10 +4,8 @@ import BoxList from '../../components/BoxList';
 
 import useAuth from '../../hooks/useAuth';
 
-import {
-  getClassroomsFromSchool,
-  Classroom,
-} from '../../services/School.service';
+import { getClassroomsFromSchool } from '../../services/School.service';
+import { Classroom } from '../../services/Classroom.service';
 
 import { Container } from './styles';
 
