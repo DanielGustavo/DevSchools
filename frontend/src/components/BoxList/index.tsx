@@ -6,17 +6,17 @@ import BoxListItem from './partials/BoxListItem';
 import { Container, List } from './styles';
 
 interface BoxListParams {
-  ableToAdd?: boolean;
   ableToDelete?: boolean;
   items: Array<{ id: string; title: string; iconUrl?: string }>;
   onMaxScroll?: () => void;
+  onAdd?: () => void;
 }
 
 const BoxList: React.FC<BoxListParams> = ({
-  ableToAdd = false,
   ableToDelete = false,
   items,
   onMaxScroll,
+  onAdd,
 }) => {
   const ref = useRef() as MutableRefObject<HTMLUListElement>;
 
@@ -47,7 +47,11 @@ const BoxList: React.FC<BoxListParams> = ({
       <header>
         <h2>Classrooms</h2>
 
-        {ableToAdd && <FiPlus />}
+        {onAdd && (
+          <button type="button" onClick={onAdd}>
+            <FiPlus />
+          </button>
+        )}
       </header>
 
       <List ref={ref}>
