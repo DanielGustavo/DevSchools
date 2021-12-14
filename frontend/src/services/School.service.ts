@@ -9,7 +9,11 @@ interface CreateProps {
   name: string;
 }
 
-interface CreateResponse {
+interface GetClassroomsFromSchoolProps {
+  page?: number;
+}
+
+export interface School {
   id: string;
   name: string;
   user_id: string;
@@ -24,6 +28,14 @@ interface CreateResponse {
   updated_at: string;
 }
 
+export interface Classroom {
+  id: string;
+  title: string;
+  school_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface ErrorResponse {
   response: {
     data: {
@@ -34,12 +46,32 @@ interface ErrorResponse {
 
 export const create = async (
   requestBody: CreateProps
-): Promise<CreateResponse | undefined> => {
+): Promise<School | undefined> => {
   try {
-    const data = (await api.post('/schools', requestBody))
-      .data as CreateResponse;
+    const data = (await api.post('/schools', requestBody)).data as School;
 
     toast('School registered successfully!', { type: 'success' });
+
+    return data;
+  } catch (error) {
+    const errorMessage = (error as ErrorResponse)?.response?.data?.error;
+
+    toast(errorMessage, {
+      type: 'error',
+    });
+
+    return undefined;
+  }
+};
+
+export const getClassroomsFromSchool = async (
+  props?: GetClassroomsFromSchoolProps
+): Promise<Classroom[] | undefined> => {
+  try {
+    const page = props?.page ?? 1;
+
+    const data = (await api.get(`/schools/classrooms/${page}`))
+      .data as Classroom[];
 
     return data;
   } catch (error) {
