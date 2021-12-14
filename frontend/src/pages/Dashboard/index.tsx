@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import BoxList from '../../components/BoxList';
 
@@ -14,8 +14,6 @@ import { Container } from './styles';
 const Dashboard: React.FC = () => {
   const [currentClassroomPage, setCurrentClassroomPage] = useState(1);
   const [classrooms, setClassrooms] = useState([] as Classroom[]);
-
-  const classroomsBoxListRef = useRef() as MutableRefObject<HTMLUListElement>;
 
   const { user } = useAuth();
 
@@ -34,30 +32,19 @@ const Dashboard: React.FC = () => {
     loadClassrooms();
   }, [setClassrooms, currentClassroomPage]);
 
-  useEffect(() => {
-    classroomsBoxListRef.current?.addEventListener('scroll', () => {
-      const { scrollHeight, offsetHeight, scrollTop } =
-        classroomsBoxListRef.current;
-
-      const scrolledToMaxScrollTop = scrollHeight - offsetHeight === scrollTop;
-
-      if (scrolledToMaxScrollTop) {
-        setCurrentClassroomPage(
-          (currentClassroomPageState) => currentClassroomPageState + 1
-        );
-      }
-    });
-  }, [classroomsBoxListRef, setCurrentClassroomPage]);
+  function incrementCurrentClassroomPage() {
+    setCurrentClassroomPage(currentClassroomPage + 1);
+  }
 
   return (
     <Container>
       <h1>Welcome, {user?.name}!</h1>
 
       <BoxList
-        ref={classroomsBoxListRef}
         items={classrooms}
         ableToAdd
         ableToDelete
+        onMaxScroll={incrementCurrentClassroomPage}
       />
     </Container>
   );
