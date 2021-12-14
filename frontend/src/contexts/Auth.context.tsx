@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+import api from '../helpers/api';
+
 import * as SchoolService from '../services/School.service';
 import * as AuthService from '../services/Auth.service';
 
@@ -57,6 +59,10 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | undefined>(() => {
     const tokenFromLocalStorage =
       window.localStorage.getItem('DevSchools:token');
+
+    if (tokenFromLocalStorage && api) {
+      api.defaults.headers.common.Authorization = `Bearer ${tokenFromLocalStorage}`;
+    }
 
     return tokenFromLocalStorage ?? undefined;
   });
