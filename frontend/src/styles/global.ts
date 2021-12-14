@@ -12,6 +12,7 @@ export default createGlobalStyle`
 
     --gray-color: #757575;
     --dark-color: #404040;
+    --dark-transparent-color: #404040bb;
     --light-color: #FFFFFF;
 
     --danger-color: #D95241;
