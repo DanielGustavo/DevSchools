@@ -4,6 +4,7 @@ import api from '../helpers/api';
 
 import * as SchoolService from '../services/School.service';
 import * as AuthService from '../services/Auth.service';
+import { validateToken } from '../utils/validateToken';
 
 interface SignInProps {
   email: string;
@@ -57,14 +58,19 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   const [token, setToken] = useState<string | undefined>(() => {
-    const tokenFromLocalStorage =
-      window.localStorage.getItem('DevSchools:token');
+    const StoredToken = window.localStorage.getItem('DevSchools:token');
 
-    if (tokenFromLocalStorage && api) {
-      api.defaults.headers.common.Authorization = `Bearer ${tokenFromLocalStorage}`;
+    const tokenIsInvalid = !StoredToken || !validateToken(StoredToken);
+
+    if (tokenIsInvalid) {
+      return undefined;
     }
 
-    return tokenFromLocalStorage ?? undefined;
+    if (StoredToken && api) {
+      api.defaults.headers.common.Authorization = `Bearer ${StoredToken}`;
+    }
+
+    return StoredToken ?? undefined;
   });
 
   const [user, setUser] = useState<User | undefined>(() => {
@@ -74,7 +80,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   });
 
   useEffect(() => {
-    if (user && token) {
+    if (user && token && validateToken(token)) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
