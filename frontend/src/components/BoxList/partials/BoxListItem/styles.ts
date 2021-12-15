@@ -15,9 +15,15 @@ export const Container = styled.li`
     align-items: center;
   }
 
-  svg {
-    color: var(--danger-color);
-    cursor: pointer;
+  button {
+    width: 0.8rem;
+    height: 0.8rem;
+
+    svg {
+      color: var(--danger-color);
+      width: 100%;
+      height: 100%;
+    }
   }
 
   border-radius: 0.4rem;
