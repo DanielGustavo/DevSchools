@@ -12,10 +12,16 @@ export const Container = styled.div`
       font-weight: 600;
     }
 
-    svg {
-      font-size: 0.8rem;
-      color: var(--dark-color);
-      cursor: pointer;
+    button {
+      width: 0.8rem;
+      height: 0.8rem;
+
+      svg {
+        width: 100%;
+        height: 100%;
+        color: var(--dark-color);
+        cursor: pointer;
+      }
     }
   }
 
