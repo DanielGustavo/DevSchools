@@ -7,6 +7,10 @@ import LogoImage from '../../assets/images/Logo.svg';
 
 import { ContainerBreakpoints } from '../../styles';
 
+interface ContainerProps {
+  authenticated: boolean;
+}
+
 export const Logo = styled(Link)`
   margin: 0;
   padding: 0;
@@ -20,7 +24,7 @@ export const Button = styled(GlobalButton)`
   padding: 0.25rem 1.7rem;
 `;
 
-export const Container = styled.header`
+export const Container = styled.header<ContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +35,8 @@ export const Container = styled.header`
   padding: 12px;
 
   @media (max-width: 425px) {
-    justify-content: center;
+    justify-content: ${({ authenticated }) =>
+      authenticated ? 'auto' : 'center'};
 
     ${Button} {
       display: none;
