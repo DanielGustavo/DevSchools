@@ -27,14 +27,14 @@ export const Container = styled.li`
   }
 
   border-radius: 0.4rem;
-  padding: 0.4rem 0.5rem;
+  padding: 0.3rem 0.3rem;
 
   @media (max-width: 767px) and (min-width: 425px) {
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0.5rem;
   }
 
   @media (max-width: 425px) {
-    padding: 0.7rem 0.5rem;
+    padding: 0.4rem 0.4rem;
   }
 `;
 

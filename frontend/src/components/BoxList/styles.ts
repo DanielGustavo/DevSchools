@@ -25,28 +25,36 @@ export const Container = styled.div`
   }
 
   border-radius: 0.4rem;
-  padding: 1rem 1.2rem;
+  padding: 0.8rem 1rem;
   background: var(--primary-color-light);
 `;
 
 export const List = styled.ul`
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   list-style: none;
 
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 290px;
+  max-height: 270px;
 
   li + li {
     margin-top: 5px;
   }
 
   @media (max-width: 1439px) {
-    max-height: 200px;
+    max-height: 170px;
+  }
+
+  @media (max-width: 768px) {
+    max-height: 140px;
   }
 
   @media (max-width: 425px) {
-    max-height: 135px;
+    max-height: 130px;
+  }
+
+  @media (max-width: 355px) {
+    max-height: 110px;
   }
 
   @media (min-width: 768px) {
