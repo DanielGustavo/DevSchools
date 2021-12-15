@@ -39,7 +39,9 @@ const DeleteClassroomModal: React.FC<DeleteClassroomModalParams> = ({
       </h2>
 
       <div>
-        <Button onClick={handlePrimaryButtonClick}>Yes</Button>
+        <Button autoFocus onClick={handlePrimaryButtonClick}>
+          Yes
+        </Button>
         <Button secondary outlined onClick={rest.handleClose}>
           No
         </Button>
