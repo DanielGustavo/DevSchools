@@ -35,18 +35,22 @@ export const Box = styled.div`
   border-radius: 10px;
 
   max-width: 45%;
+  width: 45%;
 
   @media (max-width: 1024px) {
     max-width: 80%;
+    width: 80%;
   }
 
   @media (max-width: 460px) {
     max-width: 90%;
+    width: 90%;
     padding: 20px 20px;
   }
 
   @media (max-width: 280px) {
     max-width: 95%;
+    width: 95%;
     padding: 10px 10px;
   }
 
