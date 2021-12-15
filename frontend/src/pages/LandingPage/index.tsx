@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
           <Button secondary onClick={() => push('/signup')}>
             Join us
           </Button>
-          <SecondaryButton outlined onClick={() => push('/signin')}>
+          <SecondaryButton outlined light onClick={() => push('/signin')}>
             Sign in
           </SecondaryButton>
         </div>
