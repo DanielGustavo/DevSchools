@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import BoxList from '../../components/BoxList';
 import DeleteClassroomModal from './partials/DeleteClassroomModal';
+import AddClassroomModal from './partials/AddClassroomModal';
 
 import useAuth from '../../hooks/useAuth';
 
@@ -18,6 +19,9 @@ const Dashboard: React.FC = () => {
     deleteClassroom: {
       open: false,
       data: undefined,
+    },
+    addClassroom: {
+      open: false,
     },
   });
 
@@ -49,7 +53,7 @@ const Dashboard: React.FC = () => {
     });
   }
 
-  function openModal(modalName: string, data: any) {
+  function openModal(modalName: string, data?: any) {
     setModals({ ...modals, [modalName]: { open: true, data } });
   }
 
@@ -61,6 +65,10 @@ const Dashboard: React.FC = () => {
     classrooms.splice(classroomIndex, 1);
   }
 
+  function addClassroom(classroom: Classroom) {
+    setClassrooms([...classrooms, classroom]);
+  }
+
   return (
     <Container>
       <DeleteClassroomModal
@@ -69,6 +77,11 @@ const Dashboard: React.FC = () => {
         handleClose={() => closeModal('deleteClassroom')}
         onDelete={deleteClassroom}
       />
+      <AddClassroomModal
+        open={modals.addClassroom.open}
+        handleClose={() => closeModal('addClassroom')}
+        onAdd={addClassroom}
+      />
 
       <h1>Welcome, {user?.name}!</h1>
 
@@ -76,7 +89,7 @@ const Dashboard: React.FC = () => {
         items={classrooms}
         onMaxScroll={incrementCurrentClassroomPage}
         onDelete={(classroom) => openModal('deleteClassroom', classroom)}
-        onAdd={() => console.log('Add classroom...')}
+        onAdd={() => openModal('addClassroom')}
       />
     </Container>
   );
