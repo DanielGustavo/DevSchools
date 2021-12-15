@@ -10,6 +10,10 @@ export const Container = styled.div`
 
   padding: 20px 0;
 
+  h1 {
+    font-size: 2.5rem;
+  }
+
   svg {
     width: 50%;
     height: 50%;

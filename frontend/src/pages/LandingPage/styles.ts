@@ -4,7 +4,11 @@ import Button from '../../components/Button';
 
 import { ContainerBreakpoints } from '../../styles';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  h1 {
+    font-size: 2.5rem;
+  }
+`;
 
 export const HeroSection = styled.section`
   display: flex;
@@ -77,12 +81,14 @@ export const SubHeroSection = styled.section`
   justify-content: flex-start;
   text-align: center;
 
-  h1 {
+  h2 {
+    font-size: 2.5rem;
     font-weight: 600;
   }
 
-  h2 {
+  p {
     width: 70%;
+    font-size: 1rem;
     font-weight: 400;
   }
 

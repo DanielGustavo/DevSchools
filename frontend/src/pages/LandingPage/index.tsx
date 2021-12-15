@@ -36,11 +36,11 @@ const LandingPage: React.FC = () => {
       </HeroSection>
 
       <SubHeroSection>
-        <h1>Connect Your School!</h1>
-        <h2>
+        <h2>Connect Your School!</h2>
+        <p>
           With DevSchools, you’ll be able to connect your school with it’s
           theachers and students in an easy and interactable way!
-        </h2>
+        </p>
 
         <Pana />
       </SubHeroSection>
