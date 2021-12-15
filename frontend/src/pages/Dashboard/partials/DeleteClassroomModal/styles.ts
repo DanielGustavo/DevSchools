@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import Modal from '../../../../components/Modal';
 
 export const Container = styled(Modal)`
-  text-align: center;
-
   div {
     display: flex;
     margin-top: 20px;

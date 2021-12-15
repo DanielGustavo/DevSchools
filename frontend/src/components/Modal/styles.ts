@@ -24,6 +24,10 @@ export const Container = styled.div`
 `;
 
 export const Box = styled.div`
+  h2 {
+    text-align: center;
+  }
+
   z-index: 10000;
 
   padding: 20px 55px;
