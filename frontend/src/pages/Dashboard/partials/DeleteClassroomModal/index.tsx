@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { ModalParams } from '../../../../components/Modal';
+import Button from '../../../../components/Button';
 
 import {
   Classroom,
   deleteClassroom,
 } from '../../../../services/Classroom.service';
 
-import { Container, PrimaryButton, SecondaryButton } from './styles';
+import { Container } from './styles';
 
 interface DeleteClassroomModalParams extends ModalParams {
   data?: Classroom;
@@ -38,10 +39,10 @@ const DeleteClassroomModal: React.FC<DeleteClassroomModalParams> = ({
       </h2>
 
       <div>
-        <PrimaryButton onClick={handlePrimaryButtonClick}>Yes</PrimaryButton>
-        <SecondaryButton outlined onClick={rest.handleClose}>
+        <Button onClick={handlePrimaryButtonClick}>Yes</Button>
+        <Button secondary outlined onClick={rest.handleClose}>
           No
-        </SecondaryButton>
+        </Button>
       </div>
     </Container>
   );

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import FormComponent from '../../components/Form';
-import GlobalButton from '../../components/Button';
 
 import { ContainerBreakpoints } from '../../styles';
 
@@ -29,37 +28,6 @@ export const Container = styled.div`
   ${ContainerBreakpoints}
 `;
 
-export const Button = styled(GlobalButton)`
-  color: var(--light-color);
-  background: var(--primary-color);
-
-  :hover {
-    background-color: var(--primary-color-dark);
-  }
-
-  :active {
-    background: none;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    transition: 0s;
-  }
-
-  padding: 0.7rem 0;
-`;
-
-export const SecondaryButton = styled(GlobalButton)`
-  color: var(--secondary-color);
-  border-color: var(--secondary-color);
-
-  :active {
-    background: var(--secondary-color);
-    color: var(--light-color);
-    transition: 0s;
-  }
-
-  padding: 0.7rem 0;
-`;
-
 export const Form = styled(FormComponent)`
   flex: 1;
   display: flex;
@@ -85,12 +53,19 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  ${SecondaryButton} {
-    width: 40%;
+  button {
+    padding: 0.7rem 0;
   }
 
-  ${Button} {
-    width: 58%;
+  @media (min-width: 425px) {
+    button:first-child {
+      width: 58%;
+    }
+
+    button:nth-child(2) {
+      flex: 1;
+      margin-left: 2%;
+    }
   }
 
   @media (max-width: 425px) {

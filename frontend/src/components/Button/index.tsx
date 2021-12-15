@@ -4,6 +4,8 @@ import { Container } from './styles';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   outlined?: boolean;
+  secondary?: boolean;
+  light?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (

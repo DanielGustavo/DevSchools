@@ -7,15 +7,9 @@ import { ReactComponent as BuildingImage } from '../../assets/images/amico.svg';
 import useAuth from '../../hooks/useAuth';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-import {
-  Container,
-  Button,
-  SecondaryButton,
-  Form,
-  ButtonsWrapper,
-  InputsWrapper,
-} from './styles';
+import { Container, Form, ButtonsWrapper, InputsWrapper } from './styles';
 
 interface FormValues {
   email: string;
@@ -84,13 +78,14 @@ const SignupPage: React.FC = () => {
 
         <ButtonsWrapper>
           <Button type="submit">Sign Up</Button>
-          <SecondaryButton
+          <Button
+            secondary
             outlined
             type="button"
             onClick={() => push('/signin')}
           >
             Sign In
-          </SecondaryButton>
+          </Button>
         </ButtonsWrapper>
       </Form>
     </Container>

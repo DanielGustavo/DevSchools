@@ -7,8 +7,9 @@ import { ReactComponent as WelcomeImage } from '../../assets/images/welcome.svg'
 import useAuth from '../../hooks/useAuth';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-import { Container, Button, Form, InputsWrapper } from './styles';
+import { Container, Form, InputsWrapper } from './styles';
 
 interface FormValues {
   email: string;

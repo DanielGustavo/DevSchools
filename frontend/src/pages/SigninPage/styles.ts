@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import FormComponent from '../../components/Form';
-import GlobalButton from '../../components/Button';
 
 import { ContainerBreakpoints } from '../../styles';
 
@@ -26,25 +25,6 @@ export const Container = styled.div`
   ${ContainerBreakpoints}
 `;
 
-export const Button = styled(GlobalButton)`
-  color: var(--light-color);
-  background: var(--primary-color);
-
-  :hover {
-    background-color: var(--primary-color-dark);
-  }
-
-  :active {
-    background: none;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    transition: 0s;
-  }
-
-  padding: 0.7rem 0;
-  margin-top: 20px;
-`;
-
 export const Form = styled(FormComponent)`
   flex: 1;
   display: flex;
@@ -63,6 +43,11 @@ export const Form = styled(FormComponent)`
   small {
     align-self: center;
     margin-top: 5px;
+  }
+
+  button {
+    padding: 0.7rem 0;
+    margin-top: 20px;
   }
 `;
 

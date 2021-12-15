@@ -24,7 +24,9 @@ const LandingPage: React.FC = () => {
             Take your school to the <span>next level!</span>
           </h1>
 
-          <Button onClick={() => push('/signup')}>Join us</Button>
+          <Button secondary onClick={() => push('/signup')}>
+            Join us
+          </Button>
           <SecondaryButton outlined onClick={() => push('/signin')}>
             Sign in
           </SecondaryButton>

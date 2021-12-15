@@ -10,7 +10,7 @@ const Header: React.FC = () => {
     <Container>
       <Logo to="/" />
 
-      <Button outlined onClick={() => push('/signin')}>
+      <Button light outlined onClick={() => push('/signin')}>
         Sign in
       </Button>
     </Container>

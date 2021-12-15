@@ -4,16 +4,20 @@ export default createGlobalStyle`
   :root {
     --primary-color: #2CCED9;
     --primary-color-dark: #1F9199;
+    --primary-transparent-color-dark: #1F919955;
     --primary-color-light: #53E6F1;
 
     --secondary-color: #7F53DD;
     --secondary-color-dark: #5B3C9E;
+    --secondary-transparent-color-dark: #5B3C9E55;
     --secondary-color-light: #A47AFF;
 
     --gray-color: #757575;
+    --gray-transparent-color: #75757555;
     --dark-color: #404040;
     --dark-transparent-color: #404040bb;
     --light-color: #FFFFFF;
+    --gray-light-color: #C5C5C5;
 
     --danger-color: #D95241;
     --danger-color-dark: #993A2E;

@@ -14,19 +14,40 @@ export const Container = styled.button<ButtonProps>`
     outlined ? OutlinedContainerStyle : FilledContainerStyle}
 `;
 
-export const FilledContainerStyle = css`
-  background: var(--secondary-color);
+export const FilledContainerStyle = css<ButtonProps>`
+  background: ${({ secondary, light }) =>
+    (secondary && 'var(--secondary-color)') ||
+    (light && 'var(--light-color)') ||
+    'var(--primary-color)'};
+
   border: 2px solid transparent;
   font-weight: 600;
 
+  color: ${({ secondary, light }) =>
+    (secondary && 'var(--light-color)') ||
+    (light && 'var(--dark-color)') ||
+    'var(--light-color)'};
+
   :hover {
-    background-color: var(--secondary-color-dark);
+    background-color: ${({ secondary, light }) =>
+      (secondary && 'var(--secondary-color-dark)') ||
+      (light && 'var(--gray-light-color)') ||
+      'var(--primary-color-dark)'};
   }
 
   :active {
     background: none;
-    border: 2px solid var(--secondary-color);
-    color: var(--secondary-color);
+    border: 2px solid
+      ${({ secondary, light }) =>
+        (secondary && 'var(--secondary-color)') ||
+        (light && 'var(--light-color)') ||
+        'var(--primary-color)'};
+
+    color: ${({ secondary, light }) =>
+      (secondary && 'var(--secondary-color)') ||
+      (light && 'var(--light-color)') ||
+      'var(--primary-color)'};
+
     transition: 0s;
   }
 
@@ -35,18 +56,39 @@ export const FilledContainerStyle = css`
   }
 `;
 
-export const OutlinedContainerStyle = css`
+export const OutlinedContainerStyle = css<ButtonProps>`
   background: none;
-  border: 2px solid var(--light-color);
   font-weight: 500;
 
+  border: 2px solid
+    ${({ secondary, light }) =>
+      (secondary && 'var(--secondary-color)') ||
+      (light && 'var(--light-color)') ||
+      'var(--primary-color)'};
+
+  color: ${({ secondary, light }) =>
+    (secondary && 'var(--secondary-color)') ||
+    (light && 'var(--light-color)') ||
+    'var(--primary-color)'};
+
   :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${({ secondary, light }) =>
+      (secondary && 'var(--secondary-transparent-color-dark)') ||
+      (light && 'var(--gray-transparent-color)') ||
+      'var(--primary-transparent-color-dark)'};
   }
 
   :active {
-    background: var(--light-color);
-    color: var(--primary-color);
+    background: ${({ secondary, light }) =>
+      (secondary && 'var(--secondary-color)') ||
+      (light && 'var(--light-color)') ||
+      'var(--primary-color)'};
+
+    color: ${({ secondary, light }) =>
+      (secondary && 'var(--light-color)') ||
+      (light && 'var(--primary-color)') ||
+      'var(--light-color)'};
+
     transition: 0s;
   }
 
