@@ -63,27 +63,25 @@ export const List = styled.ul`
     max-height: 110px;
   }
 
-  @media (min-width: 768px) {
-    /* ===== Scrollbar CSS ===== */
-    /* Firefox */
-     {
-      scrollbar-width: auto;
-      scrollbar-color: var(--primary-color);
-    }
+  /* ===== Scrollbar CSS ===== */
+  /* Firefox */
+   {
+    scrollbar-width: auto;
+    scrollbar-color: var(--primary-color);
+  }
 
-    /* Chrome, Edge, and Safari */
-    ::-webkit-scrollbar {
-      width: 0.3rem;
-    }
+  /* Chrome, Edge, and Safari */
+  ::-webkit-scrollbar {
+    width: 0.3rem;
+  }
 
-    ::-webkit-scrollbar-track {
-      background: var(--primary-color-dark);
-      border-radius: 10px;
-    }
+  ::-webkit-scrollbar-track {
+    background: var(--primary-color-dark);
+    border-radius: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb {
-      background-color: var(--dark-color);
-      border-radius: 10px;
-    }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--dark-color);
+    border-radius: 10px;
   }
 `;
