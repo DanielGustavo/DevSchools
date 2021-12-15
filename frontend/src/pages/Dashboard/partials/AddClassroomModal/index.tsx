@@ -1,12 +1,12 @@
 import React from 'react';
 import * as yup from 'yup';
 
-import { ModalParams } from '../../../../components/Modal';
+import Modal, { ModalParams } from '../../../../components/Modal';
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input';
 import Form from '../../../../components/Form';
 
-import { Container } from './styles';
+import { ButtonsGroup } from '../../../../components/Modal/styles';
 
 import {
   addClassroom,
@@ -40,20 +40,20 @@ const AddClassroomModal: React.FC<AddClassroomModalParams> = ({
   }
 
   return (
-    <Container {...params}>
+    <Modal {...params}>
       <h2>Create a new classroom</h2>
 
       <Form schema={schema} onValidSubmit={handleSubmit}>
         <Input autoFocus name="title" type="text" placeholder="title" />
 
-        <div>
+        <ButtonsGroup>
           <Button type="submit">Create</Button>
           <Button type="button" secondary outlined onClick={params.handleClose}>
             Cancel
           </Button>
-        </div>
+        </ButtonsGroup>
       </Form>
-    </Container>
+    </Modal>
   );
 };
 

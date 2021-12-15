@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ModalParams } from '../../../../components/Modal';
+import Modal, { ModalParams } from '../../../../components/Modal';
 import Button from '../../../../components/Button';
 
 import {
@@ -8,7 +8,7 @@ import {
   deleteClassroom,
 } from '../../../../services/Classroom.service';
 
-import { Container } from './styles';
+import { ButtonsGroup } from '../../../../components/Modal/styles';
 
 interface DeleteClassroomModalParams extends ModalParams {
   data?: Classroom;
@@ -33,20 +33,20 @@ const DeleteClassroomModal: React.FC<DeleteClassroomModalParams> = ({
   }
 
   return (
-    <Container {...rest}>
+    <Modal {...rest}>
       <h2>
         Do you really want delete the classroom {`"${classroom?.title}"`}?
       </h2>
 
-      <div>
+      <ButtonsGroup>
         <Button autoFocus onClick={handlePrimaryButtonClick}>
           Yes
         </Button>
         <Button secondary outlined onClick={rest.handleClose}>
           No
         </Button>
-      </div>
-    </Container>
+      </ButtonsGroup>
+    </Modal>
   );
 };
 
