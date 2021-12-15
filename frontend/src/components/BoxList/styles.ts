@@ -33,7 +33,7 @@ export const List = styled.ul`
   margin-top: 1rem;
   list-style: none;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   max-height: 290px;
 
