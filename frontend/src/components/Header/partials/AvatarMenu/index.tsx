@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FiAlignJustify } from 'react-icons/fi';
 
 import useAuth from '../../../../hooks/useAuth';
 
@@ -7,7 +8,7 @@ import {
   IconWrapper,
   MenuBox,
   ArrowDownIcon,
-  HamburguerIcon,
+  HamburguerButton,
   MainWrapper,
 } from './styles';
 
@@ -42,9 +43,9 @@ const AvatarMenu: React.FC = () => {
 
   return (
     <Container>
-      <button type="button" onClick={openMenuBox}>
-        <HamburguerIcon />
-      </button>
+      <HamburguerButton onClick={openMenuBox}>
+        <FiAlignJustify />
+      </HamburguerButton>
 
       <MainWrapper>
         <IconWrapper>

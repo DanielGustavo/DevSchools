@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { FiChevronDown, FiAlignJustify } from 'react-icons/fi';
+import { FiChevronDown } from 'react-icons/fi';
 
 interface ArrowDownIconProps {
   selected: boolean;
@@ -15,11 +15,13 @@ const fadeIn = keyframes`
   }
 `;
 
-export const HamburguerIcon = styled(FiAlignJustify)`
-  color: var(--light-color) !important;
-
+export const HamburguerButton = styled.button`
   @media (min-width: 426px) {
     display: none;
+  }
+
+  svg {
+    color: var(--light-color) !important;
   }
 `;
 
