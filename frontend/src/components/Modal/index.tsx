@@ -1,6 +1,7 @@
+import ReactDOM from 'react-dom';
 import React from 'react';
 
-import { Container, Box, BackgroundBlur } from './styles';
+import { Container, Box, BackgroundBlur, Global } from './styles';
 
 export interface ModalParams {
   open: boolean;
@@ -15,12 +16,16 @@ const Modal: React.FC<ModalParams> = ({
 }) => {
   if (!open) return <></>;
 
-  return (
-    <Container>
-      <BackgroundBlur onClick={handleClose} />
+  return ReactDOM.createPortal(
+    <>
+      <Global />
+      <Container>
+        <BackgroundBlur onClick={handleClose} />
 
-      <Box {...rest}>{children}</Box>
-    </Container>
+        <Box {...rest}>{children}</Box>
+      </Container>
+    </>,
+    document.querySelector('#modal-root') as HTMLDivElement
   );
 };
 

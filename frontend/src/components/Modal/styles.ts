@@ -1,7 +1,13 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const Global = createGlobalStyle`
+  body {
+    overflow: hidden !important;
+  }
+`;
 
 export const BackgroundBlur = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -12,7 +18,7 @@ export const BackgroundBlur = styled.div`
 `;
 
 export const Container = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
