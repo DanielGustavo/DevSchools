@@ -10,7 +10,7 @@ export const Container = styled.li`
   font-size: 0.8rem;
   font-weight: 400;
 
-  div {
+  span {
     display: flex;
     align-items: center;
   }

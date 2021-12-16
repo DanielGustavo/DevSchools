@@ -5,6 +5,7 @@ import api from '../helpers/api';
 import { handleApiError } from '../utils/handleApiError';
 
 import { Classroom } from './Classroom.service';
+import { Subject } from './Subject.service';
 
 interface CreateProps {
   email: string;
@@ -13,7 +14,7 @@ interface CreateProps {
   name: string;
 }
 
-interface GetClassroomsFromSchoolProps {
+interface PropsWithPage {
   page?: number;
 }
 
@@ -47,13 +48,29 @@ export const create = async (
 };
 
 export const getClassroomsFromSchool = async (
-  props?: GetClassroomsFromSchoolProps
+  props?: PropsWithPage
 ): Promise<Classroom[] | undefined> => {
   try {
     const page = props?.page ?? 1;
 
     const data = (await api.get(`/schools/classrooms/${page}`))
       .data as Classroom[];
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const getSubjectsFromSchool = async (
+  props?: PropsWithPage
+): Promise<Subject[] | undefined> => {
+  try {
+    const page = props?.page ?? 1;
+
+    const data = (await (
+      await api.get(`/schools/subjects/${page}`)
+    ).data) as Subject[];
 
     return data;
   } catch (error) {

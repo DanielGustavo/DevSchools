@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 40px;
-
   header {
     display: flex;
     justify-content: space-between;
@@ -10,6 +8,7 @@ export const Container = styled.div`
 
     h2 {
       font-weight: 600;
+      text-transform: capitalize;
     }
 
     button {

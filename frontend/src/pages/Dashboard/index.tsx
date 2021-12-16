@@ -1,9 +1,11 @@
 import React from 'react';
 
 import useAuth from '../../hooks/useAuth';
-import ClassroomsFromSchoolBoxList from './partials/ClassroomsFromSchoolBoxList';
 
-import { Container } from './styles';
+import ClassroomsFromSchoolBoxList from './partials/ClassroomsFromSchoolBoxList';
+import SubjectsFromSchoolBoxList from './partials/SubjectsFromSchoolBoxList';
+
+import { Container, BoxListsWrapper } from './styles';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -12,7 +14,10 @@ const Dashboard: React.FC = () => {
     <Container>
       <h1>Welcome, {user?.name}!</h1>
 
-      <ClassroomsFromSchoolBoxList />
+      <BoxListsWrapper>
+        <ClassroomsFromSchoolBoxList />
+        <SubjectsFromSchoolBoxList />
+      </BoxListsWrapper>
     </Container>
   );
 };

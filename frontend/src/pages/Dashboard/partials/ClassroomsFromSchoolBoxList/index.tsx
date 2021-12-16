@@ -44,11 +44,7 @@ const ClassroomsFromSchoolBoxList: React.FC = () => {
   }
 
   function deleteClassroom(classroom: Classroom) {
-    const classroomIndex = classrooms.findIndex(
-      ({ id }) => id === classroom.id
-    );
-
-    classrooms.splice(classroomIndex, 1);
+    setClassrooms(classrooms.filter(({ id }) => id !== classroom.id));
   }
 
   function addClassroom(classroom: Classroom) {
@@ -70,6 +66,7 @@ const ClassroomsFromSchoolBoxList: React.FC = () => {
       />
 
       <BoxList
+        title="classrooms"
         items={classrooms}
         onMaxScroll={incrementCurrentPage}
         onDelete={(classroom) => openModal('deleteClassroom', classroom)}

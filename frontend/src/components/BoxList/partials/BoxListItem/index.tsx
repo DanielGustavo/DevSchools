@@ -17,7 +17,7 @@ const BoxListItem: React.FC<BoxListItemParams> = ({
   data,
 }) => (
   <Container>
-    <div>
+    <span>
       <IconWrapper>
         {iconUrl ? (
           <img src={iconUrl} alt={title} />
@@ -27,7 +27,7 @@ const BoxListItem: React.FC<BoxListItemParams> = ({
       </IconWrapper>
 
       {title}
-    </div>
+    </span>
 
     {onDelete && (
       <button type="button" onClick={() => onDelete(data)}>
