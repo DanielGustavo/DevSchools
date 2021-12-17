@@ -1,49 +1,110 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
+import { ModalParams } from '../Modal';
 import List from './partials/List';
 
 import { Container } from './styles';
 
+import useModal from '../../hooks/useModal';
+
+interface Item {
+  id: string;
+  iconUrl?: string;
+  [key: string]: any;
+}
+
+interface AddItemModalParams extends ModalParams {
+  onAdd?: (item: Item | any) => void;
+}
+
+interface DeleteItemModalParams extends ModalParams {
+  data?: Item | any;
+  onDelete?: (item: Item | any) => void;
+}
+
 interface BoxListParams {
-  items: Array<{
-    id: string;
-    iconUrl?: string;
-    [key: string]: any;
-  }>;
-  loadItems?: (page: number) => Promise<Array<unknown>>;
+  loadItems?: (page: number) => Promise<Array<Item>>;
   onAdd?: () => void;
-  onDelete?: (data: any) => void;
   itemTitleProperty?: string;
   title: string;
+  AddItemModal?: React.FC<AddItemModalParams>;
+  DeleteItemModal?: React.FC<DeleteItemModalParams>;
 }
 
 const BoxList: React.FC<BoxListParams> = ({
-  items,
-  onAdd,
-  onDelete,
   title,
   itemTitleProperty,
   loadItems,
-}) => (
-  <Container>
-    <header>
-      <h2>{title}</h2>
+  AddItemModal,
+  DeleteItemModal,
+}) => {
+  const [items, setItems] = useState([] as Item[]);
 
-      {onAdd && (
-        <button type="button" onClick={onAdd}>
-          <FiPlus />
-        </button>
+  const { modals, closeModal, openModal } = useModal(['addItem', 'deleteItem']);
+
+  function addItem(item: Item) {
+    setItems([...items, item]);
+  }
+
+  function deleteItem(item: Item) {
+    setItems(items.filter(({ id }) => id !== item.id));
+  }
+
+  async function load(page: number) {
+    if (loadItems) {
+      const loadedItems = ((await loadItems(page)) ?? []) as Item[];
+
+      setItems([...items, ...loadedItems]);
+
+      return loadedItems;
+    }
+
+    return [];
+  }
+
+  return (
+    <>
+      {AddItemModal && (
+        <AddItemModal
+          open={modals.addItem.open}
+          handleClose={() => closeModal('addItem')}
+          onAdd={addItem}
+        />
       )}
-    </header>
+      {DeleteItemModal && (
+        <DeleteItemModal
+          open={modals.deleteItem.open}
+          data={modals.deleteItem.data}
+          handleClose={() => closeModal('deleteItem')}
+          onDelete={deleteItem}
+        />
+      )}
 
-    <List
-      itemTitleProperty={itemTitleProperty}
-      onDelete={onDelete}
-      items={items}
-      loadItems={loadItems}
-    />
-  </Container>
-);
+      <Container>
+        <header>
+          <h2>{title}</h2>
+
+          {AddItemModal && (
+            <button type="button" onClick={() => openModal('addItem')}>
+              <FiPlus />
+            </button>
+          )}
+        </header>
+
+        <List
+          itemTitleProperty={itemTitleProperty}
+          onDelete={
+            DeleteItemModal
+              ? (item) => openModal('deleteItem', item)
+              : undefined
+          }
+          items={items}
+          loadItems={load}
+        />
+      </Container>
+    </>
+  );
+};
 
 export default BoxList;
