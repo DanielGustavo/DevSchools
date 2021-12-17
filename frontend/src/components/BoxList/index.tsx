@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
 import BoxListItem from './partials/BoxListItem';
@@ -7,7 +7,7 @@ import { Container, EmptyMessage, List } from './styles';
 
 interface BoxListParams {
   items: Array<{ id: string; title: string; iconUrl?: string }>;
-  onMaxScroll?: () => void;
+  loadItems?: (page: number) => Promise<Array<unknown>>;
   onAdd?: () => void;
   onDelete?: (data: any) => void;
   title: string;
@@ -15,34 +15,57 @@ interface BoxListParams {
 
 const BoxList: React.FC<BoxListParams> = ({
   items,
-  onMaxScroll,
   onAdd,
   onDelete,
   title,
+  loadItems,
 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [reachedLastPage, setReachedLastPage] = useState(false);
+
   const ref = useRef() as MutableRefObject<HTMLUListElement>;
 
+  async function load() {
+    if (loadItems && !reachedLastPage) {
+      const loadedItems = await loadItems(currentPage);
+      setCurrentPage(currentPage + 1);
+
+      if (loadedItems.length === 0) {
+        setReachedLastPage(true);
+      }
+    }
+  }
+
   useEffect(() => {
-    function notifyWhenScrollReachMaxScroll() {
-      if (!onMaxScroll || !ref.current) return;
+    load();
+  }, []);
+
+  useEffect(() => {
+    async function loadItemsWhenScrollReachMaxScroll() {
+      if (!ref.current) return;
 
       const { scrollHeight, offsetHeight, scrollTop } = ref.current;
       const scrolledToMaxScrollTop = scrollHeight - offsetHeight === scrollTop;
 
       if (scrolledToMaxScrollTop) {
-        onMaxScroll();
+        load();
       }
     }
 
-    ref.current?.addEventListener('scroll', notifyWhenScrollReachMaxScroll);
+    if (loadItems !== undefined) {
+      ref.current?.addEventListener(
+        'scroll',
+        loadItemsWhenScrollReachMaxScroll
+      );
+    }
 
     return () => {
       ref.current?.removeEventListener(
         'scroll',
-        notifyWhenScrollReachMaxScroll
+        loadItemsWhenScrollReachMaxScroll
       );
     };
-  }, [onMaxScroll, ref]);
+  }, [ref, load, loadItems]);
 
   return (
     <Container>

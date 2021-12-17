@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import BoxList from '../../../../components/BoxList';
 import AddSubjectModal from '../AddSubjectModal';
@@ -11,33 +11,17 @@ import { Subject } from '../../../../services/Subject.service';
 
 const SubjectsFromSchoolBoxList: React.FC = () => {
   const [subjects, setSubjects] = useState([] as Subject[]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [reachedLastPage, setReachedLastPage] = useState(false);
 
   const { modals, openModal, closeModal } = useModal([
     'addSubject',
     'deleteSubject',
   ]);
 
-  useEffect(() => {
-    async function loadSubjects() {
-      const loadedSubjects =
-        (await getSubjectsFromSchool({ page: currentPage })) ?? [];
+  async function loadSubjects(page: number) {
+    const loadedSubjects = (await getSubjectsFromSchool({ page })) ?? [];
 
-      if (loadedSubjects?.length === 0) {
-        setReachedLastPage(true);
-      }
-
-      setSubjects((subjectsState) => [...subjectsState, ...loadedSubjects]);
-    }
-
-    loadSubjects();
-  }, [currentPage, setReachedLastPage, setSubjects]);
-
-  function incrementCurrentPage() {
-    if (reachedLastPage) return;
-
-    setCurrentPage(currentPage + 1);
+    setSubjects((subjectsState) => [...subjectsState, ...loadedSubjects]);
+    return loadedSubjects;
   }
 
   function addSubject(subject: Subject) {
@@ -65,7 +49,7 @@ const SubjectsFromSchoolBoxList: React.FC = () => {
       <BoxList
         title="subjects"
         items={subjects}
-        onMaxScroll={incrementCurrentPage}
+        loadItems={loadSubjects}
         onDelete={(subject) => openModal('deleteSubject', subject)}
         onAdd={() => openModal('addSubject')}
       />

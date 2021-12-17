@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import BoxList from '../../../../components/BoxList';
 import AddClassroomModal from '../AddClassroomModal';
@@ -6,11 +6,10 @@ import DeleteClassroomModal from '../DeleteClassroomModal';
 
 import { Classroom } from '../../../../services/Classroom.service';
 import { getClassroomsFromSchool } from '../../../../services/School.service';
+
 import useModal from '../../../../hooks/useModal';
 
 const ClassroomsFromSchoolBoxList: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [reachedLastPage, setReachedLastPage] = useState(false);
   const [classrooms, setClassrooms] = useState([] as Classroom[]);
 
   const { modals, openModal, closeModal } = useModal([
@@ -18,29 +17,18 @@ const ClassroomsFromSchoolBoxList: React.FC = () => {
     'addClassroom',
   ]);
 
-  useEffect(() => {
-    async function loadClassrooms() {
-      const loadedClassrooms = await getClassroomsFromSchool({
-        page: currentPage,
-      });
+  async function loadClassrooms(page: number) {
+    const loadedClassrooms =
+      (await getClassroomsFromSchool({
+        page,
+      })) ?? [];
 
-      if (loadedClassrooms?.length === 0) {
-        setReachedLastPage(true);
-      }
+    setClassrooms(
+      (classroomsState) =>
+        [...classroomsState, ...loadedClassrooms] as Classroom[]
+    );
 
-      setClassrooms(
-        (classroomsState) =>
-          [...classroomsState, ...(loadedClassrooms ?? [])] as Classroom[]
-      );
-    }
-
-    loadClassrooms();
-  }, [setClassrooms, currentPage]);
-
-  function incrementCurrentPage() {
-    if (reachedLastPage) return;
-
-    setCurrentPage(currentPage + 1);
+    return loadedClassrooms;
   }
 
   function deleteClassroom(classroom: Classroom) {
@@ -68,7 +56,7 @@ const ClassroomsFromSchoolBoxList: React.FC = () => {
       <BoxList
         title="classrooms"
         items={classrooms}
-        onMaxScroll={incrementCurrentPage}
+        loadItems={loadClassrooms}
         onDelete={(classroom) => openModal('deleteClassroom', classroom)}
         onAdd={() => openModal('addClassroom')}
       />
