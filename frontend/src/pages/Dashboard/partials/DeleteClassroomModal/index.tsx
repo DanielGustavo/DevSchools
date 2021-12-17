@@ -1,14 +1,12 @@
 import React from 'react';
 
-import Modal, { ModalParams } from '../../../../components/Modal';
-import Button from '../../../../components/Button';
+import { ModalParams } from '../../../../components/Modal';
+import SimpleModal from '../../../../components/SimpleModal';
 
 import {
   Classroom,
   deleteClassroom,
 } from '../../../../services/Classroom.service';
-
-import { ButtonsGroup } from '../../../../components/Modal/styles';
 
 interface DeleteClassroomModalParams extends ModalParams {
   data?: Classroom;
@@ -20,33 +18,22 @@ const DeleteClassroomModal: React.FC<DeleteClassroomModalParams> = ({
   onDelete,
   ...rest
 }) => {
-  function handlePrimaryButtonClick() {
+  function onConfirm() {
     if (classroom) {
       deleteClassroom({ id: classroom.id });
 
       if (onDelete) {
         onDelete(classroom);
       }
-
-      rest.handleClose();
     }
   }
 
   return (
-    <Modal {...rest}>
+    <SimpleModal onConfirm={onConfirm} {...rest}>
       <h2>
         Do you really want delete the classroom {`"${classroom?.title}"`}?
       </h2>
-
-      <ButtonsGroup>
-        <Button autoFocus onClick={handlePrimaryButtonClick}>
-          Yes
-        </Button>
-        <Button secondary outlined onClick={rest.handleClose}>
-          No
-        </Button>
-      </ButtonsGroup>
-    </Modal>
+    </SimpleModal>
   );
 };
 

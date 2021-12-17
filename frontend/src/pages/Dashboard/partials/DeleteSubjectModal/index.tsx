@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { ButtonsGroup } from '../../../../components/Modal/styles';
-import Modal, { ModalParams } from '../../../../components/Modal';
-import Button from '../../../../components/Button';
+import { ModalParams } from '../../../../components/Modal';
+import SimpleModal from '../../../../components/SimpleModal';
 
 import { Subject, deleteSubject } from '../../../../services/Subject.service';
 
@@ -16,31 +15,20 @@ const DeleteSubjectModal: React.FC<DeleteSubjectModalParams> = ({
   onDelete,
   ...rest
 }) => {
-  function handlePrimaryButtonClick() {
+  function onConfirm() {
     if (subject) {
       deleteSubject({ id: subject.id });
 
       if (onDelete) {
         onDelete(subject);
       }
-
-      rest.handleClose();
     }
   }
 
   return (
-    <Modal {...rest}>
+    <SimpleModal onConfirm={onConfirm} {...rest}>
       <h2>Do you really want delete the subject {`"${subject?.title}"`}?</h2>
-
-      <ButtonsGroup>
-        <Button autoFocus onClick={handlePrimaryButtonClick}>
-          Yes
-        </Button>
-        <Button secondary outlined onClick={rest.handleClose}>
-          No
-        </Button>
-      </ButtonsGroup>
-    </Modal>
+    </SimpleModal>
   );
 };
 
