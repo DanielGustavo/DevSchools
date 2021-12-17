@@ -34,6 +34,15 @@ export const Container = styled.div`
   background: var(--primary-color-light);
 `;
 
+export const EmptyMessage = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  color: var(--gray-color);
+  font-size: 0.8rem;
+`;
+
 export const List = styled.ul`
   margin-top: 0.8rem;
   list-style: none;

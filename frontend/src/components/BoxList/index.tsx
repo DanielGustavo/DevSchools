@@ -3,7 +3,7 @@ import { FiPlus } from 'react-icons/fi';
 
 import BoxListItem from './partials/BoxListItem';
 
-import { Container, List } from './styles';
+import { Container, EmptyMessage, List } from './styles';
 
 interface BoxListParams {
   items: Array<{ id: string; title: string; iconUrl?: string }>;
@@ -57,15 +57,22 @@ const BoxList: React.FC<BoxListParams> = ({
       </header>
 
       <List ref={ref}>
-        {items.map((item) => (
-          <BoxListItem
-            key={item.id}
-            title={item.title}
-            iconUrl={item.iconUrl}
-            onDelete={onDelete}
-            data={item}
-          />
-        ))}
+        {items.length > 0 ? (
+          items.map((item) => (
+            <BoxListItem
+              key={item.id}
+              title={item.title}
+              iconUrl={item.iconUrl}
+              onDelete={onDelete}
+              data={item}
+            />
+          ))
+        ) : (
+          <EmptyMessage>
+            😕
+            <p>It&apos;s empty</p>
+          </EmptyMessage>
+        )}
       </List>
     </Container>
   );
