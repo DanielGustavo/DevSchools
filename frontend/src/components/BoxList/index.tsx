@@ -50,7 +50,8 @@ const BoxList: React.FC<BoxListParams> = ({
       if (!ref.current) return;
 
       const { scrollHeight, offsetHeight, scrollTop } = ref.current;
-      const scrolledToMaxScrollTop = scrollHeight - offsetHeight === scrollTop;
+      const scrolledToMaxScrollTop =
+        scrollHeight - offsetHeight - 5 <= scrollTop;
 
       if (scrolledToMaxScrollTop) {
         load();
