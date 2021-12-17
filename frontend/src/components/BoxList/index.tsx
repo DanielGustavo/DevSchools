@@ -1,9 +1,9 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
-import BoxListItem from './partials/BoxListItem';
+import List from './partials/List';
 
-import { Container, EmptyMessage, List } from './styles';
+import { Container } from './styles';
 
 interface BoxListParams {
   items: Array<{ id: string; title: string; iconUrl?: string }>;
@@ -20,19 +20,24 @@ const BoxList: React.FC<BoxListParams> = ({
   title,
   loadItems,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [reachedLastPage, setReachedLastPage] = useState(false);
 
   const ref = useRef() as MutableRefObject<HTMLUListElement>;
 
   async function load() {
-    if (loadItems && !reachedLastPage) {
+    if (loadItems && !reachedLastPage && !loading) {
+      setLoading(true);
+
       const loadedItems = await loadItems(currentPage);
       setCurrentPage(currentPage + 1);
 
       if (loadedItems.length === 0) {
         setReachedLastPage(true);
       }
+
+      setLoading(false);
     }
   }
 
@@ -79,24 +84,7 @@ const BoxList: React.FC<BoxListParams> = ({
         )}
       </header>
 
-      <List ref={ref}>
-        {items.length > 0 ? (
-          items.map((item) => (
-            <BoxListItem
-              key={item.id}
-              title={item.title}
-              iconUrl={item.iconUrl}
-              onDelete={onDelete}
-              data={item}
-            />
-          ))
-        ) : (
-          <EmptyMessage>
-            😕
-            <p>It&apos;s empty</p>
-          </EmptyMessage>
-        )}
-      </List>
+      <List ref={ref} loading={loading} onDelete={onDelete} items={items} />
     </Container>
   );
 };
