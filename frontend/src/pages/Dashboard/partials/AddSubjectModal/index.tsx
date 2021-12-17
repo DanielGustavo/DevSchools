@@ -1,11 +1,9 @@
 import React from 'react';
 import * as yup from 'yup';
 
-import { ButtonsGroup } from '../../../../components/Modal/styles';
-import Modal, { ModalParams } from '../../../../components/Modal';
-import Button from '../../../../components/Button';
+import { ModalParams } from '../../../../components/Modal';
+import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
-import Form from '../../../../components/Form';
 
 import { addSubject, Subject } from '../../../../services/Subject.service';
 
@@ -31,25 +29,14 @@ const AddSubjectModal: React.FC<AddSubjectModalParams> = ({
     if (subject && onAdd) {
       onAdd(subject);
     }
-
-    params.handleClose();
   }
 
   return (
-    <Modal {...params}>
+    <FormModal schema={schema} onConfirm={handleSubmit} {...params}>
       <h2>Add a new subject</h2>
 
-      <Form schema={schema} onValidSubmit={handleSubmit}>
-        <Input autoFocus name="title" type="text" placeholder="title" />
-
-        <ButtonsGroup>
-          <Button type="submit">Add</Button>
-          <Button type="button" secondary outlined onClick={params.handleClose}>
-            Cancel
-          </Button>
-        </ButtonsGroup>
-      </Form>
-    </Modal>
+      <Input autoFocus name="title" type="text" placeholder="title" />
+    </FormModal>
   );
 };
 

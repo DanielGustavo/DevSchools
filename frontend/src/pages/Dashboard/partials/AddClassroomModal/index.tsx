@@ -1,12 +1,9 @@
 import React from 'react';
 import * as yup from 'yup';
 
-import Modal, { ModalParams } from '../../../../components/Modal';
-import Button from '../../../../components/Button';
+import { ModalParams } from '../../../../components/Modal';
+import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
-import Form from '../../../../components/Form';
-
-import { ButtonsGroup } from '../../../../components/Modal/styles';
 
 import {
   addClassroom,
@@ -35,25 +32,14 @@ const AddClassroomModal: React.FC<AddClassroomModalParams> = ({
     if (classroom && onAdd) {
       onAdd(classroom);
     }
-
-    params.handleClose();
   }
 
   return (
-    <Modal {...params}>
+    <FormModal schema={schema} onConfirm={handleSubmit} {...params}>
       <h2>Create a new classroom</h2>
 
-      <Form schema={schema} onValidSubmit={handleSubmit}>
-        <Input autoFocus name="title" type="text" placeholder="title" />
-
-        <ButtonsGroup>
-          <Button type="submit">Create</Button>
-          <Button type="button" secondary outlined onClick={params.handleClose}>
-            Cancel
-          </Button>
-        </ButtonsGroup>
-      </Form>
-    </Modal>
+      <Input autoFocus name="title" type="text" placeholder="title" />
+    </FormModal>
   );
 };
 
