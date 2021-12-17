@@ -5,13 +5,18 @@ import BoxListItem from '../BoxListItem';
 import { Container, EmptyMessage, LoadingIcon } from './styles';
 
 interface ListParams {
-  items: Array<{ id: string; title: string; iconUrl?: string }>;
+  items: Array<{
+    id: string;
+    iconUrl?: string;
+    [key: string]: any;
+  }>;
   loading: boolean;
+  itemTitleProperty?: string;
   onDelete?: (data: any) => void;
 }
 
 const List: React.ForwardRefRenderFunction<HTMLUListElement, ListParams> = (
-  { items, onDelete, loading },
+  { items, onDelete, loading, itemTitleProperty = 'title' },
   ref
 ) => (
   <Container ref={ref}>
@@ -24,7 +29,7 @@ const List: React.ForwardRefRenderFunction<HTMLUListElement, ListParams> = (
       items.map((item) => (
         <BoxListItem
           key={item.id}
-          title={item.title}
+          title={item[itemTitleProperty] || item.id}
           iconUrl={item.iconUrl}
           onDelete={onDelete}
           data={item}

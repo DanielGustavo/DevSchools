@@ -5,6 +5,7 @@ import api from '../helpers/api';
 import { handleApiError } from '../utils/handleApiError';
 
 import { Classroom } from './Classroom.service';
+import { Person } from './Student.service';
 import { Subject } from './Subject.service';
 
 interface CreateProps {
@@ -14,7 +15,7 @@ interface CreateProps {
   name: string;
 }
 
-interface PropsWithPage {
+interface ParamsWithPage {
   page?: number;
 }
 
@@ -33,9 +34,7 @@ export interface School {
   updated_at: string;
 }
 
-export const create = async (
-  requestBody: CreateProps
-): Promise<School | undefined> => {
+export const create = async (requestBody: CreateProps) => {
   try {
     const data = (await api.post('/schools', requestBody)).data as School;
 
@@ -47,11 +46,9 @@ export const create = async (
   }
 };
 
-export const getClassroomsFromSchool = async (
-  props?: PropsWithPage
-): Promise<Classroom[] | undefined> => {
+export const getClassroomsFromSchool = async (params?: ParamsWithPage) => {
   try {
-    const page = props?.page ?? 1;
+    const page = params?.page ?? 1;
 
     const data = (await api.get(`/schools/classrooms/${page}`))
       .data as Classroom[];
@@ -62,15 +59,27 @@ export const getClassroomsFromSchool = async (
   }
 };
 
-export const getSubjectsFromSchool = async (
-  props?: PropsWithPage
-): Promise<Subject[] | undefined> => {
+export const getSubjectsFromSchool = async (params?: ParamsWithPage) => {
   try {
-    const page = props?.page ?? 1;
+    const page = params?.page ?? 1;
 
     const data = (await (
       await api.get(`/schools/subjects/${page}`)
     ).data) as Subject[];
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const getStudentsFromSchool = async (params?: ParamsWithPage) => {
+  try {
+    const page = params?.page ?? 1;
+
+    const data = (await (
+      await api.get(`/schools/students/${page}`)
+    ).data) as Person[];
 
     return data;
   } catch (error) {

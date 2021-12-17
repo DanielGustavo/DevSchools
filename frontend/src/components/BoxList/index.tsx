@@ -6,10 +6,15 @@ import List from './partials/List';
 import { Container } from './styles';
 
 interface BoxListParams {
-  items: Array<{ id: string; title: string; iconUrl?: string }>;
+  items: Array<{
+    id: string;
+    iconUrl?: string;
+    [key: string]: any;
+  }>;
   loadItems?: (page: number) => Promise<Array<unknown>>;
   onAdd?: () => void;
   onDelete?: (data: any) => void;
+  itemTitleProperty?: string;
   title: string;
 }
 
@@ -18,6 +23,7 @@ const BoxList: React.FC<BoxListParams> = ({
   onAdd,
   onDelete,
   title,
+  itemTitleProperty,
   loadItems,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -85,7 +91,13 @@ const BoxList: React.FC<BoxListParams> = ({
         )}
       </header>
 
-      <List ref={ref} loading={loading} onDelete={onDelete} items={items} />
+      <List
+        ref={ref}
+        itemTitleProperty={itemTitleProperty}
+        loading={loading}
+        onDelete={onDelete}
+        items={items}
+      />
     </Container>
   );
 };

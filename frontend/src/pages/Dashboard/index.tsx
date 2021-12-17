@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 
 import ClassroomsFromSchoolBoxList from './partials/ClassroomsFromSchoolBoxList';
 import SubjectsFromSchoolBoxList from './partials/SubjectsFromSchoolBoxList';
+import StudentsFromSchoolBoxList from './partials/StudentsFromSchoolBoxList';
 
 import { Container, BoxListsWrapper } from './styles';
 
@@ -18,6 +19,8 @@ const Dashboard: React.FC = () => {
         <ClassroomsFromSchoolBoxList />
         <SubjectsFromSchoolBoxList />
       </BoxListsWrapper>
+
+      <StudentsFromSchoolBoxList />
     </Container>
   );
 };

@@ -2,14 +2,19 @@ import styled from 'styled-components';
 
 import { ContainerBreakpoints } from '../../styles';
 
-export const Container = styled.div`
+export const Container = styled.section`
   margin-top: 20px;
+  margin-bottom: 20px;
+
+  h1 {
+    margin-bottom: 40px;
+  }
 
   ${ContainerBreakpoints}
 `;
 
 export const BoxListsWrapper = styled.div`
-  margin-top: 40px;
+  margin-bottom: 0.5rem;
 
   display: flex;
   grid-gap: 0.5rem;

@@ -10,15 +10,15 @@ export interface Subject {
   updated_at: string;
 }
 
-interface AddSubjectProps {
+interface AddSubjectParams {
   title: string;
 }
 
-interface DeleteSubjectProps {
+interface DeleteSubjectParams {
   id: string;
 }
 
-export const addSubject = async ({ title }: AddSubjectProps) => {
+export const addSubject = async ({ title }: AddSubjectParams) => {
   try {
     const subject = (await api.post('/subjects', { title })).data as Subject;
 
@@ -28,7 +28,7 @@ export const addSubject = async ({ title }: AddSubjectProps) => {
   }
 };
 
-export const deleteSubject = async ({ id }: DeleteSubjectProps) => {
+export const deleteSubject = async ({ id }: DeleteSubjectParams) => {
   try {
     const subject = (await api.delete(`/subjects/${id}`)).data as Subject;
 

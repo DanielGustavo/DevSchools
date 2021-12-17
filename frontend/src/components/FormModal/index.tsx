@@ -4,10 +4,11 @@ import { AnyObjectSchema } from 'yup';
 import { ButtonsGroup } from '../Modal/styles';
 import Modal, { ModalParams } from '../Modal';
 import Button from '../Button';
-import Form from '../Form';
+
+import { Form } from './styles';
 
 interface FormModalParams extends ModalParams {
-  onConfirm?: (formValues: any) => Promise<void>;
+  onConfirm?: (formValues: any) => Promise<void> | void;
   firstButton?: string;
   secondButton?: string;
   schema?: AnyObjectSchema;
