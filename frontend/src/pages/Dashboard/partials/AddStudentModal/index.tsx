@@ -5,10 +5,7 @@ import { ModalParams } from '../../../../components/Modal';
 import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
 
-import {
-  addStudentInSchool,
-  Person,
-} from '../../../../services/Student.service';
+import { addPersonInSchool, Person } from '../../../../services/Person.service';
 
 interface FormValues {
   name: string;
@@ -29,13 +26,11 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
   ...rest
 }) => {
   async function handleSubmit({ name, email }: FormValues) {
-    const student = await addStudentInSchool({ name, email });
+    const student = await addPersonInSchool({ name, email, role: 'student' });
 
     if (onAdd && student) {
       onAdd(student);
     }
-
-    rest.handleClose();
   }
 
   return (
@@ -43,7 +38,7 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
       <h2>Add Student</h2>
 
       <Input autoFocus name="name" placeholder="student's name" />
-      <Input name="email" placeholder="student's email" />
+      <Input name="email" type="email" placeholder="student's email" />
     </FormModal>
   );
 };

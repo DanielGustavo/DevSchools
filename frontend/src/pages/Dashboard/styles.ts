@@ -16,8 +16,9 @@ export const Container = styled.section`
 export const BoxListsWrapper = styled.div`
   margin-bottom: 0.5rem;
 
-  display: flex;
+  display: grid;
   grid-gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
 
   div {
     flex: 1;

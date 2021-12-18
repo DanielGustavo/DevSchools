@@ -8,11 +8,14 @@ import AddSubjectModal from './partials/AddSubjectModal';
 import DeleteSubjectModal from './partials/DeleteSubjectModal';
 import AddStudentModal from './partials/AddStudentModal';
 import DeleteStudentModal from './partials/DeleteStudentModal';
+import AddTeacherModal from './partials/AddTeacherModal';
+import DeleteTeacherModal from './partials/DeleteTeacherModal';
 
 import {
   getClassroomsFromSchool,
   getStudentsFromSchool,
   getSubjectsFromSchool,
+  getTeachersFromSchool,
 } from '../../services/School.service';
 
 import useAuth from '../../hooks/useAuth';
@@ -43,6 +46,12 @@ const Dashboard: React.FC = () => {
     return loadedStudents;
   }
 
+  async function loadTeachers(page: number) {
+    const loadedTeachers = (await getTeachersFromSchool({ page })) ?? [];
+
+    return loadedTeachers;
+  }
+
   return (
     <Container>
       <h1>Welcome, {user?.name}!</h1>
@@ -61,15 +70,23 @@ const Dashboard: React.FC = () => {
           DeleteItemModal={DeleteSubjectModal}
           loadItems={loadSubjects}
         />
-      </BoxListsWrapper>
 
-      <BoxList
-        title="students"
-        itemTitleProperty="name"
-        loadItems={loadStudents}
-        AddItemModal={AddStudentModal}
-        DeleteItemModal={DeleteStudentModal}
-      />
+        <BoxList
+          title="students"
+          itemTitleProperty="name"
+          loadItems={loadStudents}
+          AddItemModal={AddStudentModal}
+          DeleteItemModal={DeleteStudentModal}
+        />
+
+        <BoxList
+          title="teachers"
+          itemTitleProperty="name"
+          loadItems={loadTeachers}
+          AddItemModal={AddTeacherModal}
+          DeleteItemModal={DeleteTeacherModal}
+        />
+      </BoxListsWrapper>
     </Container>
   );
 };

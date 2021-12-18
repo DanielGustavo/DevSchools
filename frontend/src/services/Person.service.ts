@@ -15,7 +15,7 @@ export interface Person {
   updated_at: string;
 }
 
-export interface AddStudentInSchoolResponse extends Person {
+export interface AddPersonInSchoolResponse extends Person {
   user: {
     email: string;
     is_a_school: boolean;
@@ -26,23 +26,24 @@ export interface AddStudentInSchoolResponse extends Person {
   school: School;
 }
 
-export interface AddStudentInSchoolParams {
+export interface AddPersonInSchoolParams {
   name: string;
   email: string;
+  role: 'teacher' | 'student';
 }
 
-export interface DeleteStudentFromSchoolParams {
+export interface DeletePersonFromSchoolParams {
   id: string;
 }
 
-export const addStudentInSchool = async ({
+export const addPersonInSchool = async ({
   name,
   email,
-}: AddStudentInSchoolParams) => {
+  role,
+}: AddPersonInSchoolParams) => {
   try {
-    const student = (
-      await api.post('/persons', { name, email, role: 'student' })
-    ).data as AddStudentInSchoolResponse;
+    const student = (await api.post('/persons', { name, email, role }))
+      .data as AddPersonInSchoolResponse;
 
     return student;
   } catch (error) {
@@ -50,9 +51,9 @@ export const addStudentInSchool = async ({
   }
 };
 
-export const deleteStudentFromSchool = async ({
+export const deletePersonFromSchool = async ({
   id,
-}: DeleteStudentFromSchoolParams) => {
+}: DeletePersonFromSchoolParams) => {
   try {
     const student = (await api.delete(`/persons/${id}`)).data as Person;
 

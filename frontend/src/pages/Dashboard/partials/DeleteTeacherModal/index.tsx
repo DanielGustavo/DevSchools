@@ -4,26 +4,26 @@ import { ModalParams } from '../../../../components/Modal';
 import SimpleModal from '../../../../components/SimpleModal';
 
 import {
-  Person,
   deletePersonFromSchool,
+  Person,
 } from '../../../../services/Person.service';
 
-interface DeleteStudentModalParams extends ModalParams {
+interface DeleteTeacherModalParams extends ModalParams {
   data?: Person;
-  onDelete?: (student: Person) => void;
+  onDelete?: (teacher: Person) => void;
 }
 
-const DeleteStudentModal: React.FC<DeleteStudentModalParams> = ({
-  data: student,
+const DeleteTeacherModal: React.FC<DeleteTeacherModalParams> = ({
+  data: teacher,
   onDelete,
   ...rest
 }) => {
-  function onConfirm() {
-    if (student) {
-      deletePersonFromSchool({ id: student.id });
+  async function onConfirm() {
+    if (teacher) {
+      await deletePersonFromSchool({ id: teacher.id });
 
       if (onDelete) {
-        onDelete(student);
+        onDelete(teacher);
       }
     }
   }
@@ -31,11 +31,11 @@ const DeleteStudentModal: React.FC<DeleteStudentModalParams> = ({
   return (
     <SimpleModal onConfirm={onConfirm} {...rest}>
       <h2>
-        Do you really want to remove the student {`"${student?.name}"`} from
+        Do you really want to remove the teacher {`"${teacher?.name}"`} from
         your school?
       </h2>
     </SimpleModal>
   );
 };
 
-export default DeleteStudentModal;
+export default DeleteTeacherModal;
