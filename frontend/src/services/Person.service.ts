@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import api from '../helpers/api';
 
 import { handleApiError } from '../utils/handleApiError';
@@ -15,15 +16,21 @@ export interface Person {
   updated_at: string;
 }
 
+export interface User {
+  email: string;
+  is_a_school: boolean;
+  avatar_filename: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface AddPersonInSchoolResponse extends Person {
-  user: {
-    email: string;
-    is_a_school: boolean;
-    avatar_filename: string | null;
-    created_at: string;
-    updated_at: string;
-  };
+  user: User;
   school: School;
+}
+
+export interface SetupPersonResponse extends Person {
+  user: User;
 }
 
 export interface AddPersonInSchoolParams {
@@ -34,6 +41,13 @@ export interface AddPersonInSchoolParams {
 
 export interface DeletePersonFromSchoolParams {
   id: string;
+}
+
+export interface SetupPersonParams {
+  name: string;
+  password: string;
+  passwordConfirmation: string;
+  token: string;
 }
 
 export const addPersonInSchool = async ({
@@ -58,6 +72,29 @@ export const deletePersonFromSchool = async ({
     const student = (await api.delete(`/persons/${id}`)).data as Person;
 
     return student;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const setupPerson = async ({
+  name,
+  password,
+  passwordConfirmation,
+  token,
+}: SetupPersonParams) => {
+  try {
+    const person = (
+      await api.put(
+        `/persons/setup`,
+        { name, password, passwordConfirmation },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+    ).data as SetupPersonResponse;
+
+    toast('Account setted up successfully!', { type: 'success' });
+
+    return person;
   } catch (error) {
     return handleApiError(error);
   }
