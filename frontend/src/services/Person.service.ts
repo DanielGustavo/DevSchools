@@ -3,6 +3,7 @@ import api from '../helpers/api';
 
 import { handleApiError } from '../utils/handleApiError';
 
+import { Classroom } from './Classroom.service';
 import { School } from './School.service';
 
 export interface Person {
@@ -50,6 +51,11 @@ export interface SetupPersonParams {
   token: string;
 }
 
+export interface GetClassroomsFromPersonParams {
+  id: string;
+  page?: number;
+}
+
 export const addPersonInSchool = async ({
   name,
   email,
@@ -95,6 +101,20 @@ export const setupPerson = async ({
     toast('Account setted up successfully!', { type: 'success' });
 
     return person;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const getClassroomsFromPerson = async ({
+  id,
+  page = 1,
+}: GetClassroomsFromPersonParams) => {
+  try {
+    const classrooms = (await api.get(`/persons/${id}/classrooms/${page}`))
+      .data as Classroom[];
+
+    return classrooms;
   } catch (error) {
     return handleApiError(error);
   }
