@@ -18,34 +18,21 @@ interface SignUpProps {
   passwordConfirmation: string;
 }
 
-interface UserOfTypeSchool {
-  schoolId: string;
-  userId: string;
-  name: string;
-  email: string;
-  isASchool: boolean;
-  avatarFilename: string | null;
-}
-
-interface UserOfTypePerson {
+interface User {
   userId: string;
   email: string;
   isASchool: boolean;
   avatarFilename: string | null;
-  personId: string;
+  personId?: string;
   name: string;
-  role: string;
+  role?: string;
   schoolId: string;
-  settedUp: boolean;
+  settedUp?: boolean;
 }
-
-type User = UserOfTypePerson | UserOfTypeSchool;
 
 interface AuthContextValue {
   signIn: (credentials: SignInProps) => Promise<User | undefined>;
-  signUpSchool: (
-    credentials: SignUpProps
-  ) => Promise<UserOfTypeSchool | undefined>;
+  signUpSchool: (credentials: SignUpProps) => Promise<User | undefined>;
   logout: () => void;
   token?: string;
   user?: User;
@@ -131,7 +118,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signUpSchool(
     credentials: SignUpProps
-  ): Promise<UserOfTypeSchool | undefined> {
+  ): Promise<User | undefined> {
     const { email, name, password, passwordConfirmation } = credentials;
 
     const data = await SchoolService.create({
@@ -141,7 +128,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       passwordConfirmation,
     });
 
-    let userData = undefined as UserOfTypeSchool | undefined;
+    let userData = undefined as User | undefined;
 
     if (data) {
       userData = await signIn({ email, password });

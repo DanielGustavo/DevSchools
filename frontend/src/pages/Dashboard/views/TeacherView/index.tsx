@@ -1,0 +1,35 @@
+import React from 'react';
+
+import BoxList from '../../../../components/BoxList';
+
+import { getClassroomsFromPerson } from '../../../../services/Person.service';
+
+import useAuth from '../../../../hooks/useAuth';
+
+import { BoxListsWrapper } from './styles';
+
+const TeacherView: React.FC = () => {
+  const { user } = useAuth();
+
+  async function loadClassrooms(page: number) {
+    if (!user?.personId) return [];
+
+    const classrooms =
+      (await getClassroomsFromPerson({
+        page,
+        id: user.personId,
+      })) ?? [];
+
+    return classrooms;
+  }
+
+  return (
+    <BoxListsWrapper>
+      <BoxList title="classrooms" loadItems={loadClassrooms} />
+      <BoxList title="subjects" />
+      <BoxList title="homeworks" />
+    </BoxListsWrapper>
+  );
+};
+
+export default TeacherView;
