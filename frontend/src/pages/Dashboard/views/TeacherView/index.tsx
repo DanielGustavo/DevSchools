@@ -3,6 +3,7 @@ import React from 'react';
 import BoxList from '../../../../components/BoxList';
 
 import { getClassroomsFromPerson } from '../../../../services/Person.service';
+import { getSubjectsFromTeacher } from '../../../../services/Teacher.service';
 
 import useAuth from '../../../../hooks/useAuth';
 
@@ -23,10 +24,19 @@ const TeacherView: React.FC = () => {
     return classrooms;
   }
 
+  async function loadSubjects(page: number) {
+    if (!user?.personId) return [];
+
+    const subjects =
+      (await getSubjectsFromTeacher({ page, id: user.personId })) ?? [];
+
+    return subjects;
+  }
+
   return (
     <BoxListsWrapper>
       <BoxList title="classrooms" loadItems={loadClassrooms} />
-      <BoxList title="subjects" />
+      <BoxList title="subjects" loadItems={loadSubjects} />
       <BoxList title="homeworks" />
     </BoxListsWrapper>
   );
