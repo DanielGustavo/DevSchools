@@ -25,7 +25,11 @@ const StudentView: React.FC = () => {
 
   return (
     <BoxListsWrapper>
-      <BoxList title="classrooms" loadItems={loadClassrooms} />
+      <BoxList
+        title="classrooms"
+        url="/classrooms/[id]"
+        loadItems={loadClassrooms}
+      />
     </BoxListsWrapper>
   );
 };

@@ -47,6 +47,14 @@ export const Form = styled(FormComponent)`
   small {
     align-self: center;
     margin-top: 5px;
+
+    a {
+      color: var(--secondary-color);
+
+      &:hover {
+        color: var(--secondary-color-dark);
+      }
+    }
   }
 
   button {

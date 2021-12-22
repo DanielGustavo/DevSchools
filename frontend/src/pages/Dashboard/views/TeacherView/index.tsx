@@ -35,7 +35,11 @@ const TeacherView: React.FC = () => {
 
   return (
     <BoxListsWrapper>
-      <BoxList title="classrooms" loadItems={loadClassrooms} />
+      <BoxList
+        title="classrooms"
+        url="/classrooms/[id]"
+        loadItems={loadClassrooms}
+      />
       <BoxList title="subjects" loadItems={loadSubjects} />
       <BoxList title="homeworks" />
     </BoxListsWrapper>

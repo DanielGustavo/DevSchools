@@ -50,6 +50,7 @@ const SchoolView: React.FC = () => (
   <BoxListsWrapper>
     <BoxList
       title="classrooms"
+      url="/classrooms/[id]"
       AddItemModal={AddClassroomModal}
       DeleteItemModal={DeleteClassroomModal}
       loadItems={loadClassrooms}

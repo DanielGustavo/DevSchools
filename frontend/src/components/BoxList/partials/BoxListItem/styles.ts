@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.li`
   background: var(--primary-color);
-  color: var(--dark-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,9 +9,16 @@ export const Container = styled.li`
   font-size: 0.8rem;
   font-weight: 400;
 
-  span {
+  a {
     display: flex;
     align-items: center;
+    flex: 1;
+    color: var(--dark-color);
+
+    span {
+      display: flex;
+      align-items: center;
+    }
   }
 
   button {

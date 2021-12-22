@@ -11,6 +11,7 @@ interface ListParams {
     [key: string]: any;
   }>;
   itemTitleProperty?: string;
+  url?: string;
   onDelete?: (data: any) => void;
   loadItems?: (page: number) => Promise<Array<unknown>>;
 }
@@ -20,6 +21,7 @@ const List: React.FC<ListParams> = ({
   onDelete,
   itemTitleProperty = 'title',
   loadItems,
+  url,
 }) => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -89,6 +91,7 @@ const List: React.FC<ListParams> = ({
             iconUrl={item.iconUrl}
             onDelete={onDelete}
             data={item}
+            url={url}
           />
         ))
       )}
