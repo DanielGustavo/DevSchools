@@ -26,7 +26,7 @@ export interface AddPersonInClassroomParams {
   classroomId: string;
 }
 
-export interface GetPersonsFromClassroomParams {
+export interface ClassroomPaginationParams {
   classroomId: string;
   page?: number;
 }
@@ -95,7 +95,7 @@ export const addPersonInClassroom = async ({
 export const getStudentsFromClassroom = async ({
   classroomId,
   page = 1,
-}: GetPersonsFromClassroomParams) => {
+}: ClassroomPaginationParams) => {
   try {
     const data = (
       await api.get(`/classrooms/${classroomId}/persons/${page}?role=student`)
@@ -110,11 +110,25 @@ export const getStudentsFromClassroom = async ({
 export const getTeachersFromClassroom = async ({
   classroomId,
   page = 1,
-}: GetPersonsFromClassroomParams) => {
+}: ClassroomPaginationParams) => {
   try {
     const data = (
       await api.get(`/classrooms/${classroomId}/persons/${page}?role=teacher`)
     ).data as Person[];
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const getSubjectsFromClassroom = async ({
+  classroomId,
+  page = 1,
+}: ClassroomPaginationParams) => {
+  try {
+    const data = (await api.get(`/classrooms/${classroomId}/subjects/${page}`))
+      .data as Subject[];
 
     return data;
   } catch (error) {
