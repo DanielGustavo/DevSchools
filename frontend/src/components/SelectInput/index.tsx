@@ -6,10 +6,15 @@ import { FormContext } from '../Form';
 
 import { Container, ErrorMessage, Select } from './styles';
 
+export interface Option {
+  value: string | number;
+  label: string;
+}
+
 interface SelectInputProps {
   name: string;
   placeholder?: string;
-  options: { value: string | number; label: string }[];
+  options: Option[];
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
