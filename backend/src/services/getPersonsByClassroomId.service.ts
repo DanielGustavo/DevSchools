@@ -10,12 +10,19 @@ interface Request {
   schoolId: string;
   page?: number;
   limit?: number;
+  role?: string;
 }
 
 export default async function getPersonsByClassroomIdService(
   request: Request
 ): Promise<Person[]> {
-  const { classroomId, schoolId, limit = 5, page = 1 } = request;
+  const {
+    classroomId,
+    schoolId,
+    limit = 5,
+    page = 1,
+    role = 'student',
+  } = request;
 
   const classroomRepository = getRepository(Classroom);
 
@@ -41,7 +48,10 @@ export default async function getPersonsByClassroomIdService(
     )
     .take(limit)
     .skip(limit * (page - 1))
-    .where('pc.classroom_id = :classroomId', { classroomId })
+    .where('pc.classroom_id = :classroomId AND person.role = :role', {
+      classroomId,
+      role,
+    })
     .getMany();
 
   return classroom.persons;

@@ -11,6 +11,7 @@ import hasClassroomIdInParamsValidator from '../validators/hasClassroomIdInParam
 import deletePersonFromClassroomValidator from '../validators/deletePersonFromClassroom.validator';
 import deleteSubjectFromClassroomValidator from '../validators/deleteSubjectFromClassroom.validator';
 import hasPageInParamsValidator from '../validators/hasPageInParams.validator';
+import hasRoleInQueryValidator from '../validators/hasRoleInQuery.validator';
 
 import classroomsController from '../controllers/classrooms.controller';
 
@@ -79,6 +80,7 @@ router.get(
   '/classrooms/:classroomId/persons/:page',
   hasClassroomIdInParamsValidator,
   hasPageInParamsValidator,
+  hasRoleInQueryValidator,
   classroomsController.listPersonsRegisteredInAClassroom
 );
 
