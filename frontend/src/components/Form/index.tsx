@@ -6,6 +6,7 @@ import {
   UseFormRegister,
   SubmitErrorHandler,
   FieldValues,
+  Control,
 } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -13,6 +14,7 @@ import * as yup from 'yup';
 interface FormContextValue {
   errors: FieldErrors;
   register: UseFormRegister<RegisterOptions>;
+  control: Control;
 }
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
@@ -34,6 +36,7 @@ const Form: React.FC<FormProps> = ({
     handleSubmit,
     register,
     formState: { errors },
+    control,
   } = useForm(
     schema && {
       resolver: yupResolver(schema),
@@ -45,7 +48,7 @@ const Form: React.FC<FormProps> = ({
       onSubmit={onValidSubmit && handleSubmit(onValidSubmit, onInvalidSubmit)}
       {...rest}
     >
-      <FormContext.Provider value={{ errors, register }}>
+      <FormContext.Provider value={{ errors, register, control }}>
         {children}
       </FormContext.Provider>
     </form>
