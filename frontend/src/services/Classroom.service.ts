@@ -26,6 +26,11 @@ export interface AddPersonInClassroomParams {
   classroomId: string;
 }
 
+export interface GetPersonsFromClassroomParams {
+  classroomId: string;
+  page?: number;
+}
+
 export interface DeleteClassroomResponse {
   message: string;
 }
@@ -86,3 +91,19 @@ export const addPersonInClassroom = async ({
     return handleApiError(error);
   }
 };
+
+export const getStudentsFromClassroom = async ({
+  classroomId,
+  page = 1,
+}: GetPersonsFromClassroomParams) => {
+  try {
+    const data = (
+      await api.get(`/classrooms/${classroomId}/persons/${page}?role=student`)
+    ).data as Person[];
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
