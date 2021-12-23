@@ -15,6 +15,7 @@ interface Item {
 }
 
 interface AddItemModalParams extends ModalParams {
+  data?: Item | any;
   onAdd?: (item: Item | any) => void;
 }
 
@@ -25,7 +26,9 @@ interface DeleteItemModalParams extends ModalParams {
 
 interface BoxListParams {
   loadItems?: (page: number) => Promise<Array<Item>>;
-  onAdd?: () => void;
+  modalData?: {
+    [key: string]: any;
+  };
   url?: string;
   itemTitleProperty?: string;
   title: string;
@@ -39,6 +42,7 @@ const BoxList: React.FC<BoxListParams> = ({
   loadItems,
   AddItemModal,
   DeleteItemModal,
+  modalData,
   url,
 }) => {
   const [items, setItems] = useState([] as Item[]);
@@ -72,12 +76,13 @@ const BoxList: React.FC<BoxListParams> = ({
           open={modals.addItem.open}
           handleClose={() => closeModal('addItem')}
           onAdd={addItem}
+          data={modalData}
         />
       )}
       {DeleteItemModal && (
         <DeleteItemModal
           open={modals.deleteItem.open}
-          data={modals.deleteItem.data}
+          data={{ ...modals.deleteItem.data, ...modalData }}
           handleClose={() => closeModal('deleteItem')}
           onDelete={deleteItem}
         />
