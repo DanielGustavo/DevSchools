@@ -21,6 +21,11 @@ export interface AddClassroomParams {
   title: string;
 }
 
+export interface AddPersonInClassroomParams {
+  personId: string;
+  classroomId: string;
+}
+
 export interface DeleteClassroomResponse {
   message: string;
 }
@@ -29,6 +34,12 @@ export interface GetClassroomResponse extends Classroom {
   subjects: Subject[];
   persons: Person[];
 }
+
+export interface AddPersonInClassroomResponse {
+  classroom: Classroom;
+  person: Person;
+}
+
 export const deleteClassroom = async ({ id }: PropsWithId) => {
   try {
     const data = (await api.delete(`/classrooms/${id}`))
@@ -54,6 +65,21 @@ export const getClassroom = async ({ id }: PropsWithId) => {
   try {
     const data = (await api.get(`/classrooms/${id}`))
       .data as GetClassroomResponse;
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const addPersonInClassroom = async ({
+  personId,
+  classroomId,
+}: AddPersonInClassroomParams) => {
+  try {
+    const data = (
+      await api.post(`/classrooms/${classroomId}/persons`, { personId })
+    ).data as AddPersonInClassroomResponse;
 
     return data;
   } catch (error) {
