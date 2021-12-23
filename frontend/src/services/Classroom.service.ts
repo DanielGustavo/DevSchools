@@ -1,5 +1,8 @@
 import api from '../helpers/api';
 
+import { Person } from './Person.service';
+import { Subject } from './Subject.service';
+
 import { handleApiError } from '../utils/handleApiError';
 
 export interface Classroom {
@@ -10,19 +13,23 @@ export interface Classroom {
   updated_at: string;
 }
 
-interface DeleteClassroomProps {
+export interface PropsWithId {
   id: string;
 }
 
-interface AddClassroomProps {
+export interface AddClassroomParams {
   title: string;
 }
 
-interface DeleteClassroomResponse {
+export interface DeleteClassroomResponse {
   message: string;
 }
 
-export const deleteClassroom = async ({ id }: DeleteClassroomProps) => {
+export interface GetClassroomResponse extends Classroom {
+  subjects: Subject[];
+  persons: Person[];
+}
+export const deleteClassroom = async ({ id }: PropsWithId) => {
   try {
     const data = (await api.delete(`/classrooms/${id}`))
       .data as DeleteClassroomResponse;
@@ -33,9 +40,20 @@ export const deleteClassroom = async ({ id }: DeleteClassroomProps) => {
   }
 };
 
-export const addClassroom = async ({ title }: AddClassroomProps) => {
+export const addClassroom = async ({ title }: AddClassroomParams) => {
   try {
     const data = (await api.post(`/classrooms`, { title })).data as Classroom;
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const getClassroom = async ({ id }: PropsWithId) => {
+  try {
+    const data = (await api.get(`/classrooms/${id}`))
+      .data as GetClassroomResponse;
 
     return data;
   } catch (error) {
