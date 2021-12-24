@@ -12,9 +12,9 @@ import {
   getClassroom,
   GetClassroomResponse,
   getStudentsFromClassroom,
-  getSubjectsFromClassroom,
   getTeachersFromClassroom,
 } from '../../../../services/Classroom.service';
+import { Subject } from '../../../../services/Subject.service';
 
 import { BoxListsWrapper } from './styles';
 
@@ -22,7 +22,11 @@ interface UrlParams {
   id: string;
 }
 
-const SchoolView: React.FC = () => {
+interface SchoolViewProps {
+  loadSubjects: (page: number) => Promise<Subject[]>;
+}
+
+const SchoolView: React.FC<SchoolViewProps> = ({ loadSubjects }) => {
   const [classroom, setClassroom] = useState<
     GetClassroomResponse | undefined
   >();
@@ -57,16 +61,6 @@ const SchoolView: React.FC = () => {
       })) ?? [];
 
     return teachers;
-  }
-
-  async function loadSubjects(page: number) {
-    const subjects =
-      (await getSubjectsFromClassroom({
-        classroomId: params.id,
-        page,
-      })) ?? [];
-
-    return subjects;
   }
 
   return (

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
 import SchoolView from './views/SchoolView';
+import StudentView from './views/StudentView';
 
 import {
   getClassroom,
   GetClassroomResponse,
+  getSubjectsFromClassroom,
 } from '../../services/Classroom.service';
 
 import useAuth from '../../hooks/useAuth';
@@ -35,11 +37,25 @@ const Classroom: React.FC = () => {
     loadClassroom();
   }, [setClassroom]);
 
+  async function loadSubjects(page: number) {
+    const subjects =
+      (await getSubjectsFromClassroom({
+        classroomId: params.id,
+        page,
+      })) ?? [];
+
+    return subjects;
+  }
+
   return (
     <Container>
       <h1>{classroom?.title || 'Loading...'}</h1>
 
-      {user?.isASchool === true && <SchoolView />}
+      {user?.isASchool === true && <SchoolView loadSubjects={loadSubjects} />}
+
+      {!user?.isASchool && user?.role === 'student' && (
+        <StudentView loadSubjects={loadSubjects} />
+      )}
     </Container>
   );
 };
