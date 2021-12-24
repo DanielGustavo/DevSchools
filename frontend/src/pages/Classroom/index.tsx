@@ -5,6 +5,7 @@ import BoxList from '../../components/BoxList';
 import AddStudentModal from './partials/AddStudentModal';
 import AddTeacherModal from './partials/AddTeacherModal';
 import AddSubjectModal from './partials/AddSubjectModal';
+import DeletePersonModal from './partials/DeletePersonModal';
 
 import {
   getClassroom,
@@ -76,15 +77,17 @@ const Classroom: React.FC = () => {
           title="Students"
           itemTitleProperty="name"
           loadItems={loadStudents}
+          DeleteItemModal={DeletePersonModal}
           AddItemModal={AddStudentModal}
-          modalData={classroom}
+          modalData={{ classroom }}
         />
         <BoxList
           title="Teachers"
           itemTitleProperty="name"
           loadItems={loadTeachers}
           AddItemModal={AddTeacherModal}
-          modalData={classroom}
+          DeleteItemModal={DeletePersonModal}
+          modalData={{ classroom }}
         />
 
         <BoxList

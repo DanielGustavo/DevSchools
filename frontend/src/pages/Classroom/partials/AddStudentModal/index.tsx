@@ -20,8 +20,10 @@ interface FormValues {
 interface AddStudentModalParams extends ModalParams {
   onAdd?: (person: Person) => void;
   data?: {
-    title: string;
-    id: string;
+    classroom: {
+      title: string;
+      id: string;
+    };
   };
 }
 
@@ -29,7 +31,7 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
   open,
   handleClose,
   onAdd,
-  data: classroom,
+  data,
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
 
@@ -49,11 +51,11 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
   }, [setOptions]);
 
   async function handleSubmit({ student: studentId }: FormValues) {
-    if (!classroom) return;
+    if (!data?.classroom) return;
 
     const person = (
       await addPersonInClassroom({
-        classroomId: classroom.id,
+        classroomId: data?.classroom.id,
         personId: studentId,
       })
     )?.person;
@@ -70,7 +72,7 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
       open={open}
       handleClose={handleClose}
     >
-      <h2>Insert a student in {`"${classroom?.title}"`}</h2>
+      <h2>Insert a student in {`"${data?.classroom?.title}"`}</h2>
 
       <SelectInput
         name="student"

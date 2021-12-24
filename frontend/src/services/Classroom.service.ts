@@ -31,6 +31,11 @@ export interface AddSubjectInClassroomParams {
   classroomId: string;
 }
 
+export interface DeletePersonFromClassroomParams {
+  classroomId: string;
+  personId: string;
+}
+
 export interface ClassroomPaginationParams {
   classroomId: string;
   page?: number;
@@ -46,6 +51,11 @@ export interface GetClassroomResponse extends Classroom {
 }
 
 export interface AddPersonInClassroomResponse {
+  classroom: Classroom;
+  person: Person;
+}
+
+export interface DeletePersonFromClassroomResponse {
   classroom: Classroom;
   person: Person;
 }
@@ -154,6 +164,21 @@ export const getSubjectsFromClassroom = async ({
   try {
     const data = (await api.get(`/classrooms/${classroomId}/subjects/${page}`))
       .data as Subject[];
+
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const deletePersonFromClassroom = async ({
+  classroomId,
+  personId,
+}: DeletePersonFromClassroomParams) => {
+  try {
+    const data = (
+      await api.delete(`/classrooms/${classroomId}/persons/${personId}`)
+    ).data as DeletePersonFromClassroomResponse;
 
     return data;
   } catch (error) {

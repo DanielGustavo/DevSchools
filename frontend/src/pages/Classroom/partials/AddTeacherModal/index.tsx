@@ -20,8 +20,10 @@ interface FormValues {
 interface AddTeacherModalParams extends ModalParams {
   onAdd?: (person: Person) => void;
   data?: {
-    title: string;
-    id: string;
+    classroom: {
+      title: string;
+      id: string;
+    };
   };
 }
 
@@ -29,7 +31,7 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
   open,
   handleClose,
   onAdd,
-  data: classroom,
+  data,
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
 
@@ -49,11 +51,11 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
   }, [setOptions]);
 
   async function handleSubmit({ teacher: teacherId }: FormValues) {
-    if (!classroom) return;
+    if (!data?.classroom) return;
 
     const person = (
       await addPersonInClassroom({
-        classroomId: classroom.id,
+        classroomId: data?.classroom.id,
         personId: teacherId,
       })
     )?.person;
@@ -70,7 +72,7 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
       open={open}
       handleClose={handleClose}
     >
-      <h2>Insert a teacher in {`"${classroom?.title}"`}</h2>
+      <h2>Insert a teacher in {`"${data?.classroom?.title}"`}</h2>
 
       <SelectInput
         name="teacher"
