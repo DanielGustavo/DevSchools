@@ -2,10 +2,10 @@
 
 <!--ts-->
 - [Register user of different types](#Register-user-of-different-types)
-- [Add/delete classroom](#Add/delete-classroom)
-- [Add/delete subject](#Add/delete-subject)
+- [Add/delete classroom](#Adddelete-classroom)
+- [Add/delete subject](#Adddelete-subject)
 - [Edit classroom](#Edit-classroom)
-- [Insert/remove teacher, students and subjects in a classroom](#Insert/remove-teacher,-students-and-subjects-in-a-classroom)
+- [Insert/remove teacher, students and subjects in a classroom](#Insertremove-teacher-students-and-subjects-in-a-classroom)
 <!--ts-->
 
 
