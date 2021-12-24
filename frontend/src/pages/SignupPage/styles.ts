@@ -4,11 +4,9 @@ import FormComponent from '../../components/Form';
 
 import { ContainerBreakpoints } from '../../styles';
 
-export const Container = styled.div`
+export const Container = styled.section`
   display: flex;
   justify-content: space-between;
-
-  padding: 20px 0;
 
   h1 {
     font-size: 2.5rem;

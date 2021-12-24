@@ -83,4 +83,8 @@ export default createGlobalStyle`
   small {
     font-size: 0.6rem;
   }
+
+  section {
+    padding: 20px 0;
+  }
 `;

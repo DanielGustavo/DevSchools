@@ -74,7 +74,6 @@ export const SecondaryButton = styled(Button)`
 `;
 
 export const SubHeroSection = styled.section`
-  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
