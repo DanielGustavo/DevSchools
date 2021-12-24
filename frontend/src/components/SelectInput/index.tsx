@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StylesConfig } from 'react-select';
 import { Controller } from 'react-hook-form';
 
@@ -14,14 +14,20 @@ export interface Option {
 interface SelectInputProps {
   name: string;
   placeholder?: string;
-  options: Option[];
+  options?: Option[];
+  loadOptions?: (page: number) => Promise<Option[]>;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
   name,
-  options,
+  options: optionsProp,
   placeholder,
+  loadOptions: loadOptionsProp,
 }) => {
+  const [options, setOptions] = useState(optionsProp || []);
+  const [optionsPage, setOptionsPage] = useState(optionsProp ? 2 : 1);
+  const [reachedLastPage, setReachedLastPage] = useState(false);
+
   const { errors, control } = useContext(FormContext);
 
   const customStyles = {
@@ -34,6 +40,19 @@ const SelectInput: React.FC<SelectInputProps> = ({
       maxHeight: '200px',
     }),
   } as StylesConfig;
+
+  async function loadOptions() {
+    if (!loadOptionsProp || reachedLastPage) return;
+
+    const loadedOptions = await loadOptionsProp(optionsPage);
+
+    if (loadedOptions.length === 0) {
+      setReachedLastPage(true);
+    }
+
+    setOptionsPage(optionsPage + 1);
+    setOptions([...options, ...loadedOptions]);
+  }
 
   return (
     <Container>
@@ -51,6 +70,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
             options={options}
             styles={customStyles}
             placeholder={placeholder}
+            onMenuScrollToBottom={loadOptions}
           />
         )}
       />

@@ -13,6 +13,17 @@ const schema = yup.object().shape({
   teacher: yup.string().required().uuid(),
 });
 
+async function loadOptions(page: number) {
+  const teachers = (await getTeachersFromSchool({ page })) ?? [];
+
+  const options = teachers.map(({ id, name }) => ({
+    label: name,
+    value: id,
+  }));
+
+  return options;
+}
+
 interface FormValues {
   teacher: string;
 }
@@ -35,21 +46,6 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
 
-  useEffect(() => {
-    async function loadOptions() {
-      const teachers = (await getTeachersFromSchool()) ?? [];
-
-      const teachersOptions = teachers.map(({ id, name }) => ({
-        label: name,
-        value: id,
-      }));
-
-      setOptions((currentOptions) => [...currentOptions, ...teachersOptions]);
-    }
-
-    loadOptions();
-  }, [setOptions]);
-
   async function handleSubmit({ teacher: teacherId }: FormValues) {
     if (!data?.classroom) return;
 
@@ -65,6 +61,14 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
     }
   }
 
+  useEffect(() => {
+    (async () => {
+      const loadedOptions = await loadOptions(1);
+
+      setOptions((currentOptions) => [...currentOptions, ...loadedOptions]);
+    })();
+  }, [setOptions]);
+
   return (
     <FormModal
       onConfirm={handleSubmit}
@@ -78,6 +82,7 @@ const AddTeacherModal: React.FC<AddTeacherModalParams> = ({
         name="teacher"
         placeholder="Select a teacher"
         options={options}
+        loadOptions={loadOptions}
       />
     </FormModal>
   );

@@ -13,6 +13,17 @@ const schema = yup.object().shape({
   subject: yup.string().required().uuid(),
 });
 
+async function loadOptions(page: number) {
+  const subjects = (await getSubjectsFromSchool({ page })) ?? [];
+
+  const options = subjects.map(({ id, title }) => ({
+    label: title,
+    value: id,
+  }));
+
+  return options;
+}
+
 interface FormValues {
   subject: string;
 }
@@ -38,18 +49,11 @@ const AddSubjectModal: React.FC<AddSubjectModalParams> = ({
   const classroom = data?.classroom;
 
   useEffect(() => {
-    async function loadOptions() {
-      const subjects = (await getSubjectsFromSchool()) ?? [];
+    (async () => {
+      const loadedOptions = await loadOptions(1);
 
-      const subjectsOptions = subjects.map(({ id, title }) => ({
-        label: title,
-        value: id,
-      }));
-
-      setOptions((currentOptions) => [...currentOptions, ...subjectsOptions]);
-    }
-
-    loadOptions();
+      setOptions((currentOptions) => [...currentOptions, ...loadedOptions]);
+    })();
   }, [setOptions]);
 
   async function handleSubmit({ subject: subjectId }: FormValues) {
@@ -80,6 +84,7 @@ const AddSubjectModal: React.FC<AddSubjectModalParams> = ({
         name="subject"
         placeholder="Select a subject"
         options={options}
+        loadOptions={loadOptions}
       />
     </FormModal>
   );

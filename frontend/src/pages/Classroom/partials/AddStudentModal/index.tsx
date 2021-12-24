@@ -17,6 +17,17 @@ interface FormValues {
   student: string;
 }
 
+async function loadOptions(page: number) {
+  const students = (await getStudentsFromSchool({ page })) ?? [];
+
+  const options = students.map(({ id, name }) => ({
+    label: name,
+    value: id,
+  }));
+
+  return options;
+}
+
 interface AddStudentModalParams extends ModalParams {
   onAdd?: (person: Person) => void;
   data?: {
@@ -33,22 +44,7 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
   onAdd,
   data,
 }) => {
-  const [options, setOptions] = useState<Option[]>([]);
-
-  useEffect(() => {
-    async function loadOptions() {
-      const students = (await getStudentsFromSchool()) ?? [];
-
-      const studentsOptions = students.map(({ id, name }) => ({
-        label: name,
-        value: id,
-      }));
-
-      setOptions((currentOptions) => [...currentOptions, ...studentsOptions]);
-    }
-
-    loadOptions();
-  }, [setOptions]);
+  const [options, setOptions] = useState([] as Option[]);
 
   async function handleSubmit({ student: studentId }: FormValues) {
     if (!data?.classroom) return;
@@ -65,6 +61,14 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
     }
   }
 
+  useEffect(() => {
+    (async () => {
+      const loadedOptions = await loadOptions(1);
+
+      setOptions((currentOptions) => [...currentOptions, ...loadedOptions]);
+    })();
+  }, [setOptions]);
+
   return (
     <FormModal
       onConfirm={handleSubmit}
@@ -78,6 +82,7 @@ const AddStudentModal: React.FC<AddStudentModalParams> = ({
         name="student"
         placeholder="Select a student"
         options={options}
+        loadOptions={loadOptions}
       />
     </FormModal>
   );
