@@ -107,13 +107,15 @@ class ClassroomsController {
     request: Request,
     response: Response
   ) {
+    const { school, person } = request.user;
     const { classroomId, page } = request.params;
 
     const role = request.query.role as string | undefined;
+    const schoolId = (school?.id || person?.schoolId) as string;
 
     const persons = await getPersonsByClassroomIdService({
       classroomId,
-      schoolId: request.user.school?.id as string,
+      schoolId,
       page: parseInt(page, 10),
       role: role ?? 'student',
     });

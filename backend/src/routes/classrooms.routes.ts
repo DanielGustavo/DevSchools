@@ -32,6 +32,14 @@ router.get(
   classroomsController.listClassroom
 );
 
+router.get(
+  '/classrooms/:classroomId/persons/:page',
+  hasClassroomIdInParamsValidator,
+  hasPageInParamsValidator,
+  hasRoleInQueryValidator,
+  classroomsController.listPersonsRegisteredInAClassroom
+);
+
 router.use('/classrooms', ensureIsASchoolMiddleware);
 
 router.post(
@@ -74,14 +82,6 @@ router.put(
   '/classrooms/:classroomId',
   updateAClassroomValidator,
   classroomsController.edit
-);
-
-router.get(
-  '/classrooms/:classroomId/persons/:page',
-  hasClassroomIdInParamsValidator,
-  hasPageInParamsValidator,
-  hasRoleInQueryValidator,
-  classroomsController.listPersonsRegisteredInAClassroom
 );
 
 export default router;
