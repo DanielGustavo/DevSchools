@@ -20,8 +20,10 @@ interface FormValues {
 interface AddSubjectModalParams extends ModalParams {
   onAdd?: (subject: Subject) => void;
   data?: {
-    title: string;
-    id: string;
+    classroom: {
+      title: string;
+      id: string;
+    };
   };
 }
 
@@ -29,9 +31,11 @@ const AddSubjectModal: React.FC<AddSubjectModalParams> = ({
   open,
   handleClose,
   onAdd,
-  data: classroom,
+  data,
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
+
+  const classroom = data?.classroom;
 
   useEffect(() => {
     async function loadOptions() {

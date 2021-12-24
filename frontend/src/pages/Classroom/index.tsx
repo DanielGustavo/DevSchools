@@ -6,6 +6,7 @@ import AddStudentModal from './partials/AddStudentModal';
 import AddTeacherModal from './partials/AddTeacherModal';
 import AddSubjectModal from './partials/AddSubjectModal';
 import DeletePersonModal from './partials/DeletePersonModal';
+import DeleteSubjectModal from './partials/DeleteSubjectModal';
 
 import {
   getClassroom,
@@ -94,7 +95,8 @@ const Classroom: React.FC = () => {
           title="Subjects"
           loadItems={loadSubjects}
           AddItemModal={AddSubjectModal}
-          modalData={classroom}
+          DeleteItemModal={DeleteSubjectModal}
+          modalData={{ classroom }}
         />
       </BoxListsWrapper>
     </Container>
