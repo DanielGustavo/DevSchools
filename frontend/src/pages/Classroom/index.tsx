@@ -4,6 +4,7 @@ import { useRouteMatch } from 'react-router-dom';
 import BoxList from '../../components/BoxList';
 import AddStudentModal from './partials/AddStudentModal';
 import AddTeacherModal from './partials/AddTeacherModal';
+import AddSubjectModal from './partials/AddSubjectModal';
 
 import {
   getClassroom,
@@ -89,6 +90,7 @@ const Classroom: React.FC = () => {
         <BoxList
           title="Subjects"
           loadItems={loadSubjects}
+          AddItemModal={AddSubjectModal}
           modalData={classroom}
         />
       </BoxListsWrapper>
