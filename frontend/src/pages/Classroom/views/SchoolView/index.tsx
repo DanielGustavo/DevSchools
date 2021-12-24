@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import { FiSettings } from 'react-icons/fi';
 
 import BoxList from '../../../../components/BoxList';
 import AddStudentModal from '../../partials/AddStudentModal';
@@ -7,6 +8,7 @@ import AddTeacherModal from '../../partials/AddTeacherModal';
 import AddSubjectModal from '../../partials/AddSubjectModal';
 import DeletePersonModal from '../../partials/DeletePersonModal';
 import DeleteSubjectModal from '../../partials/DeleteSubjectModal';
+import EditClassroomModal from '../../partials/EditClassroomModal';
 
 import {
   getClassroom,
@@ -16,7 +18,9 @@ import {
 } from '../../../../services/Classroom.service';
 import { Subject } from '../../../../services/Subject.service';
 
-import { BoxListsWrapper } from './styles';
+import useModal from '../../../../hooks/useModal';
+
+import { BoxListsWrapper, TitleWrapper } from './styles';
 
 interface UrlParams {
   id: string;
@@ -32,6 +36,8 @@ const SchoolView: React.FC<SchoolViewProps> = ({ loadSubjects }) => {
   >();
 
   const params = useRouteMatch().params as UrlParams;
+
+  const { openModal, modals, closeModal } = useModal(['editClassroomModal']);
 
   useEffect(() => {
     async function loadClassroom() {
@@ -65,6 +71,25 @@ const SchoolView: React.FC<SchoolViewProps> = ({ loadSubjects }) => {
 
   return (
     <>
+      {classroom && (
+        <EditClassroomModal
+          open={modals.editClassroomModal.open}
+          handleClose={() => closeModal('editClassroomModal')}
+          classroom={classroom}
+          onEdit={(editedClassroom) => {
+            setClassroom({ ...classroom, ...editedClassroom });
+          }}
+        />
+      )}
+
+      <TitleWrapper>
+        <h1>{classroom?.title || 'Loading...'}</h1>
+
+        <button type="button" onClick={() => openModal('editClassroomModal')}>
+          <FiSettings />
+        </button>
+      </TitleWrapper>
+
       <BoxListsWrapper>
         <BoxList
           title="Students"

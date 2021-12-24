@@ -61,7 +61,7 @@ const Classroom: React.FC = () => {
 
   return (
     <Container>
-      <h1>{classroom?.title || 'Loading...'}</h1>
+      {!user?.isASchool && <h1>{classroom?.title || 'Loading...'}</h1>}
 
       {user?.isASchool === true && <SchoolView loadSubjects={loadSubjects} />}
 

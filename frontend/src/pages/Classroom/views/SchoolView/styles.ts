@@ -22,3 +22,32 @@ export const BoxListsWrapper = styled.div`
     flex-direction: column;
   }
 `;
+
+export const TitleWrapper = styled.span`
+  display: flex;
+  align-items: flex-end;
+
+  margin-bottom: 40px;
+
+  h1 {
+    margin: 0 !important;
+  }
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+
+    margin-bottom: 0.3rem;
+    margin-left: 0.3rem;
+    color: var(--gray-color);
+
+    &:hover {
+      color: var(--dark-color);
+    }
+  }
+
+  svg {
+    font-size: 0.8rem;
+  }
+`;
