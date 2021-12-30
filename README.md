@@ -13,8 +13,8 @@
 
 - [Prerequisites](#Prerequisites)
 - [How to run the application](#How-to-run-the-application)
-  - [Backend setup & start](#Backend-setup-&-start)
-  - [Frontend setup & start](#Frontend-setup-&-start)
+  - [Backend setup & start](#Backend-setup--start)
+  - [Frontend setup & start](#Frontend-setup--start)
 - [Tecnologies](#Tecnologies)
 - [Author](#Author)
 - [Features](/features.md)
@@ -31,15 +31,19 @@ Before starting, you're gonna nedd to have [Docker](https://www.docker.com/get-s
 1. Create a file `.env`
 2. Copy what is inside `.env.example` and paste in `.env`
 3. Change the necessary fields in `.env` [(setup Mailtrap)](/setupMailtrap.md)
-4. Open the terminal at the backend folder and type the command bellow to build the backend and database containers:
+4. Open the terminal at the backend folder and type the command bellow to install the required packages:
+   ```bash
+   > yarn
+   ```
+5. Open the terminal at the backend folder and type the command bellow to build the backend and database containers:
    ```bash
    > docker-compose up --build -d
    ```
-5. Run all the migrations:
+6. Run all the migrations:
    ```bash
    > docker exec devschools_backend yarn typeorm migration:run
    ```
-6. Watch the backend logs:
+7. Watch the backend logs:
    ```bash
    > docker logs -f devschools_backend
    ```
