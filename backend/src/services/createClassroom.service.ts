@@ -24,9 +24,10 @@ export default async function createClassroomService(
 
   const classroomRepository = getRepository(Classroom);
 
-  const schoolAlreadyHasAClassroomWithThisTitle = !!(await classroomRepository.findOne(
-    { where: { school_id: schoolId, title } }
-  ));
+  const schoolAlreadyHasAClassroomWithThisTitle =
+    !!(await classroomRepository.findOne({
+      where: { school_id: schoolId, title },
+    }));
 
   if (schoolAlreadyHasAClassroomWithThisTitle) {
     throw new AppError(400, 'There is a classroom with this title already');

@@ -6,7 +6,8 @@ import {
 } from 'typeorm';
 
 export class createPersonsSubjectsTable1620695745317
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({

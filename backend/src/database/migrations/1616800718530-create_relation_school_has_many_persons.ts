@@ -6,7 +6,8 @@ import {
 } from 'typeorm';
 
 export class createRelationSchoolHasManyPersons1616800718530
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'persons',

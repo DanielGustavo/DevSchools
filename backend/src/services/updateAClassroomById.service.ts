@@ -29,9 +29,10 @@ export default async function updateAClassroomByIdService(
     throw new AppError(403, 'You can not edit a classroom that you do not own');
   }
 
-  const ThereIsAlreadyAClassroomWithThisTitleInThisSchool = !!(await classroomRepository.findOne(
-    { where: { title: newTitle, school_id: schoolId } }
-  ));
+  const ThereIsAlreadyAClassroomWithThisTitleInThisSchool =
+    !!(await classroomRepository.findOne({
+      where: { title: newTitle, school_id: schoolId },
+    }));
 
   if (ThereIsAlreadyAClassroomWithThisTitleInThisSchool) {
     throw new AppError(

@@ -15,7 +15,8 @@ const updatedAtColumn = new TableColumn({
 });
 
 export class addFieldsCreatedAtAndUpdatedAtInAllModelsTables1620691207538
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumns('classrooms', [
       createdAtColumn,
