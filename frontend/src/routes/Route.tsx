@@ -7,6 +7,8 @@ import {
 
 import useAuth from '../hooks/useAuth';
 
+import LoadingPage from '../pages/LoadingPage';
+
 interface RouteProps extends DefaultRouteProps {
   isPrivate?: boolean;
   component: React.ComponentType;
@@ -17,12 +19,16 @@ const Route: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { authenticated } = useAuth();
+  const { authenticated, loading } = useAuth();
 
   return (
     <DefaultRoute
       {...rest}
       component={() => {
+        if (loading) {
+          return <LoadingPage />;
+        }
+
         if (!!isPrivate === authenticated) {
           return <Component />;
         }

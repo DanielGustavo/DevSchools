@@ -37,12 +37,14 @@ interface AuthContextValue {
   token?: string;
   user?: User;
   authenticated: boolean;
+  loading: boolean;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [token, setToken] = useState<string | undefined>(() => {
     const StoredToken = window.localStorage.getItem('DevSchools:token');
@@ -72,7 +74,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     } else {
       setAuthenticated(false);
     }
-  }, [user, token]);
+
+    if (user !== undefined && token !== undefined) {
+      setLoading(false);
+    }
+  }, [user, token, setLoading]);
 
   function logout() {
     window.localStorage.setItem('DevSchools:token', '');
@@ -139,7 +145,15 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, authenticated, logout, signIn, signUpSchool }}
+      value={{
+        user,
+        token,
+        authenticated,
+        logout,
+        signIn,
+        signUpSchool,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>
