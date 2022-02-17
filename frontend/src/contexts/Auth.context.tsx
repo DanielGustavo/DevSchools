@@ -2,8 +2,8 @@ import React, { createContext, useEffect, useState } from 'react';
 
 import api from '../helpers/api';
 
-import * as SchoolService from '../services/School.service';
-import * as AuthService from '../services/Auth.service';
+import { addSchool } from '../services/addSchool.service';
+import { signIn as login } from '../services/signin.service';
 import { validateToken } from '../utils/validateToken';
 
 interface SignInProps {
@@ -84,7 +84,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signIn(credentials: SignInProps): Promise<User | undefined> {
     const { email, password } = credentials;
-    const data = await AuthService.signIn({ email, password });
+    const data = await login({ email, password });
 
     if (!data) return undefined;
 
@@ -121,7 +121,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   ): Promise<User | undefined> {
     const { email, name, password, passwordConfirmation } = credentials;
 
-    const data = await SchoolService.create({
+    const data = await addSchool({
       email,
       name,
       password,

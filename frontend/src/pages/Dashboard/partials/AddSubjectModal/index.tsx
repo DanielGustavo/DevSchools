@@ -5,7 +5,9 @@ import { ModalParams } from '../../../../components/Modal';
 import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
 
-import { addSubject, Subject } from '../../../../services/Subject.service';
+import { addSubject } from '../../../../services/addSubject.service';
+
+import Subject from '../../../../entities/Subject';
 
 interface FormValues {
   title: string;

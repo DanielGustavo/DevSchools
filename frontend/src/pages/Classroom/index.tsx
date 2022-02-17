@@ -5,12 +5,9 @@ import SchoolView from './views/SchoolView';
 import StudentView from './views/StudentView';
 import TeacherView from './views/TeacherView';
 
-import {
-  getClassroom,
-  GetClassroomResponse,
-  getSubjectsFromClassroom,
-  getStudentsFromClassroom,
-} from '../../services/Classroom.service';
+import { getSubjectsFromClassroom } from '../../services/getSubjectsFromClassroom.service';
+import { getStudentsFromClassroom } from '../../services/getStudentsFromClassroom.service';
+import { getClassroom, Response } from '../../services/getClassroom.service';
 
 import useAuth from '../../hooks/useAuth';
 
@@ -21,9 +18,7 @@ interface UrlParams {
 }
 
 const Classroom: React.FC = () => {
-  const [classroom, setClassroom] = useState<
-    GetClassroomResponse | undefined
-  >();
+  const [classroom, setClassroom] = useState<Response | undefined>();
 
   const params = useRouteMatch().params as UrlParams;
 

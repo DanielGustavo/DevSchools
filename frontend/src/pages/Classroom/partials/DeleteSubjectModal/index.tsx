@@ -3,8 +3,9 @@ import React from 'react';
 import { ModalParams } from '../../../../components/Modal';
 import SimpleModal from '../../../../components/SimpleModal';
 
-import { deleteSubjectFromClassroom } from '../../../../services/Classroom.service';
-import { Subject } from '../../../../services/Subject.service';
+import { deleteSubjectFromClassroom } from '../../../../services/deleteSubjectFromClassroom.service';
+
+import Subject from '../../../../entities/Subject';
 
 interface DeleteSubjectModalParams extends ModalParams {
   onDelete?: (subject: Subject) => void;

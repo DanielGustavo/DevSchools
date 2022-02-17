@@ -2,7 +2,7 @@ import React from 'react';
 
 import BoxList from '../../../../components/BoxList';
 
-import { Subject } from '../../../../services/Subject.service';
+import Subject from '../../../../entities/Subject';
 
 import { BoxListWrapper } from './styles';
 

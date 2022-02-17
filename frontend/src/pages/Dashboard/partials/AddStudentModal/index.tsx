@@ -5,7 +5,9 @@ import { ModalParams } from '../../../../components/Modal';
 import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
 
-import { addPersonInSchool, Person } from '../../../../services/Person.service';
+import { addPersonInSchool } from '../../../../services/addPersonInSchool.service';
+
+import Person from '../../../../entities/Person';
 
 interface FormValues {
   name: string;

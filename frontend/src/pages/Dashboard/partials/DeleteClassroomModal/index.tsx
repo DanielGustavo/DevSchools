@@ -3,10 +3,9 @@ import React from 'react';
 import { ModalParams } from '../../../../components/Modal';
 import SimpleModal from '../../../../components/SimpleModal';
 
-import {
-  Classroom,
-  deleteClassroom,
-} from '../../../../services/Classroom.service';
+import Classroom from '../../../../entities/Classroom';
+
+import { deleteClassroom } from '../../../../services/deleteClassroom.service';
 
 interface DeleteClassroomModalParams extends ModalParams {
   data?: Classroom;

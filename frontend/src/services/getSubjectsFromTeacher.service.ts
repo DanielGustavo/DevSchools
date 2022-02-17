@@ -1,18 +1,15 @@
 import api from '../helpers/api';
 
-import { Subject } from './Subject.service';
-
 import { handleApiError } from '../utils/handleApiError';
 
-interface GetSubjectsFromTeacherParams {
+import Subject from '../entities/Subject';
+
+interface Request {
   page?: number;
   id: string;
 }
 
-export const getSubjectsFromTeacher = async ({
-  page = 1,
-  id,
-}: GetSubjectsFromTeacherParams) => {
+export const getSubjectsFromTeacher = async ({ page = 1, id }: Request) => {
   try {
     const subjects = (await api.get(`/teachers/${id}/subjects/${page}`))
       ?.data as Subject[];

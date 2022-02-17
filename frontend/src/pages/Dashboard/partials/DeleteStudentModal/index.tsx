@@ -3,10 +3,9 @@ import React from 'react';
 import { ModalParams } from '../../../../components/Modal';
 import SimpleModal from '../../../../components/SimpleModal';
 
-import {
-  Person,
-  deletePersonFromSchool,
-} from '../../../../services/Person.service';
+import { deletePersonFromSchool } from '../../../../services/deletePersonFromSchool.service';
+
+import Person from '../../../../entities/Person';
 
 interface DeleteStudentModalParams extends ModalParams {
   data?: Person;

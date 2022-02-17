@@ -2,12 +2,12 @@ import api from '../helpers/api';
 
 import { handleApiError } from '../utils/handleApiError';
 
-interface SignInRequest {
+interface Request {
   email: string;
   password: string;
 }
 
-interface SignInResponse {
+interface Response {
   user: {
     id: string;
     email: string;
@@ -37,10 +37,10 @@ interface SignInResponse {
 }
 
 export const signIn = async (
-  requestBody: SignInRequest
-): Promise<SignInResponse | undefined> => {
+  requestBody: Request
+): Promise<Response | undefined> => {
   try {
-    const data = (await api.post('/auth', requestBody)).data as SignInResponse;
+    const data = (await api.post('/auth', requestBody)).data as Response;
 
     const userData = {
       userId: data.user.id,

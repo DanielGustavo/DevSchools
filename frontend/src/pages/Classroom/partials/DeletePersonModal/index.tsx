@@ -2,9 +2,9 @@ import React from 'react';
 
 import { ModalParams } from '../../../../components/Modal';
 import SimpleModal from '../../../../components/SimpleModal';
-import { deletePersonFromClassroom } from '../../../../services/Classroom.service';
+import { deletePersonFromClassroom } from '../../../../services/deletePersonFromClassroom.service';
 
-import { Person } from '../../../../services/Person.service';
+import Person from '../../../../entities/Person';
 
 interface DeletePersonModalParams extends ModalParams {
   onDelete?: (person: Person) => void;

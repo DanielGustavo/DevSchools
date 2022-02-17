@@ -5,10 +5,9 @@ import { ModalParams } from '../../../../components/Modal';
 import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
 
-import {
-  addClassroom,
-  Classroom,
-} from '../../../../services/Classroom.service';
+import Classroom from '../../../../entities/Classroom';
+
+import { addClassroom } from '../../../../services/addClassroom.service';
 
 interface FormValues {
   title: string;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import BoxList from '../../../../components/BoxList';
 
-import { getClassroomsFromPerson } from '../../../../services/Person.service';
+import { getClassroomsFromPerson } from '../../../../services/getClassroomsFromPerson.service';
 
 import useAuth from '../../../../hooks/useAuth';
 

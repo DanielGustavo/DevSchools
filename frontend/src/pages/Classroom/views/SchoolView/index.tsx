@@ -10,17 +10,18 @@ import DeletePersonModal from '../../partials/DeletePersonModal';
 import DeleteSubjectModal from '../../partials/DeleteSubjectModal';
 import EditClassroomModal from '../../partials/EditClassroomModal';
 
+import { getTeachersFromClassroom } from '../../../../services/getTeachersFromClassroom.service';
+import { getStudentsFromClassroom } from '../../../../services/getStudentsFromClassroom.service';
 import {
   getClassroom,
-  GetClassroomResponse,
-  getStudentsFromClassroom,
-  getTeachersFromClassroom,
-} from '../../../../services/Classroom.service';
-import { Subject } from '../../../../services/Subject.service';
+  Response,
+} from '../../../../services/getClassroom.service';
 
 import useModal from '../../../../hooks/useModal';
 
 import { BoxListsWrapper, TitleWrapper } from './styles';
+
+import Subject from '../../../../entities/Subject';
 
 interface UrlParams {
   id: string;
@@ -31,9 +32,7 @@ interface SchoolViewProps {
 }
 
 const SchoolView: React.FC<SchoolViewProps> = ({ loadSubjects }) => {
-  const [classroom, setClassroom] = useState<
-    GetClassroomResponse | undefined
-  >();
+  const [classroom, setClassroom] = useState<Response | undefined>();
 
   const params = useRouteMatch().params as UrlParams;
 

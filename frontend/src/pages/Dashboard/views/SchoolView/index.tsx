@@ -12,12 +12,10 @@ import DeleteStudentModal from '../../partials/DeleteStudentModal';
 import AddTeacherModal from '../../partials/AddTeacherModal';
 import DeleteTeacherModal from '../../partials/DeleteTeacherModal';
 
-import {
-  getClassroomsFromSchool,
-  getStudentsFromSchool,
-  getSubjectsFromSchool,
-  getTeachersFromSchool,
-} from '../../../../services/School.service';
+import { getTeachersFromSchool } from '../../../../services/getTeachersFromSchool.service';
+import { getStudentsFromSchool } from '../../../../services/getStudentsFromSchool.service';
+import { getSubjectsFromSchool } from '../../../../services/getSubjectsFromSchool.service';
+import { getClassroomsFromSchool } from '../../../../services/getClassroomsFromSchool.service';
 
 async function loadSubjects(page: number) {
   const subjects = (await getSubjectsFromSchool({ page })) ?? [];

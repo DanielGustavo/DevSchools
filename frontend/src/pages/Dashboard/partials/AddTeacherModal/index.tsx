@@ -5,7 +5,9 @@ import FormModal from '../../../../components/FormModal';
 import Input from '../../../../components/Input';
 import { ModalParams } from '../../../../components/Modal';
 
-import { addPersonInSchool, Person } from '../../../../services/Person.service';
+import Person from '../../../../entities/Person';
+
+import { addPersonInSchool } from '../../../../services/addPersonInSchool.service';
 
 interface AddTeacherModalParams extends ModalParams {
   onAdd?: (teacher: Person) => void;

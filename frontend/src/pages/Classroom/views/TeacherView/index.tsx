@@ -2,10 +2,10 @@ import React from 'react';
 
 import BoxList from '../../../../components/BoxList';
 
-import { Subject } from '../../../../services/Subject.service';
-import { Person } from '../../../../services/Person.service';
-
 import { BoxListsWrapper } from './styles';
+
+import Person from '../../../../entities/Person';
+import Subject from '../../../../entities/Subject';
 
 interface TeacherViewProps {
   loadSubjects: (page: number) => Promise<Subject[]>;

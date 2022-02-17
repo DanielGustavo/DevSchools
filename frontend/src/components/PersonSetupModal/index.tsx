@@ -7,7 +7,7 @@ import Input from '../Input';
 
 import useAuth from '../../hooks/useAuth';
 
-import { setupPerson } from '../../services/Person.service';
+import { setupPerson } from '../../services/setupPerson.service';
 
 import { validateToken } from '../../utils/validateToken';
 

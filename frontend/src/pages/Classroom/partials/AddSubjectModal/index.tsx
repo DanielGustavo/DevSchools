@@ -5,9 +5,10 @@ import FormModal from '../../../../components/FormModal';
 import SelectInput, { Option } from '../../../../components/SelectInput';
 import { ModalParams } from '../../../../components/Modal';
 
-import { Subject } from '../../../../services/Subject.service';
-import { getSubjectsFromSchool } from '../../../../services/School.service';
-import { addSubjectInClassroom } from '../../../../services/Classroom.service';
+import { getSubjectsFromSchool } from '../../../../services/getSubjectsFromSchool.service';
+import { addSubjectInClassroom } from '../../../../services/addSubjectInClassroom.service';
+
+import Subject from '../../../../entities/Subject';
 
 const schema = yup.object().shape({
   subject: yup.string().required().uuid(),
