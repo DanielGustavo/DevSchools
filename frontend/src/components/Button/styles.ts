@@ -10,6 +10,12 @@ export const Container = styled.button<ButtonProps>`
   text-transform: capitalize;
   color: var(--light-color);
 
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+    `}
+
   ${({ outlined = false }) =>
     outlined ? OutlinedContainerStyle : FilledContainerStyle}
 `;

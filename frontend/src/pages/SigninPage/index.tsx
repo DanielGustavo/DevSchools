@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import * as yup from 'yup';
 
@@ -22,15 +22,20 @@ const formSchema = yup.object().shape({
 });
 
 const SigninPage: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const { signIn } = useAuth();
   const { push } = useHistory();
 
   async function onValidSubmit(formValues: FormValues) {
+    setLoading(true);
     const user = await signIn(formValues);
 
     if (user) {
       push('/dashboard');
     }
+
+    setLoading(false);
   }
 
   return (
@@ -51,7 +56,9 @@ const SigninPage: React.FC = () => {
           />
         </InputsWrapper>
 
-        <Button type="submit">Sign In</Button>
+        <Button type="submit" disabled={loading}>
+          Sign In
+        </Button>
         <small>
           You don’t have an account? <Link to="/signup">Join us</Link>!
         </small>
