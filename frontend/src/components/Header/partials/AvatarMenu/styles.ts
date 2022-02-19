@@ -49,7 +49,7 @@ export const Container = styled.div`
       color: var(--gray-color);
     }
 
-    @media (max-width: 425px) {
+    @media (max-width: 426px) {
       width: 1.5rem;
       height: 1.5rem;
     }
@@ -74,9 +74,21 @@ export const MainWrapper = styled.div`
       font-size: 0.5rem;
       color: var(--gray-color);
     }
+
+    @media (max-width: 1440px) {
+      strong {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      small {
+        font-size: 0.7rem;
+        color: var(--gray-color);
+      }
+    }
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 426px) {
     display: none;
   }
 `;
