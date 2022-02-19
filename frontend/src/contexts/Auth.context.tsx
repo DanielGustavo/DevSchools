@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+import notifier from '../helpers/notifier';
 import api from '../helpers/api';
 
 import { addSchool } from '../services/addSchool.service';
@@ -77,6 +78,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       setLoading(false);
     }
   }, [user, token, setLoading]);
+
+  useEffect(() => {
+    notifier.on('logout', logout);
+
+    return () => {
+      notifier.off('logout', logout);
+    };
+  }, []);
 
   function logout() {
     window.localStorage.setItem('DevSchools:token', '');
