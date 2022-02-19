@@ -32,10 +32,9 @@ const SigninPage: React.FC = () => {
     const user = await signIn(formValues);
 
     if (user) {
+      setLoading(false);
       push('/dashboard');
     }
-
-    setLoading(false);
   }
 
   return (

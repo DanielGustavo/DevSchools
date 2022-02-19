@@ -43,10 +43,9 @@ const SignupPage: React.FC = () => {
     const user = await signUp(formValues);
 
     if (user) {
+      setLoading(false);
       push('/dashboard');
     }
-
-    setLoading(false);
   }
 
   return (
