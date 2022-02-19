@@ -57,11 +57,19 @@ const BoxList: React.FC<BoxListParams> = ({
     setItems(items.filter(({ id }) => id !== item.id));
   }
 
+  function findItemById(id: string) {
+    return items.find((item) => item.id === id);
+  }
+
   async function load(page: number) {
     if (loadItems) {
       const loadedItems = ((await loadItems(page)) ?? []) as Item[];
 
-      setItems([...items, ...loadedItems]);
+      const nonRepeatedItems = loadedItems.filter(
+        (item) => !findItemById(item.id)
+      );
+
+      setItems([...items, ...nonRepeatedItems]);
 
       return loadedItems;
     }
