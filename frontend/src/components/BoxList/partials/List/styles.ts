@@ -7,26 +7,18 @@ export const Container = styled.ul`
 
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 270px;
+  max-height: 200px;
 
   li + li {
     margin-top: 5px;
   }
 
   @media (max-width: 1439px) {
-    max-height: 170px;
-  }
-
-  @media (max-width: 768px) {
-    max-height: 140px;
+    max-height: 150px;
   }
 
   @media (max-width: 425px) {
-    max-height: 130px;
-  }
-
-  @media (max-width: 355px) {
-    max-height: 110px;
+    max-height: 135px;
   }
 
   /* ===== Scrollbar CSS ===== */

@@ -46,15 +46,15 @@ export default createGlobalStyle`
     }
 
     @media (max-width: 768px) and (min-width: 356px) {
-      font-size: 18px;
+      font-size: 15px;
     }
 
     @media (max-width: 1440px) and (min-width: 768px) {
-      font-size: 25px;
+      font-size: 18px;
     }
 
     @media (min-width: 1440px) {
-      font-size: 31px;
+      font-size: 25px;
     }
   }
 
