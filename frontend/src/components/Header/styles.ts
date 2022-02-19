@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import GlobalButton from '../Button';
+import ButtonLinkComponent from '../ButtonLink';
 
 import LogoImage from '../../assets/images/Logo.svg';
 
@@ -19,7 +19,7 @@ export const Logo = styled(Link)`
   height: 50px;
 `;
 
-export const Button = styled(GlobalButton)`
+export const ButtonLink = styled(ButtonLinkComponent)`
   font-size: 0.8rem;
   padding: 0.25rem 1.7rem;
 `;
@@ -38,7 +38,7 @@ export const Container = styled.header<ContainerProps>`
     justify-content: ${({ authenticated }) =>
       authenticated ? 'auto' : 'center'};
 
-    ${Button} {
+    ${ButtonLink} {
       display: none;
     }
   }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Button from '../../components/Button';
+import ButtonLink from '../../components/ButtonLink';
 
 import { ContainerBreakpoints } from '../../styles';
 
@@ -49,12 +49,12 @@ export const HeroSection = styled.section`
       flex-direction: column;
       align-items: center;
 
-      button {
+      a {
         width: 50%;
       }
 
       @media (max-width: 768px) {
-        button {
+        a {
           width: 95%;
         }
       }
@@ -64,7 +64,7 @@ export const HeroSection = styled.section`
   ${ContainerBreakpoints}
 `;
 
-export const SecondaryButton = styled(Button)`
+export const SecondaryButtonLink = styled(ButtonLink)`
   display: none;
 
   @media (max-width: 425px) {

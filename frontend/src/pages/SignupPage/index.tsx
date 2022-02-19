@@ -8,6 +8,7 @@ import useAuth from '../../hooks/useAuth';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import ButtonLink from '../../components/ButtonLink';
 
 import { Container, Form, ButtonsWrapper, InputsWrapper } from './styles';
 
@@ -84,14 +85,9 @@ const SignupPage: React.FC = () => {
           <Button type="submit" disabled={loading}>
             Sign Up
           </Button>
-          <Button
-            secondary
-            outlined
-            type="button"
-            onClick={() => push('/signin')}
-          >
+          <ButtonLink secondary outlined to="/signin">
             Sign In
-          </Button>
+          </ButtonLink>
         </ButtonsWrapper>
       </Form>
     </Container>

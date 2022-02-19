@@ -60,11 +60,11 @@ export const ButtonsWrapper = styled.div`
   }
 
   @media (min-width: 425px) {
-    button:first-child {
+    button {
       width: 58%;
     }
 
-    button:nth-child(2) {
+    a {
       flex: 1;
       margin-left: 2%;
     }
