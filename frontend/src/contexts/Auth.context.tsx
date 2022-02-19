@@ -71,11 +71,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (user && token && validateToken(token)) {
       setAuthenticated(true);
+      setLoading(false);
     } else {
       setAuthenticated(false);
-    }
-
-    if (user !== undefined && token !== undefined) {
       setLoading(false);
     }
   }, [user, token, setLoading]);
